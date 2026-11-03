@@ -1,0 +1,69 @@
+name: Deploy dashboard to Pages
+
+# GitHub Pages serves files and runs no Python, so the published site is a
+# build-time snapshot: this workflow runs the same upstream pull the local
+# server runs, writes the payloads next to a copy of the page, and deploys
+# that directory. See export_static.py.
+#
+# A build that cannot reach civicAPI fails on purpose, which leaves the last
+# good deployment in place instead of replacing it with empty data.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # Refresh the snapshot every 15 minutes. Scheduled runs need the default
+    # branch and GitHub throttles them under load, so the published age can
+    # exceed 15 minutes. The page reports its own age.
+    - cron: "*/15 * * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time. The starter template keeps in-progress runs, and
+# that is the safe setting for a live deployment.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Run the adapter tests
+        run: python3 -m unittest -v test_aggregate
+
+      - name: Build the static snapshot
+        run: python3 export_static.py --out dist
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

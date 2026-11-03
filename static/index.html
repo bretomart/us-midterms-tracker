@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Midterm Elections 2026 Tracker</title>
+    <style>
+        :root {
+            --bg: #0b1120;
+            --surface: #141c2e;
+            --raised: #1b2437;
+            --hover: #222d44;
+            --line: rgba(148, 163, 184, 0.18);
+            --line-strong: rgba(148, 163, 184, 0.32);
+            --text: #e8eef9;
+            --muted: #a9b6c9;
+            --faint: #8b99b2;
+            --dem: #4d9bff;
+            --rep: #ff6b6b;
+            --oth: #34d399;
+            --accent: #8b93ff;
+            --warn-bg: #3a2a10;
+            --warn-line: #a16207;
+            --warn-text: #fcd34d;
+            --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        }
+        * { box-sizing: border-box; }
+        html { -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        .wrap { max-width: 1760px; margin: 0 auto; padding: 22px 26px 40px; }
+
+        /* ---------- header ---------- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+            flex-wrap: wrap;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--line);
+        }
+        h1 { margin: 0; font-size: 1.5rem; font-weight: 650; letter-spacing: -0.02em; }
+        .sub { font-size: 0.87rem; color: var(--muted); margin-top: 4px; max-width: 62ch; }
+        .clock { font-family: var(--mono); font-size: 0.87rem; color: var(--muted); margin-top: 6px; }
+        .clock b { color: var(--text); font-weight: 600; }
+        .hud { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+        .stat {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 7px 12px;
+            min-width: 104px;
+        }
+        .stat .k { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--faint); }
+        .stat .v { font-family: var(--mono); font-size: 0.9rem; font-weight: 600; margin-top: 2px; }
+        .stat.ok .v { color: var(--oth); }
+        .stat.warn .v { color: var(--warn-text); }
+        .stat.bad .v { color: var(--rep); }
+        button.act {
+            background: var(--raised);
+            border: 1px solid var(--line-strong);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 0 16px;
+            font-size: 0.87rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        button.act:hover { background: var(--hover); border-color: var(--accent); }
+
+        /* ---------- banner ---------- */
+        .banner {
+            display: none;
+            background: linear-gradient(90deg, rgba(161, 98, 7, 0.22), rgba(161, 98, 7, 0.06));
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--warn-line);
+            color: var(--warn-text);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin: 16px 0 0;
+            font-size: 0.85rem;
+        }
+
+        /* ---------- wave timeline ---------- */
+        .waves {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 16px 0 4px;
+            scrollbar-width: thin;
+        }
+        .wave {
+            flex: 0 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--faint);
+            border-radius: 8px;
+            padding: 8px 13px;
+            min-width: 150px;
+        }
+        .wave.closed { border-left-color: var(--oth); }
+        .wave.next { border-left-color: var(--accent); background: var(--raised); }
+        .wave.unconfirmed { border-left-color: var(--warn-line); }
+        .wave.unconfirmed .b { color: var(--warn-text); }
+        .wave .t { font-family: var(--mono); font-size: 0.92rem; font-weight: 650; }
+        .wave .s { font-size: 0.74rem; color: var(--muted); margin-top: 3px; max-width: 26ch; line-height: 1.35; }
+        .wave .b { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin-top: 4px; }
+        .wave.closed .b { color: var(--oth); }
+        .wave.next .b { color: var(--accent); }
+
+        /* ---------- kpi cards ---------- */
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .kpi {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 16px 18px;
+        }
+        .kpi .eyebrow {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 10px;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--faint);
+        }
+        .kpi .eyebrow strong { color: var(--text); font-size: 1rem; letter-spacing: -0.01em; text-transform: none; white-space: nowrap; }
+        .kpi .eyebrow span { text-align: right; }
+        .scores { display: flex; align-items: flex-end; gap: 20px; margin: 12px 0 10px; }
+        .score { display: flex; align-items: baseline; gap: 7px; }
+        .score .n { font-family: var(--mono); font-size: 2.1rem; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+        .score .l { font-size: 0.78rem; color: var(--muted); }
+        .score.d .n { color: var(--dem); }
+        .score.r .n { color: var(--rep); }
+        .score.o .n { color: var(--oth); font-size: 1.3rem; }
+        .track {
+            position: relative;
+            height: 10px;
+            background: var(--raised);
+            border-radius: 5px;
+            display: flex;
+            overflow: hidden;
+        }
+        .track i { display: block; height: 100%; transition: width .35s ease; }
+        .track i:nth-of-type(1) { background: var(--dem); }
+        .track i:nth-of-type(2) { background: var(--oth); }
+        .track i:nth-of-type(3) { background: var(--rep); }
+        .track .tick {
+            position: absolute;
+            top: -3px;
+            bottom: -3px;
+            width: 2px;
+            background: var(--text);
+            opacity: 0.55;
+        }
+        .track .tick::after {
+            content: attr(data-label);
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--faint);
+            white-space: nowrap;
+        }
+        .foot {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid var(--line);
+        }
+        .foot b { font-family: var(--mono); color: var(--text); font-weight: 600; }
+        .note {
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-top: 11px;
+            padding-bottom: 11px;
+            border-bottom: 1px solid var(--line);
+            line-height: 1.4;
+        }
+        .foot:has(+ .note) { margin-top: 0; }
+
+        /* ---------- split ---------- */
+        .split {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(340px, 1fr);
+            gap: 14px;
+            align-items: start;
+        }
+        @media (max-width: 1180px) { .split { grid-template-columns: minmax(0, 1fr); } }
+        .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+        .panel > h2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 0 0 14px;
+            font-size: 1.02rem;
+            font-weight: 650;
+            letter-spacing: -0.01em;
+        }
+        .panel > h2 .meta { font-family: var(--mono); font-size: 0.75rem; font-weight: 500; color: var(--faint); }
+
+        /* ---------- toolbar ---------- */
+        .seg { display: inline-flex; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 3px; gap: 2px; flex-wrap: wrap; }
+        .seg button {
+            background: none;
+            border: 0;
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .seg button:hover { color: var(--text); }
+        .seg button[aria-pressed="true"] { background: var(--raised); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-strong); }
+        .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+        input[type=search] {
+            flex: 1 1 200px;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.85rem;
+            padding: 8px 12px;
+        }
+        input[type=search]::placeholder { color: var(--faint); }
+        input[type=search]:focus-visible, .seg button:focus-visible, button.act:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 1px;
+        }
+        label.chk { display: inline-flex; align-items: center; gap: 7px; font-size: 0.8rem; color: var(--muted); cursor: pointer; user-select: none; }
+        label.chk input { accent-color: var(--accent); width: 15px; height: 15px; }
+
+        /* ---------- table ---------- */
+        .scroll { max-height: 620px; overflow-y: auto; border: 1px solid var(--line); border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+        thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: var(--raised);
+            color: var(--faint);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            font-weight: 600;
+            text-align: left;
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--line-strong);
+        }
+        tbody td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 0.87rem; }
+        tbody tr:last-child td { border-bottom: 0; }
+        tbody tr:hover td { background: var(--hover); }
+        tr.awaiting td { color: var(--faint); }
+        .st { font-family: var(--mono); font-weight: 700; font-size: 0.9rem; letter-spacing: -0.02em; }
+        .dist { display: block; font-family: var(--mono); font-size: 0.7rem; color: var(--faint); margin-top: 1px; }
+        .race { font-weight: 600; line-height: 1.3; }
+        .kind { display: block; font-size: 0.72rem; color: var(--faint); margin-top: 2px; }
+        .pct { font-family: var(--mono); font-size: 0.85rem; font-weight: 600; }
+        .mini { height: 4px; background: var(--raised); border-radius: 2px; margin-top: 5px; overflow: hidden; width: 62px; }
+        .mini i { display: block; height: 100%; background: var(--accent); }
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
+        .tag.called { background: rgba(52, 211, 153, 0.14); color: var(--oth); border: 1px solid rgba(52, 211, 153, 0.4); }
+        .tag.lead-D { background: rgba(77, 155, 255, 0.14); color: var(--dem); border: 1px solid rgba(77, 155, 255, 0.4); }
+        .tag.lead-R { background: rgba(255, 107, 107, 0.14); color: var(--rep); border: 1px solid rgba(255, 107, 107, 0.4); }
+        .tag.lead-O { background: rgba(34, 211, 238, 0.12); color: #67e8f9; border: 1px solid rgba(34, 211, 238, 0.35); }
+        .tag.tie { background: var(--raised); color: var(--muted); border: 1px solid var(--line-strong); }
+        .tag.unk { background: transparent; color: var(--warn-text); border: 1px dashed var(--warn-line); }
+        .tag.disp { background: rgba(161, 98, 7, 0.18); color: var(--warn-text); border: 1px solid var(--warn-line); }
+        .who { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 5px; }
+        ul.cands { list-style: none; margin: 0; padding: 0; }
+        ul.cands li { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
+        ul.cands li + li { border-top: 1px dotted var(--line); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 8px; }
+        .dot.D { background: var(--dem); }
+        .dot.R { background: var(--rep); }
+        .dot.O { background: var(--oth); }
+        .cname { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.84rem; }
+        .cparty { font-size: 0.7rem; color: var(--faint); }
+        .cvotes { font-family: var(--mono); font-size: 0.82rem; font-weight: 600; text-align: right; min-width: 62px; }
+        ul.cands li.hot .cname { font-weight: 650; color: var(--text); }
+        ul.cands li.hot .cvotes { font-weight: 750; }
+        .mark {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 1px 4px;
+            border-radius: 3px;
+            vertical-align: 1px;
+        }
+        .mark.won { background: var(--oth); color: #06251c; }
+        .mark.lead { background: var(--raised); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line-strong); }
+        .cpct { font-family: var(--mono); font-size: 0.72rem; color: var(--faint); text-align: right; min-width: 46px; }
+        .empty { padding: 40px 12px; text-align: center; color: var(--faint); font-size: 0.87rem; }
+
+        /* ---------- news ---------- */
+        .chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: thin; }
+        .chip {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 0.76rem;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 999px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .chip:hover { color: var(--text); border-color: var(--line-strong); }
+        .chip[aria-pressed="true"] { background: var(--raised); color: var(--text); border-color: var(--accent); }
+        .chip .n { font-family: var(--mono); font-size: 0.7rem; color: var(--faint); }
+        .chip.err .dot { background: var(--rep); }
+        .wire { max-height: 620px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+        article.item { padding: 12px 4px 12px 0; border-bottom: 1px solid var(--line); }
+        article.item:last-child { border-bottom: 0; }
+        .ihead { display: flex; align-items: center; gap: 7px; font-size: 0.7rem; margin-bottom: 5px; }
+        .iprov { font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+        .itime { margin-left: auto; font-family: var(--mono); color: var(--faint); white-space: nowrap; }
+        .ititle { margin: 0; font-size: 0.93rem; font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; }
+        .ititle a { color: var(--text); text-decoration: none; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .ititle a:hover { color: var(--accent); }
+        .isum {
+            margin: 5px 0 0;
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        /* ---------- coverage ---------- */
+        .coverage { margin-top: 14px; }
+        .cov-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px 22px;
+        }
+        .cov-grid h3 {
+            margin: 0 0 8px;
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--faint);
+            font-weight: 650;
+        }
+        .cov-grid ul { margin: 0; padding-left: 17px; }
+        .cov-grid li { font-size: 0.81rem; color: var(--muted); line-height: 1.5; margin-bottom: 7px; }
+        .cov-grid b { color: var(--text); font-weight: 600; }
+        .cov-grid a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+        .cov-grid a:hover { border-bottom-color: var(--accent); }
+        .prov {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid var(--line);
+            font-size: 0.74rem;
+            color: var(--faint);
+            line-height: 1.55;
+        }
+        .links {
+            margin-top: 20px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+            font-size: 0.8rem;
+            color: var(--faint);
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .links a { color: var(--muted); text-decoration: none; margin-right: 14px; border-bottom: 1px solid transparent; }
+        .links a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+        @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <header>
+        <div>
+            <h1>US Midterm Elections 2026</h1>
+            <div class="sub">Vote tallies, race calls, and a live press wire for November 3. Zero-vote races stay uncalled and each figure keeps its source and age. Exit polls have no public machine-readable feed tonight, so crosstabs are not shown; the wire carries exit-poll headlines as outlets publish them.</div>
+            <div class="clock" id="clock">Election clock loading...</div>
+        </div>
+        <div class="hud">
+            <div class="stat"><div class="k">Results feed</div><div class="v" id="hud-mode">connecting</div></div>
+            <div class="stat"><div class="k">Tally updated</div><div class="v" id="hud-updated">--:--</div></div>
+            <div class="stat" id="hud-fresh-wrap"><div class="k">Feed age</div><div class="v" id="hud-fresh">--</div></div>
+            <button class="act" onclick="refreshAll()">Refresh</button>
+        </div>
+    </header>
+
+    <div id="banner" class="banner"></div>
+
+    <div class="waves" id="waves"></div>
+
+    <div class="kpis">
+        <div class="kpi">
+            <div class="eyebrow"><strong>Senate</strong><span>100 seats · 51 to control</span></div>
+            <div class="scores">
+                <div class="score d"><span class="n" id="sen-d">34</span><span class="l">Dem</span></div>
+                <div class="score r"><span class="n" id="sen-r">31</span><span class="l">Rep</span></div>
+                <div class="score o"><span class="n" id="sen-o">0</span><span class="l">Other</span></div>
+            </div>
+            <div class="track"><i id="sen-bd" style="width:34%"></i><i id="sen-bo" style="width:0%"></i><i id="sen-br" style="width:31%"></i><span class="tick" style="left:51%" data-label="51"></span></div>
+            <div class="note" id="sen-note">Loading the starting line...</div>
+            <div class="foot">
+                <span>Contested <b id="sen-contested">35</b> · reporting <b id="sen-reporting">0</b></span>
+                <span>Leading uncalled D <b id="sen-lead-d">0</b> R <b id="sen-lead-r">0</b></span>
+                <span id="sen-held">--</span>
+            </div>
+        </div>
+
+        <div class="kpi">
+            <div class="eyebrow"><strong>House</strong><span>435 seats · 218 to control</span></div>
+            <div class="scores">
+                <div class="score d"><span class="n" id="house-d">0</span><span class="l">Dem called</span></div>
+                <div class="score r"><span class="n" id="house-r">0</span><span class="l">Rep called</span></div>
+                <div class="score o"><span class="n" id="house-o">0</span><span class="l">Other</span></div>
+            </div>
+            <div class="track"><i id="house-bd" style="width:0%"></i><i id="house-bo" style="width:0%"></i><i id="house-br" style="width:0%"></i><span class="tick" style="left:50.1%" data-label="218"></span></div>
+            <div class="note" id="house-note">Loading the starting line...</div>
+            <div class="foot">
+                <span>Contested <b id="house-contested">435</b> · reporting <b id="house-reporting">0</b></span>
+                <span>Leading uncalled D <b id="house-lead-d">0</b> R <b id="house-lead-r">0</b></span>
+                <span id="house-held">--</span>
+            </div>
+        </div>
+
+        <div class="kpi">
+            <div class="eyebrow"><strong>Governors</strong><span id="gov-scope">36 states · 3 territories</span></div>
+            <div class="scores">
+                <div class="score d"><span class="n" id="gov-d">0</span><span class="l">Dem called</span></div>
+                <div class="score r"><span class="n" id="gov-r">0</span><span class="l">Rep called</span></div>
+                <div class="score o"><span class="n" id="gov-o">0</span><span class="l">Other</span></div>
+            </div>
+            <div class="track"><i id="gov-bd" style="width:0%"></i><i id="gov-bo" style="width:0%"></i><i id="gov-br" style="width:0%"></i></div>
+            <div class="note" id="gov-note">Loading the starting line...</div>
+            <div class="foot">
+                <span>States <b id="gov-contested">36</b> · territories <b id="gov-terr">3</b> · reporting <b id="gov-reporting">0</b></span>
+                <span id="gov-held">--</span>
+                <span>Leading uncalled D <b id="gov-lead-d">0</b> R <b id="gov-lead-r">0</b></span>
+            </div>
+        </div>
+
+        <div class="kpi">
+            <div class="eyebrow"><strong>Ballot measures</strong><span>Referenda and proposals</span></div>
+            <div class="scores">
+                <div class="score"><span class="n" id="meas-contested">0</span><span class="l">Tracked</span></div>
+                <div class="score o"><span class="n" id="meas-called">0</span><span class="l">Decided</span></div>
+            </div>
+            <div class="note" id="meas-note">Statewide referenda carried by the feed. Yes/no counts only; measures carry no partisan grouping.</div>
+        </div>
+    </div>
+
+    <div class="split">
+        <section class="panel">
+            <h2>Race board <span class="meta" id="table-count">loading...</span></h2>
+            <div class="toolbar">
+                <div class="seg" id="chamber-seg">
+                    <button data-chamber="all" aria-pressed="true">All</button>
+                    <button data-chamber="senate" aria-pressed="false">Senate</button>
+                    <button data-chamber="house" aria-pressed="false">House</button>
+                    <button data-chamber="governor" aria-pressed="false">Governors</button>
+                    <button data-chamber="measures" aria-pressed="false">Measures</button>
+                </div>
+                <div class="seg" id="status-seg">
+                    <button data-status="all" aria-pressed="true">Everything</button>
+                    <button data-status="called" aria-pressed="false">Called</button>
+                    <button data-status="active" aria-pressed="false">Reporting</button>
+                </div>
+                <label class="chk"><input type="checkbox" id="hide-awaiting" checked onchange="renderTable()"> Hide races with no votes yet</label>
+                <input type="search" id="filter-search" placeholder="Search state, district, candidate..." oninput="renderTable()">
+            </div>
+            <div class="scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:74px">State</th>
+                            <th style="width:24%">Race</th>
+                            <th style="width:88px">Reporting</th>
+                            <th style="width:112px">Closes</th>
+                            <th style="width:17%">Standing</th>
+                            <th>Candidates</th>
+                        </tr>
+                    </thead>
+                    <tbody id="race-tbody"><tr><td colspan="6" class="empty">Loading races...</td></tr></tbody>
+                </table>
+            </div>
+        </section>
+
+        <aside class="panel">
+            <h2>News wire <span class="meta" id="news-status">loading RSS...</span></h2>
+            <div class="chips" id="provider-chips"></div>
+            <input type="search" id="news-search" placeholder="Filter headlines: exit poll, turnout, Georgia..." oninput="renderNews()" style="width:100%; margin-bottom:10px;">
+            <div class="wire" id="news-list"><div class="empty">Fetching MS NOW, CNN, Fox, NBC, NPR, PBS, CBS, ABC, Politico, The Hill...</div></div>
+        </aside>
+    </div>
+
+    <section class="panel coverage">
+        <h2>Coverage and provenance <span class="meta" id="coverage-meta">loading...</span></h2>
+        <div class="cov-grid">
+            <div>
+                <h3>Ingested</h3>
+                <ul>
+                    <li><b>civicAPI v2</b> (<a href="https://civicapi.org" target="_blank" rel="noopener">civicapi.org</a>): race list, percent reporting, candidate votes, winner flags. Free, no API key, CORS enabled.</li>
+                    <li><b>Ten RSS wires</b> (MS NOW, CNN, Fox, NBC, NPR, PBS, CBS, ABC, Politico, The Hill) for headlines, which is where exit-poll coverage appears.</li>
+                    <li><b>Closing hours</b> from state election office documents and statutes, cross-checked against the AP state-by-state guide.</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Not available</h3>
+                <ul>
+                    <li><b>AP Elections API</b>: key gated and paid.</li>
+                    <li><b>Decision Desk HQ</b>: returns HTTP 429 to this client, and its API is paid.</li>
+                    <li><b>NEP (Edison) exit poll crosstabs and AP VoteCast</b>: no public machine-readable endpoint, so none is scraped or guessed at.</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Rules</h3>
+                <ul>
+                    <li>Votes are never averaged across feeds. Where the feed and the published baseline disagree, the banner above names it.</li>
+                    <li>A race with no votes shows "no votes yet", never zero.</li>
+                    <li>Territories and the synthetic national rollup stay out of the 50-state, 100-seat and 435-seat arithmetic.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="prov" id="coverage-prov"></div>
+    </section>
+
+    <div class="links">
+        <div>
+            <a href="https://civicapi.org/decision-2026" target="_blank" rel="noopener">civicAPI</a>
+            <a href="https://votes.decisiondeskhq.com/elections/2026-11-03" target="_blank" rel="noopener">Decision Desk HQ</a>
+            <a href="https://www.ms.now/" target="_blank" rel="noopener">MS NOW</a>
+            <a href="https://www.cnn.com/election/2026" target="_blank" rel="noopener">CNN</a>
+            <a href="https://www.foxnews.com/elections" target="_blank" rel="noopener">Fox</a>
+            <a href="https://www.nytimes.com/interactive/2026/11/03/us/elections/results-senate.html" target="_blank" rel="noopener">NYT</a>
+        </div>
+        <div>Bretomart · votes are never averaged across feeds; disagreements surface in the banner above.</div>
+    </div>
+</div>
+
+<script>
+    let boardData = { senate: [], house: [], governor: [], measures: [] };
+    let waveData = [];
+    let schedData = null;
+    let baselineData = null;
+    let newsItems = [];
+    let newsProviders = [];
+    let activeProvider = 'all';
+    let lastTallyFetch = Date.now();
+
+    const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const nf = (n) => (n || 0).toLocaleString('en-US');
+    const etParts = () => new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+    const etMinutes = () => {
+        const p = etParts();
+        const h = Number(p.find(x => x.type === 'hour')?.value ?? 0) % 24;
+        const mi = Number(p.find(x => x.type === 'minute')?.value ?? 0);
+        return Number.isFinite(h) && Number.isFinite(mi) ? h * 60 + mi : NaN;
+    };
+    const agoText = (mins) => mins < 1 ? 'just now' : mins < 60 ? `${mins}m ago` : `${Math.floor(mins / 60)}h ${mins % 60}m ago`;
+    const dueText = (mins) => mins <= 60 ? `in ${mins}m` : `in ${(mins / 60).toFixed(1)}h`;
+    // A static build stamps snapshot_epoch on its payloads. Those payloads are
+    // a build-time snapshot rather than a live poll, and the UI has to say so.
+    const isSnapshotPayload = (d) => Number(d && d.snapshot_epoch) > 0;
+
+    function tickClock() {
+        const now = new Date();
+        const et = now.toLocaleString('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', hour12: true });
+        const local = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        document.getElementById('clock').innerHTML = `Polls close in waves through the night. Eastern time <b>${esc(et)}</b> · local <b>${esc(local)}</b> · UTC <b>${esc(now.toISOString().slice(11, 16))}</b>`;
+    }
+
+    function waveDetail(w) {
+        const opens = (w.opens || []).map(o => o.label);
+        const closes = (w.closes || []).map(c => c.label);
+        const bits = [];
+        if (opens.length) bits.push('first data: ' + opens.join(', '));
+        if (closes.length) bits.push('fully closed: ' + closes.join(', '));
+        return bits.join(' · ');
+    }
+
+    function renderWaves() {
+        const el = document.getElementById('waves');
+        const nowMin = schedData && Number.isFinite(schedData.now_minutes_et)
+            ? schedData.now_minutes_et : etMinutes();
+        if (!waveData.length) {
+            el.innerHTML = '<div class="wave"><div class="t">Closing schedule</div>' +
+                '<div class="s">Waiting for the first tally payload.</div></div>';
+            return;
+        }
+        el.innerHTML = waveData.map(w => {
+            // A bucket is either the point where a jurisdiction's first
+            // precincts report, or the point where it is fully closed. The
+            // count line has to say which, or a first-results bucket reads
+            // as "0 races".
+            const closesN = w.races_close || 0;
+            const opensN = w.races_open || 0;
+            const counts = closesN || opensN;
+            const verb = closesN ? 'close' : 'start reporting';
+            const due = closesN ? 'closes' : 'first results';
+            const done = closesN ? 'closed' : 'reporting since';
+            let cls = '', note;
+            if (w.at === null) {
+                cls = 'unconfirmed';
+                note = 'closing hour not published';
+            } else if (w.closed) {
+                cls = 'closed';
+                note = Number.isFinite(nowMin) ? `${done} ${agoText(Math.round(nowMin - w.at))}` : done;
+            } else if (w.next) {
+                cls = 'next';
+                note = Number.isFinite(nowMin) ? `${due} ${dueText(Math.round(w.at - nowMin))}` : 'next';
+            } else {
+                note = 'later tonight';
+            }
+            const flags = [];
+            if (w.unverified && w.unverified.length) flags.push(`${w.unverified.length} unverified`);
+            if (w.disputed && w.disputed.length) flags.push(`${w.disputed.length} disputed`);
+            const count = `${counts} race${counts === 1 ? '' : 's'} ${verb}` +
+                (flags.length ? ' · ' + flags.join(' · ') : '');
+            return `<div class="wave ${cls}" title="${esc(waveDetail(w))}">` +
+                `<div class="t">${esc(w.label)}</div>` +
+                `<div class="s">${esc(count)}</div>` +
+                `<div class="b">${esc(note)}</div></div>`;
+        }).join('');
+    }
+
+    function renderCoverage(d) {
+        const meta = document.getElementById('coverage-meta');
+        const prov = document.getElementById('coverage-prov');
+        if (meta) {
+            const total = ['senate', 'house', 'governor', 'measures']
+                .reduce((n, k) => n + (boardData[k] || []).length, 0);
+            // A snapshot's schedule is stamped at build time, so "now" would lie.
+            const stamp = schedData ? ` · ${isSnapshotPayload(d) ? 'as of' : 'now'} ${schedData.now_label_et}` : '';
+            meta.textContent = `${total} races tracked${stamp}`;
+        }
+        if (!prov) return;
+        const parts = [];
+        if (d.source) parts.push(`Results: ${d.source}`);
+        if (schedData && schedData.provenance) parts.push(`Closing hours: ${schedData.provenance}`);
+        if (d.baseline && d.baseline.provenance) parts.push(`Starting line: ${d.baseline.provenance}`);
+        if (schedData && schedData.disputed && Object.keys(schedData.disputed).length) {
+            parts.push('Disputed closing hours: ' + Object.entries(schedData.disputed)
+                .map(([code, note]) => `${code} (${note})`).join('; '));
+        }
+        if (schedData && schedData.unverified && schedData.unverified.length) {
+            parts.push('Closing hours no state source confirmed: ' + schedData.unverified.join(', '));
+        }
+        prov.textContent = parts.join('  ·  ');
+    }
+
+    function refreshAll() { fetchData(); fetchNews(); }
+
+    // The local server answers /api/races and /api/news. The static GitHub
+    // Pages build ships the same payloads as files under data/. Resolve
+    // whichever source answers once, then keep using it.
+    let racesSource = null;
+    let newsSource = null;
+
+    async function loadPayload(candidates) {
+        for (const url of candidates) {
+            try {
+                // The API is live, so a browser cache must never answer it. The
+                // data files are a build output, so let the CDN cache work.
+                const res = await fetch(url, { cache: url.startsWith('/api/') ? 'no-store' : 'default' });
+                if (res.ok) return { url, body: await res.json() };
+            } catch (e) { /* unreachable, try the next source */ }
+        }
+        return null;
+    }
+
+    async function fetchData() {
+        try {
+            const hit = await loadPayload(racesSource ? [racesSource] : ['/api/races', 'data/races.json']);
+            if (!hit) throw new Error('no results source');
+            racesSource = hit.url;
+            const d = hit.body;
+            lastTallyFetch = Date.now();
+
+            const isSnapshot = isSnapshotPayload(d);
+            const MODE_LABEL = {
+                'LIVE-CIVICAPI': 'Live (civicAPI)',
+                'FIXTURE-WARMUP': 'Cached snapshot',
+                'LIVE-CACHED (UPSTREAM TIMEOUT)': 'Live cache, upstream slow',
+                'INITIALIZING': 'Starting',
+            };
+            const rawMode = d.source_status || 'INITIALIZING';
+            const modeEl = document.getElementById('hud-mode');
+            modeEl.textContent = isSnapshot ? 'Static snapshot' : (MODE_LABEL[rawMode] || rawMode.replace(/_/g, ' '));
+            modeEl.parentNode.className = 'stat ' + (isSnapshot || rawMode === 'LIVE-CIVICAPI' ? 'ok' : rawMode === 'FIXTURE-WARMUP' || rawMode.includes('TIMEOUT') ? 'warn' : 'bad');
+            document.getElementById('hud-updated').textContent = (d.fetched_at || '').slice(11, 16) + ' UTC';
+            const wrap = document.getElementById('hud-fresh-wrap');
+            // A snapshot is only as good as the last scheduled build, so it
+            // gets its own scale instead of the 90s live-poll one.
+            const age = isSnapshot ? Math.max(0, Math.floor(Date.now() / 1000 - Number(d.snapshot_epoch))) : (d.cache_age_seconds ?? 0);
+            const freshOk = isSnapshot ? 1800 : 90;
+            const freshWarn = isSnapshot ? 3600 : 300;
+            wrap.className = 'stat ' + (age < freshOk ? 'ok' : age < freshWarn ? 'warn' : 'bad');
+            document.getElementById('hud-fresh').textContent = isSnapshot
+                ? `snapshot ${age < 60 ? Math.round(age) + 's' : Math.round(age / 60) + 'm'}`
+                : age < freshOk ? `fresh ${Math.round(age)}s` : age < freshWarn ? `stale ${Math.round(age)}s` : `stale ${Math.round(age / 60)}m`;
+
+            const banner = document.getElementById('banner');
+            const notes = [];
+            if (d.conflicts?.length) notes.push('Feed disagreement: ' + d.conflicts.join(' | '));
+            if (d.upstream_error) notes.push('Serving the last good tally while civicAPI recovers (' + d.upstream_error + ').');
+            if (isSnapshot) notes.push('Static snapshot, rebuilt by the Pages workflow every 15 minutes. Run python3 run.py locally for live polling.');
+            banner.style.display = notes.length ? 'block' : 'none';
+            banner.textContent = notes.join('  ');
+
+            if (d.board) boardData = d.board;
+            if (Array.isArray(d.waves)) waveData = d.waves;
+            if (d.schedule) schedData = d.schedule;
+            if (d.baseline) baselineData = d.baseline;
+            renderWaves();
+            renderCoverage(d);
+            if (d.summary) renderSummary(d.summary);
+            renderTable();
+        } catch (e) {
+            const modeEl = document.getElementById('hud-mode');
+            modeEl.textContent = 'unavailable';
+            modeEl.parentNode.className = 'stat bad';
+            document.getElementById('hud-fresh-wrap').className = 'stat bad';
+            document.getElementById('hud-fresh').textContent = 'offline';
+            console.error('races fetch failed:', e);
+        }
+    }
+
+    async function fetchNews() {
+        try {
+            const hit = await loadPayload(newsSource ? [newsSource] : ['/api/news', 'data/news.json']);
+            if (!hit) throw new Error('no news source');
+            newsSource = hit.url;
+            const d = hit.body;
+            newsItems = d.items || [];
+            newsProviders = d.providers || [];
+            const ok = newsProviders.filter(p => p.status === 'OK').length;
+            document.getElementById('news-status').textContent = `${newsItems.length} headlines · ${ok}/${newsProviders.length} feeds · ${(d.fetched_at || '').slice(11, 16)} UTC`;
+            renderChips();
+            renderNews();
+        } catch (e) {
+            document.getElementById('news-status').textContent = 'wire error: ' + e.message;
+        }
+    }
+
+    function renderChips() {
+        const btn = (id, name, count, color, err, title) =>
+            `<button class="chip ${err ? 'err' : ''}" data-prov="${esc(id)}" aria-pressed="${activeProvider === id}" title="${esc(title)}">
+                <span class="dot" style="background:${esc(color)}"></span>${esc(name)} <span class="n">${count}</span></button>`;
+        const all = btn('all', 'All feeds', newsItems.length, 'var(--accent)', false, 'Every wired provider');
+        const provs = newsProviders.map(p => btn(
+            p.id, p.name, p.count || 0, p.color || 'var(--muted)', p.status !== 'OK',
+            p.status === 'OK' ? `${p.count} items in ${p.latency_s}s` : (p.error || p.status)
+        )).join('');
+        document.getElementById('provider-chips').innerHTML = all + provs;
+    }
+
+    function relTime(ts) {
+        if (!ts) return '';
+        const mins = Math.max(0, Math.round((Date.now() / 1000) - ts));
+        if (mins < 1) return 'now';
+        if (mins < 60) return mins + 'm';
+        const h = Math.floor(mins / 60);
+        return h < 24 ? `${h}h ${mins % 60}m` : `${Math.floor(h / 24)}d`;
+    }
+
+    function renderNews() {
+        const el = document.getElementById('news-list');
+        const q = (document.getElementById('news-search').value || '').trim().toLowerCase();
+        const list = newsItems.filter(i => {
+            if (activeProvider !== 'all' && i.provider_id !== activeProvider) return false;
+            if (q && !`${i.title} ${i.summary} ${i.provider_name}`.toLowerCase().includes(q)) return false;
+            return true;
+        });
+        if (!list.length) { el.innerHTML = '<div class="empty">No headlines match this filter.</div>'; return; }
+        el.innerHTML = list.slice(0, 80).map(i => `
+            <article class="item">
+                <div class="ihead">
+                    <span class="dot" style="background:${esc(i.provider_color)}"></span>
+                    <span class="iprov" style="color:${esc(i.provider_color)}">${esc(i.provider_name)}</span>
+                    <span class="itime" title="${esc(i.published_at || '')}">${esc(relTime(i.timestamp))} ago</span>
+                </div>
+                <h3 class="ititle"><a href="${esc(i.link)}" target="_blank" rel="noopener noreferrer">${esc(i.title)}</a></h3>
+                ${i.summary ? `<p class="isum">${esc(i.summary)}</p>` : ''}
+            </article>`).join('');
+    }
+
+    function controlLine(ctrl, label) {
+        if (!ctrl || !ctrl.needed) return '';
+        if (ctrl.state === 'majority') {
+            const who = ctrl.holder === 'D' ? 'Democrats' : ctrl.holder === 'R' ? 'Republicans' : 'Other';
+            return `${who} hold a ${label} majority`;
+        }
+        return `${ctrl.needed.D} more ${label} seats for a Democratic majority, ${ctrl.needed.R} for a Republican one`;
+    }
+
+    function renderSummary(s) {
+        const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+        const bar = (id, d, o, r, total) => {
+            const t = Math.max(1, total);
+            document.getElementById(id + '-bd').style.width = (d / t * 100) + '%';
+            document.getElementById(id + '-bo').style.width = (o / t * 100) + '%';
+            document.getElementById(id + '-br').style.width = (r / t * 100) + '%';
+        };
+        if (s.senate) {
+            const t = s.senate.tally, hold = s.senate.holdover || { D: 34, R: 31, O: 0 };
+            const held = s.senate.held_before || {};
+            const ctrl = s.senate.control;
+            const totD = hold.D + t.called.D, totR = hold.R + t.called.R, totO = (hold.O || 0) + t.called.O;
+            set('sen-d', totD); set('sen-r', totR); set('sen-o', totO);
+            set('sen-note', `${hold.D} D and ${hold.R} R seats are not up this cycle · ${t.called.D + t.called.R + t.called.O} called tonight · ${controlLine(ctrl, 'Senate')}.`);
+            set('sen-held', `${held.R || 53} R, ${held.D || 45} D, ${held.O || 2} other before this election`);
+            set('sen-contested', s.senate.contested);
+            set('sen-reporting', t.races - t.no_data);
+            set('sen-lead-d', t.leading.D); set('sen-lead-r', t.leading.R);
+            bar('sen', totD, totO, totR, s.senate.total_seats || 100);
+        }
+        if (s.house) {
+            const t = s.house.tally, held = s.house.held_before || {}, ctrl = s.house.control;
+            const called = t.called.D + t.called.R + t.called.O;
+            set('house-d', t.called.D); set('house-r', t.called.R); set('house-o', t.called.O);
+            set('house-note', `All ${s.house.total_seats || 435} seats are up tonight · ${called} of ${s.house.contested} called · ${controlLine(ctrl, 'House')}.`);
+            set('house-held', `${held.R || 218} R, ${held.D || 214} D, ${held.O || 1} other before this election${s.house.vacant ? `, ${s.house.vacant} vacant` : ''}`);
+            set('house-contested', s.house.contested);
+            set('house-reporting', t.races - t.no_data);
+            set('house-lead-d', t.leading.D); set('house-lead-r', t.leading.R);
+            bar('house', t.called.D, t.called.O, t.called.R, s.house.total_seats || 435);
+        }
+        if (s.governor) {
+            const t = s.governor.tally, all = s.governor.tally_all || t;
+            const held = s.governor.held_before || {};
+            set('gov-d', t.called.D); set('gov-r', t.called.R); set('gov-o', t.called.O);
+            set('gov-note', `${t.called.D + t.called.R + t.called.O} of ${t.races} governorships decided · ${t.tied} tied on votes · ${t.no_data} with no votes reported yet. Territories are tracked but excluded from the 50-state count.`);
+            set('gov-scope', `${s.governor.contested_states} states · ${s.governor.territories} territories`);
+            set('gov-contested', s.governor.contested_states);
+            set('gov-terr', s.governor.territories);
+            set('gov-reporting', all.races - all.no_data);
+            set('gov-held', `${held.R || 26} R, ${held.D || 24} D of the 50 states`);
+            set('gov-lead-d', t.leading.D); set('gov-lead-r', t.leading.R);
+            bar('gov', t.called.D, t.called.O, t.called.R, t.races || 36);
+        }
+        if (s.measures) {
+            const t = s.measures.tally;
+            set('meas-contested', s.measures.contested);
+            set('meas-called', t.called.D + t.called.R + t.called.O);
+            set('meas-note', `${t.called.D + t.called.R + t.called.O} of ${s.measures.contested} decided · ${t.no_data} with no votes yet. Yes/no counts only; measures carry no partisan grouping.`);
+        }
+    }
+
+    function marginOf(r) {
+        const c = r.candidates || [];
+        if (!r.has_data || c.length < 2) return null;
+        const sorted = [...c].sort((a, b) => b.votes - a.votes);
+        return sorted[0].votes - sorted[1].votes;
+    }
+
+    function standingCell(r) {
+        if (r.called && r.winner) {
+            const m = marginOf(r);
+            return `<span class="tag called">Called</span><span class="who">${m === null ? 'unopposed' : 'margin ' + nf(m)}</span>`;
+        }
+        if (!r.has_data) return `<span class="tag tie">No votes yet</span>`;
+        if (r.tied) return `<span class="tag tie">Tied</span><span class="who">${nf(r.total_votes)} counted</span>`;
+        const m = marginOf(r);
+        return `<span class="tag lead-${r.leader.group}">Leading</span><span class="who">${m === null ? 'sole reporter' : 'ahead by ' + nf(m)}</span>`;
+    }
+
+    function candCell(r) {
+        const all = r.candidates || [];
+        if (!all.length) return '<span class="cparty">Uncontested</span>';
+        const c = all.slice(0, 4);
+        const rest = all.length - c.length;
+        return '<ul class="cands">' + c.map(x => {
+            const won = r.called && x.winner;
+            const lead = !r.called && r.leader && x.name === r.leader.name && x.votes === r.leader.votes;
+            const mark = won ? '<span class="mark won">WIN</span>' : lead ? '<span class="mark lead">LD</span>' : '';
+            return `<li class="${won || lead ? 'hot' : ''}">
+                <span class="dot ${x.group}"></span>
+                <span class="cname">${esc(x.name)} <span class="cparty">${esc(x.party || 'Ind')}</span> ${mark}</span>
+                <span class="cvotes">${r.has_data ? nf(x.votes) : '--'}</span>
+                <span class="cpct">${r.has_data && r.total_votes > 0 ? (x.votes / r.total_votes * 100).toFixed(1) + '%' : ''}</span>
+            </li>`;
+        }).join('') + (rest > 0 ? `<li><span class="cparty">+${rest} more candidate${rest > 1 ? 's' : ''}</span></li>` : '') + '</ul>';
+    }
+
+    function pressGroup(segId, attr) {
+        const seg = document.getElementById(segId);
+        seg.addEventListener('click', (e) => {
+            const b = e.target.closest('button[data-' + attr + ']');
+            if (!b) return;
+            seg.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+            renderTable();
+        });
+    }
+
+    function pressed(segId) {
+        return document.querySelector(`#${segId} button[aria-pressed="true"]`)?.dataset;
+    }
+
+    function closeCell(r) {
+        if (!r.close_label) {
+            if (r.close_state === 'rollup') return '<span class="cparty">rollup row</span>';
+            return '<span class="tag unk">unconfirmed</span>';
+        }
+        const bits = [`<span class="pct">${esc(r.close_label)}</span>`];
+        if (r.polls_closed) bits.push('<span class="tag called">closed</span>');
+        if (r.close_disputed) bits.push(`<span class="tag disp" title="${esc(r.close_disputed)}">disputed</span>`);
+        else if (r.close_verified === false) bits.push('<span class="tag unk" title="No state document confirmed this closing hour.">unverified</span>');
+        return bits.join(' ');
+    }
+
+    function renderTable() {
+        const ch = pressed('chamber-seg').chamber;
+        const st = pressed('status-seg').status;
+        const hideAwaiting = document.getElementById('hide-awaiting').checked;
+        const q = document.getElementById('filter-search').value.trim().toLowerCase();
+        const pool = ch === 'all'
+            ? [...(boardData.senate || []), ...(boardData.governor || []), ...(boardData.house || []), ...(boardData.measures || [])]
+            : (boardData[ch] || []);
+
+        const rows = pool.filter(r => {
+            if (st === 'called' && !r.called) return false;
+            if (st === 'active' && !r.has_data) return false;
+            if (hideAwaiting && st === 'all' && !r.has_data && !r.called) return false;
+            if (q) {
+                const hay = `${r.state || ''} ${r.district || ''} ${r.name || ''} ${r.type || ''} ${(r.candidates || []).map(c => c.name + ' ' + (c.party || '')).join(' ')}`.toLowerCase();
+                if (!hay.includes(q)) return false;
+            }
+            return true;
+        });
+
+        rows.sort((a, b) => (b.called - a.called) || (b.reporting - a.reporting) || (b.total_votes - a.total_votes) || ((a.close_first ?? 9999) - (b.close_first ?? 9999)));
+
+        const awaitingHidden = pool.filter(r => !r.has_data && !r.called).length;
+        const skipped = pool.length - rows.length;
+        const shown = rows.slice(0, 200);
+        const parts = [shown.length < rows.length ? `${shown.length} of ${rows.length} shown` : `${rows.length} shown`];
+        if (st === 'all' && hideAwaiting && awaitingHidden) parts.push(`${awaitingHidden} awaiting votes hidden`);
+        const otherHidden = skipped - (st === 'all' && hideAwaiting ? awaitingHidden : 0);
+        if (otherHidden > 0) parts.push(`${otherHidden} filtered out`);
+        document.getElementById('table-count').textContent = parts.join(' · ');
+
+        const tb = document.getElementById('race-tbody');
+        if (!rows.length) { tb.innerHTML = '<tr><td colspan="6" class="empty">Nothing matches. Clear the filters or turn off "Hide races with no votes yet".</td></tr>'; return; }
+
+        tb.innerHTML = shown.map(r => {
+            const label = r.name && r.name !== r.type ? r.name : (r.district ? `${r.state || ''} ${r.district}`.trim() : r.type);
+            const kind = r.name && r.name !== r.type ? r.type : '';
+            return `
+            <tr class="${r.has_data || r.called ? '' : 'awaiting'}">
+                <td><span class="st">${esc(r.state || '--')}</span>${r.district ? `<span class="dist">${esc(r.district)}</span>` : ''}</td>
+                <td><span class="race">${esc(label)}</span>${kind ? `<span class="kind">${esc(kind)}</span>` : ''}</td>
+                <td><span class="pct">${r.reporting ? r.reporting.toFixed(0) + '%' : '--'}</span><span class="mini"><i style="width:${Math.min(100, r.reporting || 0)}%"></i></span></td>
+                <td>${closeCell(r)}</td>
+                <td>${standingCell(r)}</td>
+                <td>${candCell(r)}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    document.getElementById('provider-chips').addEventListener('click', (e) => {
+        const b = e.target.closest('button[data-prov]');
+        if (!b) return;
+        activeProvider = b.dataset.prov;
+        renderChips();
+        renderNews();
+    });
+
+    pressGroup('chamber-seg', 'chamber');
+    pressGroup('status-seg', 'status');
+
+    tickClock();
+    renderWaves();
+    refreshAll();
+    setInterval(tickClock, 15000);
+    setInterval(renderWaves, 60000);
+    setInterval(fetchData, 30000);
+    setInterval(fetchNews, 60000);
+</script>
+</body>
+</html>
