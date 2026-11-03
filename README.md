@@ -79,7 +79,7 @@ python3 export_static.py --out dist
 
 It refuses to publish when the upstream is unreachable or when a payload comes back empty. The step fails and the previous deployment stays live, because a stale snapshot is better than a blank one.
 
-One page serves both cases. It resolves `/api/races` and `/api/news` first and falls back to `data/races.json` and `data/news.json`, so the local server answers the API routes with live polling while Pages serves the snapshots. Snapshot payloads carry a `snapshot_epoch`, so the header reads "Static snapshot" with the build's age and the coverage stamp reads "as of" instead of "now". To rebuild the published snapshot on demand, run the workflow from the Actions tab.
+One page serves both cases. `export_static.py` writes `data-mode="snapshot"` onto the `<html>` element it publishes, and the page reads that mark to fetch `data/races.json` and `data/news.json` directly. The local server serves the unmarked file, which fetches `/api/races` and `/api/news` first and falls back to the data files. Marking the build is what keeps the published page from asking a static host for endpoints it cannot answer: unmarked, every visit collected two 404s before the fallback ran. Snapshot payloads carry a `snapshot_epoch`, so the header reads "Static snapshot" with the build's age and the coverage stamp reads "as of" instead of "now". To rebuild the published snapshot on demand, run the workflow from the Actions tab.
 
 GitHub disables scheduled workflows after 60 days without repository activity. Re-enable the schedule from the Actions tab if that happens.
 
