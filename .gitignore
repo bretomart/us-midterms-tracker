@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Runtime artifacts
+server.pid
+
+# Static site build output (see export_static.py)
+dist/
+
+# Environment files
+.env
+venv/
+.venv/
+
+# Operating system artifacts
+.DS_Store
+Thumbs.db
