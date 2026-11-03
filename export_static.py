@@ -7,8 +7,9 @@ and aggregation the server performs at runtime, then writes both payloads
 next to a copy of the page. The page tries the API first and falls back to
 these files, so one HTML file works in both places.
 
-The build exits non-zero unless the results genuinely came from civicAPI, so
-a bad upstream minute cannot replace a good deployment with empty data.
+The build exits non-zero unless the results genuinely came from a live
+results feed (AP first, civicAPI as the fallback source), so a bad upstream
+minute cannot replace a good deployment with empty data.
 
 Usage:
     python3 export_static.py --out dist
@@ -42,7 +43,7 @@ def build(out_dir):
         status = server._STATE["source_status"]
         upstream_error = server._STATE["upstream_error"]
 
-    if status != "LIVE-CIVICAPI" or not payload:
+    if status not in ("LIVE-AP", "LIVE-CIVICAPI") or not payload:
         print("refusing to publish: upstream pull failed "
               f"({status}: {upstream_error})", file=sys.stderr)
         return 1

@@ -76,6 +76,7 @@
             font-family: inherit;
         }
         button.act:hover { background: var(--hover); border-color: var(--accent); }
+        button.act[disabled] { cursor: progress; color: var(--muted); border-color: var(--line); }
 
         /* ---------- banner ---------- */
         .banner {
@@ -430,7 +431,7 @@
             <div class="stat"><div class="k">Results feed</div><div class="v" id="hud-mode">connecting</div></div>
             <div class="stat"><div class="k">Tally updated</div><div class="v" id="hud-updated">--:--</div></div>
             <div class="stat" id="hud-fresh-wrap"><div class="k">Feed age</div><div class="v" id="hud-fresh">--</div></div>
-            <button class="act" onclick="refreshAll()">Refresh</button>
+            <button class="act" id="hud-refresh" onclick="refreshAll(true)">Refresh</button>
         </div>
     </header>
 
@@ -547,7 +548,8 @@
             <div>
                 <h3>Ingested</h3>
                 <ul>
-                    <li><b>civicAPI v2</b> (<a href="https://civicapi.org" target="_blank" rel="noopener">civicapi.org</a>): race list, percent reporting, candidate votes, winner flags. Free, no API key, CORS enabled.</li>
+                    <li><b>AP results feed</b> (<a href="https://apnews.com/projects/elections-2026/us-house-results/" target="_blank" rel="noopener">apnews.com</a>): the JSON behind AP's results page, on <code>interactives.apelections.org</code>. Race list, candidate votes, percent of expected vote, the AP's own race calls, and per-race poll closing times. No key; the CDN only checks the referer.</li>
+                    <li><b>civicAPI v2</b> (<a href="https://civicapi.org" target="_blank" rel="noopener">civicapi.org</a>): fallback when AP is unreachable. Same fields, no race-call labels.</li>
                     <li><b>Ten RSS wires</b> (MS NOW, CNN, Fox, NBC, NPR, PBS, CBS, ABC, Politico, The Hill) for headlines, which is where exit-poll coverage appears.</li>
                     <li><b>Closing hours</b> from state election office documents and statutes, cross-checked against the AP state-by-state guide.</li>
                 </ul>
@@ -555,7 +557,7 @@
             <div>
                 <h3>Not available</h3>
                 <ul>
-                    <li><b>AP Elections API</b>: key gated and paid.</li>
+                    <li><b>AP Elections API</b>: key gated and paid. The public feed behind AP's own results page carries the same numbers, so that is what this reads.</li>
                     <li><b>Decision Desk HQ</b>: returns HTTP 429 to this client, and its API is paid.</li>
                     <li><b>NEP (Edison) exit poll crosstabs and AP VoteCast</b>: no public machine-readable endpoint, so none is scraped or guessed at.</li>
                 </ul>
@@ -574,6 +576,7 @@
 
     <div class="links">
         <div>
+            <a href="https://apnews.com/projects/elections-2026/us-house-results/" target="_blank" rel="noopener">AP results</a>
             <a href="https://civicapi.org/decision-2026" target="_blank" rel="noopener">civicAPI</a>
             <a href="https://votes.decisiondeskhq.com/elections/2026-11-03" target="_blank" rel="noopener">Decision Desk HQ</a>
             <a href="https://www.ms.now/" target="_blank" rel="noopener">MS NOW</a>
@@ -696,7 +699,48 @@
         prov.textContent = parts.join('  ·  ');
     }
 
-    function refreshAll() { fetchData(); fetchNews(); }
+    // The button has to move the feed, not just re-read the server's cache. Ask
+    // the server to poll civicAPI now, then wait for a payload built after the
+    // click before re-rendering. A static Pages build has no /api/refresh, so it
+    // falls back to a plain reload of the published snapshot. Page load passes
+    // no argument: the server already polls on its own, so loading the page must
+    // not add an upstream round trip.
+    let manualRefreshBusy = false;
+
+    async function refreshAll(force = false) {
+        const btn = document.getElementById('hud-refresh');
+        if (manualRefreshBusy) return;
+        manualRefreshBusy = true;
+        if (btn) { btn.disabled = true; btn.textContent = 'Refreshing'; }
+        try {
+            const before = (await fetchData())?.refreshed_epoch ?? null;
+            await fetchNews();
+            if (!force) return;
+
+            let kicked = false;
+            try {
+                const res = await fetch('/api/refresh', { cache: 'no-store' });
+                kicked = res.ok;
+            } catch (e) { kicked = false; }
+            if (!kicked) return;
+
+            // One civicAPI round trip runs tens of seconds tonight, so poll the
+            // payload until it carries a newer refreshed_epoch, then give up.
+            for (let i = 0; i < 50; i++) {
+                await new Promise(res => setTimeout(res, 2000));
+                const next = await fetchData();
+                if (!next) break;
+                if (next.refreshed_epoch !== before) break;
+                // The poll finished and the payload still predates the click:
+                // upstream failed this cycle, so stop waiting on it.
+                if (!next.refreshing) break;
+            }
+            await fetchNews();
+        } finally {
+            manualRefreshBusy = false;
+            if (btn) { btn.disabled = false; btn.textContent = 'Refresh'; }
+        }
+    }
 
     // The local server answers /api/races and /api/news. The static GitHub
     // Pages build ships the same payloads as files under data/. Resolve
@@ -717,24 +761,29 @@
     }
 
     async function fetchData() {
+        let out = null;
         try {
             const hit = await loadPayload(racesSource ? [racesSource] : ['/api/races', 'data/races.json']);
             if (!hit) throw new Error('no results source');
             racesSource = hit.url;
             const d = hit.body;
+            out = d;
             lastTallyFetch = Date.now();
 
             const isSnapshot = isSnapshotPayload(d);
             const MODE_LABEL = {
-                'LIVE-CIVICAPI': 'Live (civicAPI)',
+                'LIVE-AP': 'Live (AP)',
+                'LIVE-CIVICAPI': 'Live (civicAPI fallback)',
                 'FIXTURE-WARMUP': 'Cached snapshot',
-                'LIVE-CACHED (UPSTREAM TIMEOUT)': 'Live cache, upstream slow',
+                'LIVE-CACHED (UPSTREAM ERROR)': 'Live cache, upstream error',
                 'INITIALIZING': 'Starting',
             };
             const rawMode = d.source_status || 'INITIALIZING';
             const modeEl = document.getElementById('hud-mode');
             modeEl.textContent = isSnapshot ? 'Static snapshot' : (MODE_LABEL[rawMode] || rawMode.replace(/_/g, ' '));
-            modeEl.parentNode.className = 'stat ' + (isSnapshot || rawMode === 'LIVE-CIVICAPI' ? 'ok' : rawMode === 'FIXTURE-WARMUP' || rawMode.includes('TIMEOUT') ? 'warn' : 'bad');
+            const modeOk = isSnapshot || (rawMode.startsWith('LIVE-') && !rawMode.includes('CACHED'));
+            const modeWarn = rawMode === 'FIXTURE-WARMUP' || rawMode.includes('CACHED') || rawMode.includes('TIMEOUT');
+            modeEl.parentNode.className = 'stat ' + (modeOk ? 'ok' : modeWarn ? 'warn' : 'bad');
             document.getElementById('hud-updated').textContent = (d.fetched_at || '').slice(11, 16) + ' UTC';
             const wrap = document.getElementById('hud-fresh-wrap');
             // A snapshot is only as good as the last scheduled build, so it
@@ -750,7 +799,7 @@
             const banner = document.getElementById('banner');
             const notes = [];
             if (d.conflicts?.length) notes.push('Feed disagreement: ' + d.conflicts.join(' | '));
-            if (d.upstream_error) notes.push('Serving the last good tally while civicAPI recovers (' + d.upstream_error + ').');
+            if (d.upstream_error) notes.push('Serving the last good tally while the results feed recovers (' + d.upstream_error + ').');
             if (isSnapshot) notes.push('Static snapshot, rebuilt by the Pages workflow every 15 minutes. Run python3 run.py locally for live polling.');
             banner.style.display = notes.length ? 'block' : 'none';
             banner.textContent = notes.join('  ');
@@ -771,6 +820,7 @@
             document.getElementById('hud-fresh').textContent = 'offline';
             console.error('races fetch failed:', e);
         }
+        return out;
     }
 
     async function fetchNews() {
@@ -901,15 +951,22 @@
         return sorted[0].votes - sorted[1].votes;
     }
 
+    // AP's own wording for a race that has votes but no call yet. Races with no
+    // votes stay bare: the "No votes yet" tag already says everything.
+    function callNote(r) {
+        if (r.called || !r.call_status || r.call_status === 'Awaiting Poll Close') return '';
+        return `<span class="who">${esc(r.call_status.toLowerCase())}</span>`;
+    }
+
     function standingCell(r) {
         if (r.called && r.winner) {
             const m = marginOf(r);
             return `<span class="tag called">Called</span><span class="who">${m === null ? 'unopposed' : 'margin ' + nf(m)}</span>`;
         }
         if (!r.has_data) return `<span class="tag tie">No votes yet</span>`;
-        if (r.tied) return `<span class="tag tie">Tied</span><span class="who">${nf(r.total_votes)} counted</span>`;
+        if (r.tied) return `<span class="tag tie">Tied</span><span class="who">${nf(r.total_votes)} counted</span>${callNote(r)}`;
         const m = marginOf(r);
-        return `<span class="tag lead-${r.leader.group}">Leading</span><span class="who">${m === null ? 'sole reporter' : 'ahead by ' + nf(m)}</span>`;
+        return `<span class="tag lead-${r.leader.group}">Leading</span><span class="who">${m === null ? 'sole reporter' : 'ahead by ' + nf(m)}</span>${callNote(r)}`;
     }
 
     function candCell(r) {

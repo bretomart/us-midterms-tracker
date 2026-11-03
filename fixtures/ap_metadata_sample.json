@@ -1,0 +1,2209 @@
+{
+ "20261103IN15010": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "SS",
+  "officeName": "Secretary of State",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "state": true,
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 2099080,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 1204636,
+      "absenteeMail": 113686,
+      "provisional": 1585,
+      "advanceInPerson": 780758,
+      "advanceTotal": 894444
+     }
+    },
+    "total": 0,
+    "registered": 4713746,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103IN15010",
+  "seatNum": null,
+  "electionDate": "2026-11-03",
+  "statePostal": "IN",
+  "candidates": {
+   "162930": {
+    "first": "Max",
+    "last": "Engling",
+    "party": "GOP",
+    "candidateID": "162930",
+    "ballotOrder": 3,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   },
+   "167505": {
+    "first": "Lauri",
+    "middle": "A.",
+    "last": "Shillings",
+    "party": "Lib",
+    "candidateID": "167505",
+    "ballotOrder": 4,
+    "editorialCandidate": false,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   },
+   "177918": {
+    "first": "Beau",
+    "last": "Bayh",
+    "party": "Dem",
+    "candidateID": "177918",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   },
+   "178670": {
+    "first": "Greg",
+    "last": "Ballard",
+    "party": "LP",
+    "candidateID": "178670",
+    "ballotOrder": 1,
+    "editorialCandidate": false,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   }
+  },
+  "isCertified": false,
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103IN15014": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "01",
+  "incumbents": [
+   {
+    "first": "Frank",
+    "last": "Mrvan",
+    "party": "Dem",
+    "candidateID": "69958",
+    "polID": "69958",
+    "polNum": "69958"
+   }
+  ],
+  "currentParty": "Dem",
+  "currentPartyCaucus": "Dem",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "keyRace": true,
+  "seatName": "District 1",
+  "seatNum": "1",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 246255,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 140791,
+      "absenteeMail": 12439,
+      "provisional": 179,
+      "advanceInPerson": 93025,
+      "advanceTotal": 105464
+     }
+    },
+    "total": 0,
+    "registered": 555278,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103IN15014",
+  "electionDate": "2026-11-03",
+  "statePostal": "IN",
+  "candidates": {
+   "170346": {
+    "first": "Barb",
+    "last": "Regnitz",
+    "party": "GOP",
+    "candidateID": "170346",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "69958": {
+    "first": "Frank",
+    "middle": "J.",
+    "last": "Mrvan",
+    "incumbent": true,
+    "party": "Dem",
+    "candidateID": "69958",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "69958",
+  "firstPollClosingTime": "2026-11-04T00:00:00.000000Z"
+ },
+ "20261103IN15017": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "02",
+  "incumbents": [
+   {
+    "first": "Rudy",
+    "last": "Yakym",
+    "party": "GOP",
+    "candidateID": "71760",
+    "polID": "71760",
+    "polNum": "71760"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 2",
+  "seatNum": "2",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 212332,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 133636,
+      "absenteeMail": 8801,
+      "provisional": 164,
+      "advanceInPerson": 69895,
+      "advanceTotal": 78696
+     }
+    },
+    "total": 0,
+    "registered": 497397,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103IN15017",
+  "electionDate": "2026-11-03",
+  "statePostal": "IN",
+  "candidates": {
+   "170348": {
+    "first": "Jamee",
+    "last": "Decio",
+    "party": "Dem",
+    "candidateID": "170348",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "71635": {
+    "first": "William",
+    "middle": "Eric",
+    "last": "Henry",
+    "party": "Lib",
+    "candidateID": "71635",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "71760": {
+    "first": "Rudy",
+    "last": "Yakym",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "71760",
+    "ballotOrder": 3,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "71760",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103IN15020": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "03",
+  "incumbents": [
+   {
+    "first": "Marlin",
+    "last": "Stutzman",
+    "party": "GOP",
+    "candidateID": "53887",
+    "polID": "53887",
+    "polNum": "53887"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 3",
+  "seatNum": "3",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 222306,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 130379,
+      "absenteeMail": 12030,
+      "provisional": 172,
+      "advanceInPerson": 79897,
+      "advanceTotal": 91927
+     }
+    },
+    "total": 0,
+    "registered": 503271,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103IN15020",
+  "electionDate": "2026-11-03",
+  "statePostal": "IN",
+  "candidates": {
+   "113870": {
+    "first": "Kelly",
+    "last": "Thompson",
+    "party": "Dem",
+    "candidateID": "113870",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "53887": {
+    "first": "Marlin",
+    "middle": "A.",
+    "last": "Stutzman",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "53887",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "53887",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103IN15023": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "04",
+  "incumbents": [
+   {
+    "first": "Jim",
+    "last": "Baird",
+    "party": "GOP",
+    "candidateID": "66172",
+    "polID": "66172",
+    "polNum": "66172"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 4",
+  "seatNum": "4",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 219252,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 100090,
+      "absenteeMail": 12386,
+      "provisional": 165,
+      "advanceInPerson": 106776,
+      "advanceTotal": 119162
+     }
+    },
+    "total": 0,
+    "registered": 529554,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103IN15023",
+  "electionDate": "2026-11-03",
+  "statePostal": "IN",
+  "candidates": {
+   "170349": {
+    "first": "Drew",
+    "last": "Cox",
+    "party": "Dem",
+    "candidateID": "170349",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "66172": {
+    "first": "Jim",
+    "last": "Baird",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "66172",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "66172",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103IN15026": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "05",
+  "incumbents": [
+   {
+    "first": "Victoria",
+    "last": "Spartz",
+    "party": "GOP",
+    "candidateID": "162937",
+    "polID": "162937",
+    "polNum": "162937"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "keyRace": true,
+  "seatName": "District 5",
+  "seatNum": "5",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 272447,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 150205,
+      "absenteeMail": 18698,
+      "provisional": 202,
+      "advanceInPerson": 103544,
+      "advanceTotal": 122242
+     }
+    },
+    "total": 0,
+    "registered": 564325,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103IN15026",
+  "electionDate": "2026-11-03",
+  "statePostal": "IN",
+  "candidates": {
+   "113146": {
+    "first": "J.D.",
+    "last": "Ford",
+    "party": "Dem",
+    "candidateID": "113146",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "162937": {
+    "first": "Victoria",
+    "last": "Spartz",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "162937",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "162937",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103IN15029": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "06",
+  "incumbents": [
+   {
+    "first": "Jefferson",
+    "last": "Shreve",
+    "party": "GOP",
+    "candidateID": "113296",
+    "polID": "113296",
+    "polNum": "113296"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 6",
+  "seatNum": "6",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 208257,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 112704,
+      "absenteeMail": 10914,
+      "provisional": 163,
+      "advanceInPerson": 84639,
+      "advanceTotal": 95553
+     }
+    },
+    "total": 0,
+    "registered": 519010,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103IN15029",
+  "electionDate": "2026-11-03",
+  "statePostal": "IN",
+  "candidates": {
+   "113296": {
+    "first": "Jefferson",
+    "last": "Shreve",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "113296",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "70017": {
+    "first": "Cynthia",
+    "last": "Wirth",
+    "nickname": "Cinde",
+    "party": "Dem",
+    "candidateID": "70017",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "113296",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103IN15032": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "07",
+  "incumbents": [
+   {
+    "first": "Andr\u00e9",
+    "last": "Carson",
+    "party": "Dem",
+    "candidateID": "57849",
+    "polID": "57849",
+    "polNum": "57849"
+   }
+  ],
+  "currentParty": "Dem",
+  "currentPartyCaucus": "Dem",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 7",
+  "seatNum": "7",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 202333,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 122537,
+      "absenteeMail": 14805,
+      "provisional": 147,
+      "advanceInPerson": 64991,
+      "advanceTotal": 79796
+     }
+    },
+    "total": 0,
+    "registered": 488840,
+    "voteTypeAvailability": {
+     "electionDayInPerson": false,
+     "advanceTotal": false,
+     "provisional": false,
+     "absenteeMail": false,
+     "advanceInPerson": false
+    }
+   }
+  },
+  "raceID": "20261103IN15032",
+  "electionDate": "2026-11-03",
+  "statePostal": "IN",
+  "candidates": {
+   "170598": {
+    "first": "Patrick",
+    "last": "McAuley",
+    "party": "GOP",
+    "candidateID": "170598",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "hasPhoto": true
+   },
+   "57849": {
+    "first": "Andr\u00e9",
+    "last": "Carson",
+    "incumbent": true,
+    "party": "Dem",
+    "candidateID": "57849",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "hasPhoto": true
+   },
+   "71633": {
+    "first": "James",
+    "middle": "M.",
+    "last": "Sceniak",
+    "party": "Lib",
+    "candidateID": "71633",
+    "ballotOrder": 3,
+    "editorialCandidate": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "57849",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103IN15035": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "08",
+  "incumbents": [
+   {
+    "first": "Mark",
+    "last": "Messmer",
+    "party": "GOP",
+    "candidateID": "112975",
+    "polID": "112975",
+    "polNum": "112975"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 8",
+  "seatNum": "8",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 234609,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 138382,
+      "absenteeMail": 10510,
+      "provisional": 183,
+      "advanceInPerson": 85717,
+      "advanceTotal": 96227
+     }
+    },
+    "total": 0,
+    "registered": 513799,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103IN15035",
+  "electionDate": "2026-11-03",
+  "statePostal": "IN",
+  "candidates": {
+   "112975": {
+    "first": "Mark",
+    "last": "Messmer",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "112975",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "170362": {
+    "first": "Mary",
+    "last": "Allen",
+    "party": "Dem",
+    "candidateID": "170362",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "112975",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103IN15038": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "09",
+  "incumbents": [
+   {
+    "first": "Erin",
+    "last": "Houchin",
+    "party": "GOP",
+    "candidateID": "162955",
+    "polID": "162955",
+    "polNum": "162955"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 9",
+  "seatNum": "9",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 247127,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 156439,
+      "absenteeMail": 11349,
+      "provisional": 192,
+      "advanceInPerson": 79339,
+      "advanceTotal": 90688
+     }
+    },
+    "total": 0,
+    "registered": 542264,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103IN15038",
+  "electionDate": "2026-11-03",
+  "statePostal": "IN",
+  "candidates": {
+   "162955": {
+    "first": "Erin",
+    "last": "Houchin",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "162955",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "170365": {
+    "first": "Brad",
+    "middle": "A.",
+    "last": "Meyer",
+    "party": "Dem",
+    "candidateID": "170365",
+    "ballotOrder": 3,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "177924": {
+    "first": "Tonya",
+    "middle": "L.",
+    "last": "Hudson",
+    "party": "Lib",
+    "candidateID": "177924",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "162955",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103KY18009": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "03",
+  "incumbents": [
+   {
+    "first": "Morgan",
+    "last": "McGarvey",
+    "party": "Dem",
+    "candidateID": "69995",
+    "polID": "69995",
+    "polNum": "69995"
+   }
+  ],
+  "currentParty": "Dem",
+  "currentPartyCaucus": "Dem",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 3",
+  "seatNum": "3",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 300050,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 222761,
+      "absenteeMail": 8797,
+      "provisional": 35,
+      "advanceInPerson": 68492,
+      "advanceTotal": 77289
+     }
+    },
+    "total": 0,
+    "registered": 559808,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103KY18009",
+  "electionDate": "2026-11-03",
+  "statePostal": "KY",
+  "candidates": {
+   "169788": {
+    "first": "Maria",
+    "middle": "Teresa",
+    "last": "Rodriguez",
+    "party": "GOP",
+    "candidateID": "169788",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "69995": {
+    "first": "Morgan",
+    "last": "McGarvey",
+    "incumbent": true,
+    "party": "Dem",
+    "candidateID": "69995",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "69995",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103KY18013": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "05",
+  "incumbents": [
+   {
+    "first": "Hal",
+    "last": "Rogers",
+    "party": "GOP",
+    "candidateID": "208",
+    "polID": "208",
+    "polNum": "208"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 5",
+  "seatNum": "5",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 228087,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 171562,
+      "absenteeMail": 10110,
+      "provisional": 27,
+      "advanceInPerson": 46391,
+      "advanceTotal": 56501
+     }
+    },
+    "total": 0,
+    "registered": 545394,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103KY18013",
+  "electionDate": "2026-11-03",
+  "statePostal": "KY",
+  "candidates": {
+   "169791": {
+    "first": "Ned",
+    "last": "Pillersdorf",
+    "party": "Dem",
+    "candidateID": "169791",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "208": {
+    "first": "Hal",
+    "last": "Rogers",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "208",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "66816": {
+    "first": "Gerardo",
+    "last": "Serrano",
+    "party": "Ind",
+    "candidateID": "66816",
+    "ballotOrder": 4,
+    "editorialCandidate": false,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "175050": {
+    "first": "Mikel",
+    "last": "Wein",
+    "party": "Ind",
+    "candidateID": "175050",
+    "ballotOrder": 3,
+    "editorialCandidate": false,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "208",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103KY18015": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "06",
+  "incumbents": [
+   {
+    "first": "Andy",
+    "last": "Barr",
+    "party": "GOP",
+    "candidateID": "60705",
+    "polID": "60705",
+    "polNum": "60705"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "keyRace": true,
+  "seatName": "District 6",
+  "seatNum": "6",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 305882,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 214714,
+      "absenteeMail": 13673,
+      "provisional": 31,
+      "advanceInPerson": 77464,
+      "advanceTotal": 91137
+     }
+    },
+    "total": 0,
+    "registered": 559580,
+    "voteTypeTotals": {
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": false,
+     "advanceInPerson": false
+    }
+   }
+  },
+  "raceID": "20261103KY18015",
+  "electionDate": "2026-11-03",
+  "statePostal": "KY",
+  "candidates": {
+   "115622": {
+    "first": "Ralph",
+    "last": "Alvarado",
+    "party": "GOP",
+    "candidateID": "115622",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "typeTotal": 0
+   },
+   "169796": {
+    "first": "Zach",
+    "last": "Dembo",
+    "party": "Dem",
+    "candidateID": "169796",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "175051": {
+    "first": "Jay",
+    "middle": "J.",
+    "last": "Bowman",
+    "party": "Ind",
+    "candidateID": "175051",
+    "ballotOrder": 3,
+    "editorialCandidate": false,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "175072": {
+    "first": "Pete",
+    "last": "Lynch",
+    "party": "KYP",
+    "candidateID": "175072",
+    "ballotOrder": 4,
+    "editorialCandidate": false,
+    "typeTotal": 0
+   }
+  },
+  "isCertified": false,
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103KY18622": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "01",
+  "incumbents": [
+   {
+    "first": "James",
+    "last": "Comer",
+    "party": "GOP",
+    "candidateID": "54203",
+    "polID": "54203",
+    "polNum": "54203"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 1",
+  "seatNum": "1",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 274195,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 198935,
+      "absenteeMail": 7273,
+      "provisional": 29,
+      "advanceInPerson": 67960,
+      "advanceTotal": 75233
+     }
+    },
+    "total": 0,
+    "registered": 572399,
+    "voteTypeTotals": {
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": false,
+     "advanceInPerson": false
+    }
+   }
+  },
+  "raceID": "20261103KY18622",
+  "electionDate": "2026-11-03",
+  "statePostal": "KY",
+  "candidates": {
+   "116236": {
+    "first": "John",
+    "last": "Williams",
+    "nickname": "Drew",
+    "party": "Dem",
+    "candidateID": "116236",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "54203": {
+    "first": "James",
+    "middle": "R.",
+    "last": "Comer",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "54203",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "54203",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103KY18624": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "02",
+  "incumbents": [
+   {
+    "first": "S.",
+    "last": "Guthrie",
+    "party": "GOP",
+    "candidateID": "54282",
+    "polID": "54282",
+    "polNum": "54282"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 2",
+  "seatNum": "2",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 251333,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 176221,
+      "absenteeMail": 8398,
+      "provisional": 31,
+      "advanceInPerson": 66685,
+      "advanceTotal": 75083
+     }
+    },
+    "total": 0,
+    "registered": 560540,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103KY18624",
+  "electionDate": "2026-11-03",
+  "statePostal": "KY",
+  "candidates": {
+   "169784": {
+    "first": "Megan",
+    "last": "Wingfield",
+    "party": "Dem",
+    "candidateID": "169784",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "54282": {
+    "first": "S.",
+    "middle": "Brett",
+    "last": "Guthrie",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "54282",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "67696": {
+    "first": "Thomas",
+    "middle": "A.",
+    "last": "Loecken",
+    "party": "Ind",
+    "candidateID": "67696",
+    "ballotOrder": 3,
+    "editorialCandidate": false,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "54282",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103KY18783": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "S",
+  "officeName": "U.S. Senate",
+  "incumbents": [
+   {
+    "first": "Mitch",
+    "last": "McConnell",
+    "party": "GOP",
+    "candidateID": "210",
+    "polID": "210",
+    "polNum": "210"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "state": true,
+  "keyRace": true,
+  "seatName": "Class II",
+  "seatNum": "2",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 1657156,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 1205026,
+      "absenteeMail": 57469,
+      "provisional": 182,
+      "advanceInPerson": 394534,
+      "advanceTotal": 452003
+     }
+    },
+    "total": 0,
+    "registered": 3393480,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103KY18783",
+  "electionDate": "2026-11-03",
+  "statePostal": "KY",
+  "candidates": {
+   "60705": {
+    "first": "Andy",
+    "last": "Barr",
+    "party": "GOP",
+    "candidateID": "60705",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "68558": {
+    "first": "Charles",
+    "last": "Booker",
+    "party": "Dem",
+    "candidateID": "68558",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "175070": {
+    "first": "Christopher",
+    "last": "Campbell",
+    "party": "KYP",
+    "candidateID": "175070",
+    "ballotOrder": 3,
+    "editorialCandidate": false,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   }
+  },
+  "isCertified": false,
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103KY18835": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "04",
+  "incumbents": [
+   {
+    "first": "Thomas",
+    "last": "Massie",
+    "party": "GOP",
+    "candidateID": "61880",
+    "polID": "61880",
+    "polNum": "61880"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "District 4",
+  "seatNum": "4",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 304604,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 224674,
+      "absenteeMail": 9325,
+      "provisional": 30,
+      "advanceInPerson": 70591,
+      "advanceTotal": 79916
+     }
+    },
+    "total": 0,
+    "registered": 607194,
+    "voteTypeTotals": {
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": false,
+     "advanceInPerson": false
+    }
+   }
+  },
+  "raceID": "20261103KY18835",
+  "electionDate": "2026-11-03",
+  "statePostal": "KY",
+  "candidates": {
+   "163294": {
+    "first": "Ed",
+    "last": "Gallrein",
+    "party": "GOP",
+    "candidateID": "163294",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "169790": {
+    "first": "Melissa",
+    "middle": "Claire",
+    "last": "Strange",
+    "party": "Dem",
+    "candidateID": "169790",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "175049": {
+    "first": "Jeremy",
+    "last": "Todd",
+    "party": "Lib",
+    "candidateID": "175049",
+    "ballotOrder": 3,
+    "editorialCandidate": true,
+    "typeTotal": 0
+   }
+  },
+  "isCertified": false,
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103KY84590": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "I",
+  "suppOfficeID": "IAM",
+  "officeName": "Amendment",
+  "description": "Kentucky Amendment 1. Bars gubernatorial pardons and commutations near elections.",
+  "category": "Courts and justice",
+  "summary": "This proposed amendment to Kentucky's constitution would prohibit the governor from issuing pardons or commuting sentences during a period beginning 60 days before a gubernatorial election until five weeks after it.",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "state": true,
+  "seatName": "1 - Limit governor's pardon and commutation power",
+  "designation": "1",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 1657156,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 1205034,
+      "absenteeMail": 57469,
+      "provisional": 173,
+      "advanceInPerson": 394534,
+      "advanceTotal": 452003
+     }
+    },
+    "total": 0,
+    "registered": 3393480,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103KY84590",
+  "seatNum": null,
+  "electionDate": "2026-11-03",
+  "statePostal": "KY",
+  "candidates": {
+   "2": {
+    "last": "Yes",
+    "party": "Yes",
+    "candidateID": "2",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   },
+   "3": {
+    "last": "No",
+    "party": "No",
+    "candidateID": "3",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   }
+  },
+  "isCertified": false,
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103KY84686": {
+  "eventID": "20261103",
+  "raceType": "Nonpartisan Election",
+  "raceTypeID": "L",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "partyRaceCall": "NP",
+  "officeID": "M",
+  "officeName": "Mayor",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "seatName": "Louisville",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 316386,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 234889,
+      "absenteeMail": 9276,
+      "provisional": 34,
+      "advanceInPerson": 72221,
+      "advanceTotal": 81497
+     }
+    },
+    "total": 0,
+    "registered": 590287,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103KY84686",
+  "seatNum": null,
+  "electionDate": "2026-11-03",
+  "statePostal": "KY",
+  "candidates": {
+   "117259": {
+    "first": "Shameka",
+    "middle": "L.",
+    "last": "Parrish-Wright",
+    "party": "NP",
+    "candidateID": "117259",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   },
+   "117264": {
+    "first": "Craig",
+    "last": "Greenberg",
+    "incumbent": true,
+    "party": "NP",
+    "candidateID": "117264",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "117264",
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103US999999": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "officeID": "H",
+  "officeName": "U.S. House",
+  "censusDistrict": "00",
+  "national": true,
+  "keyRace": true,
+  "seatName": "District 1",
+  "seatNum": "1",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 123741657,
+     "eevpCap": 99.0
+    },
+    "total": 0,
+    "registered": 228343225
+   }
+  },
+  "raceID": "20261103US999999",
+  "electionDate": "2026-11-03",
+  "statePostal": "US",
+  "candidates": {
+   "178508": {
+    "last": "Other",
+    "party": "Oth",
+    "candidateID": "178508",
+    "ballotOrder": 3,
+    "editorialCandidate": false
+   },
+   "178506": {
+    "last": "Democrat",
+    "party": "Dem",
+    "candidateID": "178506",
+    "ballotOrder": 2,
+    "editorialCandidate": true
+   },
+   "178507": {
+    "last": "Republican",
+    "party": "GOP",
+    "candidateID": "178507",
+    "ballotOrder": 1,
+    "editorialCandidate": true
+   }
+  },
+  "isCertified": false,
+  "firstPollClosingTime": "2026-11-03T23:00:00.000000Z"
+ },
+ "20261103AK2010": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "G",
+  "officeName": "Governor",
+  "incumbents": [
+   {
+    "first": "Mike",
+    "last": "Dunleavy",
+    "party": "GOP",
+    "candidateID": "67549",
+    "polID": "67549",
+    "polNum": "67549"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "winThreshold": 50.0,
+  "national": true,
+  "rankedChoice": true,
+  "state": true,
+  "keyRace": true,
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 302244,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 175519,
+      "absenteeMail": 51444,
+      "provisional": 8951,
+      "advanceInPerson": 66330,
+      "advanceTotal": 117774
+     }
+    },
+    "total": 0,
+    "registered": 605573,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103AK2010",
+  "seatNum": null,
+  "electionDate": "2026-11-03",
+  "statePostal": "AK",
+  "candidates": {
+   "100008": {
+    "last": "Total Write-ins",
+    "party": "Oth",
+    "candidateID": "100008",
+    "ballotOrder": 5,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   },
+   "101017": {
+    "first": "Jonathan",
+    "middle": "S.",
+    "last": "Kreiss-Tomkins",
+    "party": "Dem",
+    "candidateID": "101017",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "177699": {
+    "first": "Dave",
+    "last": "Bronson",
+    "party": "GOP",
+    "candidateID": "177699",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "177706": {
+    "first": "Treg",
+    "last": "Taylor",
+    "party": "GOP",
+    "candidateID": "177706",
+    "ballotOrder": 3,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "177707": {
+    "first": "Bernadette",
+    "middle": "M.",
+    "last": "Wilson",
+    "party": "GOP",
+    "candidateID": "177707",
+    "ballotOrder": 4,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "firstPollClosingTime": "2026-11-04T06:00:00.000000Z"
+ },
+ "20261103AK3079": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "S",
+  "officeName": "U.S. Senate",
+  "incumbents": [
+   {
+    "first": "Dan",
+    "last": "Sullivan",
+    "party": "GOP",
+    "candidateID": "64262",
+    "polID": "64262",
+    "polNum": "64262"
+   }
+  ],
+  "currentParty": "GOP",
+  "currentPartyCaucus": "GOP",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "winThreshold": 50.0,
+  "national": true,
+  "rankedChoice": true,
+  "state": true,
+  "keyRace": true,
+  "seatName": "Class II",
+  "seatNum": "2",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 302532,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 175519,
+      "absenteeMail": 51732,
+      "provisional": 8951,
+      "advanceInPerson": 66330,
+      "advanceTotal": 118062
+     }
+    },
+    "total": 0,
+    "registered": 605573,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103AK3079",
+  "electionDate": "2026-11-03",
+  "statePostal": "AK",
+  "candidates": {
+   "100008": {
+    "last": "Total Write-ins",
+    "party": "Oth",
+    "candidateID": "100008",
+    "ballotOrder": 5,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   },
+   "177716": {
+    "first": "Daniel",
+    "middle": "J.",
+    "last": "Sullivan",
+    "suffix": "Jr.",
+    "party": "UDC",
+    "candidateID": "177716",
+    "ballotOrder": 4,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "57566": {
+    "first": "Gerald",
+    "middle": "L.",
+    "last": "Heikes",
+    "party": "GOP",
+    "candidateID": "57566",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "64262": {
+    "first": "Dan",
+    "middle": "S.",
+    "last": "Sullivan",
+    "incumbent": true,
+    "party": "GOP",
+    "candidateID": "64262",
+    "ballotOrder": 3,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   },
+   "70718": {
+    "first": "Mary",
+    "last": "Peltola",
+    "party": "Dem",
+    "candidateID": "70718",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0,
+    "hasPhoto": true
+   }
+  },
+  "isCertified": false,
+  "incumbentID": "64262",
+  "firstPollClosingTime": "2026-11-04T06:00:00.000000Z"
+ },
+ "20261103AK85116": {
+  "eventID": "20261103",
+  "raceType": "General",
+  "raceTypeID": "G",
+  "tabulationStatus": "Awaiting Poll Close",
+  "raceCallStatus": "Too Early to Call",
+  "officeID": "I",
+  "suppOfficeID": "IME",
+  "officeName": "Measure",
+  "description": "Alaska Measure 3. Prohibits noncitizens from voting.",
+  "category": "Voting and elections",
+  "summary": "This ballot measure would prohibit noncitizens from voting in any election.",
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "national": true,
+  "state": true,
+  "seatName": "3 - Require citizenship to vote",
+  "designation": "3",
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 302244,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 175519,
+      "absenteeMail": 51444,
+      "provisional": 8951,
+      "advanceInPerson": 66330,
+      "advanceTotal": 117774
+     }
+    },
+    "total": 0,
+    "registered": 605573,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   }
+  },
+  "raceID": "20261103AK85116",
+  "seatNum": null,
+  "electionDate": "2026-11-03",
+  "statePostal": "AK",
+  "candidates": {
+   "2": {
+    "last": "Yes",
+    "party": "Yes",
+    "candidateID": "2",
+    "ballotOrder": 1,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   },
+   "3": {
+    "last": "No",
+    "party": "No",
+    "candidateID": "3",
+    "ballotOrder": 2,
+    "editorialCandidate": true,
+    "advanceInPerson": 0,
+    "typeTotal": 0
+   }
+  },
+  "isCertified": false,
+  "firstPollClosingTime": "2026-11-04T06:00:00.000000Z"
+ }
+}

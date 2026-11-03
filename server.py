@@ -1,3 +1,4 @@
+import concurrent.futures
 import email.utils
 import html
 import http.server
@@ -14,6 +15,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 
 import aggregate
+import ap_source
 import baseline
 import schedule
 
@@ -21,6 +23,10 @@ PORT = int(os.environ.get("PORT", "8080"))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DIRECTORY = os.path.join(BASE_DIR, "static")
 FIXTURES_DIR = os.path.join(BASE_DIR, "fixtures")
+
+SOURCE_AP = "AP (interactives.apelections.org)"
+SOURCE_CIVICAPI = "civicAPI v2 (https://civicapi.org)"
+SOURCE_FIXTURES = "Recorded fixtures (fixtures/)"
 
 POLL_INTERVAL = 30
 NEWS_POLL_INTERVAL = 60
@@ -97,7 +103,12 @@ _STATE = {
     "last_refresh_epoch": 0.0,
     "source_status": "INITIALIZING",
     "upstream_error": None,
+    "refreshing": False,
 }
+
+# Held for the whole upstream round trip, so the scheduled poller and a manual
+# refresh can never hammer the upstream feeds at the same time.
+_REFRESH_LOCK = threading.Lock()
 
 _NEWS_LOCK = threading.Lock()
 _NEWS_STATE = {
@@ -342,7 +353,7 @@ def _dedupe_races(raw_races):
 
 
 def build_board_payload(raw_races, national_raw, source_status, fetched_at, upstream_error=None,
-                        epoch=None):
+                        epoch=None, source_label=SOURCE_CIVICAPI, source_meta=None):
     deduped = _dedupe_races(raw_races)
     normalised = [aggregate.normalise_race(r) for r in deduped]
     if epoch is None:
@@ -372,7 +383,8 @@ def build_board_payload(raw_races, national_raw, source_status, fetched_at, upst
 
     return {
         "fetched_at": fetched_at,
-        "source": "civicAPI v2 (https://civicapi.org)",
+        "source": source_label,
+        "source_meta": source_meta,
         "source_status": source_status,
         "upstream_error": upstream_error,
         "summary": {
@@ -453,6 +465,7 @@ def load_from_fixtures(reason="FIXTURE-CACHE"):
         national_raw=national_raw,
         source_status=reason,
         fetched_at=fetched_at,
+        source_label=SOURCE_FIXTURES,
     )
     with _STATE_LOCK:
         _STATE["payload"] = payload
@@ -461,47 +474,139 @@ def load_from_fixtures(reason="FIXTURE-CACHE"):
     return payload
 
 
-def refresh_from_upstream():
-    try:
-        raw_races = []
-        for et in ("General", "Statewide"):
-            url = (
-                "https://civicapi.org/api/v2/race/search"
-                f"?startDate=2026-11-03&endDate=2026-11-03&country=US&election_type={et}&limit=1000"
-            )
-            data = _fetch_url_json(url, timeout=20, attempts=3)
-            raw_races.extend(data.get("races") or [])
+def _search_url(election_type):
+    return (
+        "https://civicapi.org/api/v2/race/search"
+        f"?startDate=2026-11-03&endDate=2026-11-03&country=US&election_type={election_type}&limit=1000"
+    )
 
-        nat_house = _fetch_url_json("https://civicapi.org/api/v2/race/87524", timeout=12, attempts=2)
-        nat_senate = _fetch_url_json("https://civicapi.org/api/v2/race/87528", timeout=12, attempts=2)
+
+def _fetch_sources():
+    """Pull the four endpoints the board is built from, concurrently.
+
+    Serially a healthy cycle cost about 20 seconds and a timing-out one cost
+    nearly three minutes, which left the board ageing well past its poll
+    interval and made the refresh button feel dead. The four calls are
+    independent, so a cycle now costs its slowest call instead of their sum.
+    """
+    jobs = [
+        (_search_url("General"), 15, 2),
+        (_search_url("Statewide"), 15, 2),
+        ("https://civicapi.org/api/v2/race/87524", 10, 1),
+        ("https://civicapi.org/api/v2/race/87528", 10, 1),
+    ]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(jobs)) as pool:
+        futures = [pool.submit(_fetch_url_json, url, timeout=t, attempts=a) for url, t, a in jobs]
+        general, statewide, nat_house, nat_senate = (f.result() for f in futures)
+    return (
+        (general.get("races") or []) + (statewide.get("races") or []),
+        {"house": nat_house, "senate": nat_senate},
+    )
+
+
+def _fetch_ap():
+    """Read AP's own results feed. Raises when AP cannot be reached."""
+    raw_races, meta = ap_source.fetch_cycle()
+    # AP publishes no national seat table, so the seat cross-check is skipped
+    # rather than fed zeros that would read as a disagreement.
+    return raw_races, {}, "LIVE-AP", SOURCE_AP, meta
+
+
+def _fetch_civicapi():
+    raw_races, national_raw = _fetch_sources()
+    return raw_races, national_raw, "LIVE-CIVICAPI", SOURCE_CIVICAPI, None
+
+
+def _fetch_results():
+    """Pull the board from AP, falling back to civicAPI when AP is down."""
+    errors = []
+    for name, fetch in (("AP", _fetch_ap), ("civicAPI", _fetch_civicapi)):
+        try:
+            return fetch()
+        except Exception as exc:  # noqa: BLE001 - any failure moves to the fallback
+            errors.append(f"{name}: {exc}")
+    raise RuntimeError("; ".join(errors))
+
+
+def _refresh_from_upstream_unlocked():
+    try:
+        raw_races, national_raw, status, label, meta = _fetch_results()
 
         fetched_at = time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
         payload = build_board_payload(
             raw_races=raw_races,
-            national_raw={"house": nat_house, "senate": nat_senate},
-            source_status="LIVE-CIVICAPI",
+            national_raw=national_raw,
+            source_status=status,
             fetched_at=fetched_at,
             upstream_error=None,
+            source_label=label,
+            source_meta=meta,
         )
         with _STATE_LOCK:
             _STATE["payload"] = payload
             _STATE["last_refresh_epoch"] = time.time()
-            _STATE["source_status"] = "LIVE-CIVICAPI"
+            _STATE["source_status"] = status
             _STATE["upstream_error"] = None
+        return True
     except Exception as exc:
         with _STATE_LOCK:
             _STATE["upstream_error"] = str(exc)
             if _STATE["payload"] is not None:
                 _STATE["payload"]["upstream_error"] = str(exc)
-                if _STATE["source_status"] == "LIVE-CIVICAPI":
-                    _STATE["source_status"] = "LIVE-CACHED (UPSTREAM TIMEOUT)"
+                if str(_STATE["source_status"]).startswith("LIVE-"):
+                    _STATE["source_status"] = "LIVE-CACHED (UPSTREAM ERROR)"
                     _STATE["payload"]["source_status"] = _STATE["source_status"]
+        return False
+
+
+def refresh_from_upstream(wait=True):
+    """Poll civicAPI once.
+
+    ``wait=False`` skips the cycle when another refresh already holds the lock,
+    which is what the poller and the manual refresh endpoint want: a queued
+    request would only stack a second full round trip behind the first.
+    """
+    if not wait:
+        if not _REFRESH_LOCK.acquire(blocking=False):
+            return False
+        try:
+            with _STATE_LOCK:
+                _STATE["refreshing"] = True
+            return _refresh_from_upstream_unlocked()
+        finally:
+            with _STATE_LOCK:
+                _STATE["refreshing"] = False
+            _REFRESH_LOCK.release()
+
+    with _REFRESH_LOCK:
+        with _STATE_LOCK:
+            _STATE["refreshing"] = True
+        try:
+            return _refresh_from_upstream_unlocked()
+        finally:
+            with _STATE_LOCK:
+                _STATE["refreshing"] = False
+
+
+def start_refresh_async():
+    """Kick a refresh on a worker thread. Returns True when one was started."""
+    with _STATE_LOCK:
+        if _STATE["refreshing"]:
+            return False
+        # Claim the flag here so a caller can report work in flight immediately.
+        _STATE["refreshing"] = True
+    threading.Thread(target=refresh_from_upstream, kwargs={"wait": False}, daemon=True).start()
+    return True
 
 
 def _poller_loop():
     while True:
-        refresh_from_upstream()
-        time.sleep(POLL_INTERVAL)
+        started = time.time()
+        refresh_from_upstream(wait=False)
+        # POLL_INTERVAL is the target gap between polls, not a fixed sleep, so a
+        # slow round trip does not push the next one out by another 30s.
+        elapsed = time.time() - started
+        time.sleep(max(5.0, POLL_INTERVAL - elapsed))
 
 
 class DualStackThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
@@ -524,6 +629,8 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path.startswith("/api/news"):
             self.handle_news_api()
+        elif self.path.startswith("/api/refresh"):
+            self.handle_refresh()
         elif self.path.startswith("/api/"):
             self.handle_api()
         else:
@@ -532,6 +639,8 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
     def do_HEAD(self):
         if self.path.startswith("/api/news"):
             self.handle_news_api()
+        elif self.path.startswith("/api/refresh"):
+            self.handle_refresh()
         elif self.path.startswith("/api/"):
             self.handle_api()
         else:
@@ -563,16 +672,34 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
             }
         self._send_json(out)
 
+    def handle_refresh(self):
+        started = start_refresh_async()
+        with _STATE_LOCK:
+            payload = _STATE["payload"]
+            age = round(time.time() - _STATE["last_refresh_epoch"], 1) if _STATE["last_refresh_epoch"] else 0.0
+            out = {
+                "accepted": started,
+                "refreshing": _STATE["refreshing"],
+                "cache_age_seconds": age,
+                "refreshed_epoch": round(_STATE["last_refresh_epoch"], 3),
+                "fetched_at": (payload or {}).get("fetched_at"),
+            }
+        self._send_json(out)
+
     def handle_api(self):
         with _STATE_LOCK:
             payload = _STATE["payload"]
             age = round(time.time() - _STATE["last_refresh_epoch"], 1) if _STATE["last_refresh_epoch"] else 0.0
+            refreshing = _STATE["refreshing"]
+            refreshed_epoch = round(_STATE["last_refresh_epoch"], 3)
 
         if payload is None:
             payload = load_from_fixtures("FIXTURE-FALLBACK")
 
         out = dict(payload)
         out["cache_age_seconds"] = age
+        out["refreshing"] = refreshing
+        out["refreshed_epoch"] = refreshed_epoch
         self._send_json(out)
 
     def log_message(self, format, *args):

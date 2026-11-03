@@ -64,6 +64,11 @@ def normalise_race(raw):
         "multiple_winners": len(winners) > 1,
         "leader": leader,
         "candidates": cands,
+        # The source's own wording for a race it has not called yet ("Too
+        # Early to Call", "Awaiting Poll Close"). None when the source has no
+        # such field; the UI then omits the note rather than inventing one.
+        "call_status": raw.get("call_status"),
+        "tabulation": raw.get("tabulation"),
     }
 
 

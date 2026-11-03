@@ -1,0 +1,1792 @@
+{
+ "20261103IN15010": {
+  "statePostal": "IN",
+  "stateName": "Indiana",
+  "reportingunitID": "15",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T00:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T21:39:59.206000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "162930",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "167505",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "177918",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "178670",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 2099080,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 1204636,
+      "absenteeMail": 113686,
+      "provisional": 1585,
+      "advanceInPerson": 780758,
+      "advanceTotal": 894444
+     }
+    },
+    "total": 0,
+    "registered": 4713746,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103IN15010",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103IN15014": {
+  "statePostal": "IN",
+  "stateName": "Indiana",
+  "reportingunitID": "15",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T00:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T21:54:26.519000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "170346",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "69958",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 246255,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 140791,
+      "absenteeMail": 12439,
+      "provisional": 179,
+      "advanceInPerson": 93025,
+      "advanceTotal": 105464
+     }
+    },
+    "total": 0,
+    "registered": 555278,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Stringer"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103IN15014",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103IN15017": {
+  "statePostal": "IN",
+  "stateName": "Indiana",
+  "reportingunitID": "15",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T00:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T21:39:57.823000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "170348",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "71635",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "71760",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 212332,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 133636,
+      "absenteeMail": 8801,
+      "provisional": 164,
+      "advanceInPerson": 69895,
+      "advanceTotal": 78696
+     }
+    },
+    "total": 0,
+    "registered": 497397,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103IN15017",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103IN15020": {
+  "statePostal": "IN",
+  "stateName": "Indiana",
+  "reportingunitID": "15",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T21:40:00.275000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "113870",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "53887",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 222306,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 130379,
+      "absenteeMail": 12030,
+      "provisional": 172,
+      "advanceInPerson": 79897,
+      "advanceTotal": 91927
+     }
+    },
+    "total": 0,
+    "registered": 503271,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103IN15020",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103IN15023": {
+  "statePostal": "IN",
+  "stateName": "Indiana",
+  "reportingunitID": "15",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T00:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T21:39:58.824000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "170349",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "66172",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 219252,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 100090,
+      "absenteeMail": 12386,
+      "provisional": 165,
+      "advanceInPerson": 106776,
+      "advanceTotal": 119162
+     }
+    },
+    "total": 0,
+    "registered": 529554,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103IN15023",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103IN15026": {
+  "statePostal": "IN",
+  "stateName": "Indiana",
+  "reportingunitID": "15",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T21:40:02.112000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "113146",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "162937",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 272447,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 150205,
+      "absenteeMail": 18698,
+      "provisional": 202,
+      "advanceInPerson": 103544,
+      "advanceTotal": 122242
+     }
+    },
+    "total": 0,
+    "registered": 564325,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Stringer"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103IN15026",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103IN15029": {
+  "statePostal": "IN",
+  "stateName": "Indiana",
+  "reportingunitID": "15",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T21:39:54.858000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "113296",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "70017",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 208257,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 112704,
+      "absenteeMail": 10914,
+      "provisional": 163,
+      "advanceInPerson": 84639,
+      "advanceTotal": 95553
+     }
+    },
+    "total": 0,
+    "registered": 519010,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103IN15029",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103IN15032": {
+  "statePostal": "IN",
+  "stateName": "Indiana",
+  "reportingunitID": "15",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T21:40:02.487000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "170598",
+    "voteCount": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "57849",
+    "voteCount": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "71633",
+    "voteCount": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 202333,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 122537,
+      "absenteeMail": 14805,
+      "provisional": 147,
+      "advanceInPerson": 64991,
+      "advanceTotal": 79796
+     }
+    },
+    "total": 0,
+    "registered": 488840,
+    "voteTypeAvailability": {
+     "electionDayInPerson": false,
+     "advanceTotal": false,
+     "provisional": false,
+     "absenteeMail": false,
+     "advanceInPerson": false
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Stringer"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103IN15032",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103IN15035": {
+  "statePostal": "IN",
+  "stateName": "Indiana",
+  "reportingunitID": "15",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T00:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T21:39:55.302000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "112975",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "170362",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 234609,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 138382,
+      "absenteeMail": 10510,
+      "provisional": 183,
+      "advanceInPerson": 85717,
+      "advanceTotal": 96227
+     }
+    },
+    "total": 0,
+    "registered": 513799,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103IN15035",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103IN15038": {
+  "statePostal": "IN",
+  "stateName": "Indiana",
+  "reportingunitID": "15",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T21:40:01.823000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "162955",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "170365",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "177924",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 247127,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 156439,
+      "absenteeMail": 11349,
+      "provisional": 192,
+      "advanceInPerson": 79339,
+      "advanceTotal": 90688
+     }
+    },
+    "total": 0,
+    "registered": 542264,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103IN15038",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103KY18009": {
+  "statePostal": "KY",
+  "stateName": "Kentucky",
+  "reportingunitID": "18",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T18:23:07.445000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "169788",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "69995",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 300050,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 222761,
+      "absenteeMail": 8797,
+      "provisional": 35,
+      "advanceInPerson": 68492,
+      "advanceTotal": 77289
+     }
+    },
+    "total": 0,
+    "registered": 559808,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Stringer"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103KY18009",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103KY18013": {
+  "statePostal": "KY",
+  "stateName": "Kentucky",
+  "reportingunitID": "18",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T18:23:44.295000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "169791",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "208",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "66816",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "175050",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 228087,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 171562,
+      "absenteeMail": 10110,
+      "provisional": 27,
+      "advanceInPerson": 46391,
+      "advanceTotal": 56501
+     }
+    },
+    "total": 0,
+    "registered": 545394,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "Mixed",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103KY18013",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103KY18015": {
+  "statePostal": "KY",
+  "stateName": "Kentucky",
+  "reportingunitID": "18",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T18:15:33.441000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "115622",
+    "voteCount": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "169796",
+    "voteCount": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "175051",
+    "voteCount": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "175072",
+    "voteCount": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 305882,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 214714,
+      "absenteeMail": 13673,
+      "provisional": 31,
+      "advanceInPerson": 77464,
+      "advanceTotal": 91137
+     }
+    },
+    "total": 0,
+    "registered": 559580,
+    "voteTypeTotals": {
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": false,
+     "advanceInPerson": false
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "StateFeed",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103KY18015",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103KY18622": {
+  "statePostal": "KY",
+  "stateName": "Kentucky",
+  "reportingunitID": "18",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T00:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T22:19:49.653000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "116236",
+    "voteCount": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "54203",
+    "voteCount": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 274195,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 198935,
+      "absenteeMail": 7273,
+      "provisional": 29,
+      "advanceInPerson": 67960,
+      "advanceTotal": 75233
+     }
+    },
+    "total": 0,
+    "registered": 572399,
+    "voteTypeTotals": {
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": false,
+     "advanceInPerson": false
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "StateFeed",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103KY18622",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103KY18624": {
+  "statePostal": "KY",
+  "stateName": "Kentucky",
+  "reportingunitID": "18",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T00:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T18:23:11.175000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "169784",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "54282",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "67696",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 251333,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 176221,
+      "absenteeMail": 8398,
+      "provisional": 31,
+      "advanceInPerson": 66685,
+      "advanceTotal": 75083
+     }
+    },
+    "total": 0,
+    "registered": 560540,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "Mixed",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103KY18624",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103KY18783": {
+  "statePostal": "KY",
+  "stateName": "Kentucky",
+  "reportingunitID": "18",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T00:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T22:19:46.917000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "60705",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "68558",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "175070",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 1657156,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 1205026,
+      "absenteeMail": 57469,
+      "provisional": 182,
+      "advanceInPerson": 394534,
+      "advanceTotal": 452003
+     }
+    },
+    "total": 0,
+    "registered": 3393480,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "Mixed",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103KY18783",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103KY18835": {
+  "statePostal": "KY",
+  "stateName": "Kentucky",
+  "reportingunitID": "18",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T18:19:41.228000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "163294",
+    "voteCount": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "169790",
+    "voteCount": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "175049",
+    "voteCount": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 304604,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 224674,
+      "absenteeMail": 9325,
+      "provisional": 30,
+      "advanceInPerson": 70591,
+      "advanceTotal": 79916
+     }
+    },
+    "total": 0,
+    "registered": 607194,
+    "voteTypeTotals": {
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": false,
+     "absenteeMail": false,
+     "advanceInPerson": false
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "StateFeed",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103KY18835",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103KY84590": {
+  "statePostal": "KY",
+  "stateName": "Kentucky",
+  "reportingunitID": "18",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T00:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T22:19:47.795000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "2",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "3",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 1657156,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 1205034,
+      "absenteeMail": 57469,
+      "provisional": 173,
+      "advanceInPerson": 394534,
+      "advanceTotal": 452003
+     }
+    },
+    "total": 0,
+    "registered": 3393480,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "Mixed",
+    "voteTotal": "Mixed"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103KY84590",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103KY84686": {
+  "statePostal": "KY",
+  "stateName": "Kentucky",
+  "reportingunitID": "18",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T18:23:08.940000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "117259",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "117264",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 316386,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 234889,
+      "absenteeMail": 9276,
+      "provisional": 34,
+      "advanceInPerson": 72221,
+      "advanceTotal": 81497
+     }
+    },
+    "total": 0,
+    "registered": 590287,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "CountyAutoScrape",
+    "voteTotal": "Stringer"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103KY84686",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103US999999": {
+  "statePostal": "US",
+  "stateName": "United States",
+  "reportingunitLevel": 0,
+  "pollClosingTime": "2026-11-03T23:00:00.000000Z",
+  "level": "national",
+  "lastUpdated": "2026-11-03T22:19:49.653000Z",
+  "eevp": 0.0,
+  "candidates": [
+   {
+    "candidateID": "178508",
+    "voteCount": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "178506",
+    "voteCount": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "178507",
+    "voteCount": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 123741657,
+     "eevpCap": 99.0
+    },
+    "total": 0,
+    "registered": 228343225
+   }
+  },
+  "raceID": "20261103US999999",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103AK2010": {
+  "statePostal": "AK",
+  "stateName": "Alaska",
+  "reportingunitID": "2",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T06:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T18:18:36.045000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "100008",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "101017",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "177699",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "177706",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "177707",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 302244,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 175519,
+      "absenteeMail": 51444,
+      "provisional": 8951,
+      "advanceInPerson": 66330,
+      "advanceTotal": 117774
+     }
+    },
+    "total": 0,
+    "registered": 605573,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "StateAutoScrape",
+    "voteTotal": "StateAutoScrape"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103AK2010",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103AK3079": {
+  "statePostal": "AK",
+  "stateName": "Alaska",
+  "reportingunitID": "2",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T06:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T18:03:43.123000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "100008",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "177716",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "57566",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "64262",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "70718",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 302532,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 175519,
+      "absenteeMail": 51732,
+      "provisional": 8951,
+      "advanceInPerson": 66330,
+      "advanceTotal": 118062
+     }
+    },
+    "total": 0,
+    "registered": 605573,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "StateAutoScrape",
+    "voteTotal": "StateAutoScrape"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103AK3079",
+  "test": false,
+  "resultsType": "live"
+ },
+ "20261103AK85116": {
+  "statePostal": "AK",
+  "stateName": "Alaska",
+  "reportingunitID": "2",
+  "reportingunitLevel": 1,
+  "pollClosingTime": "2026-11-04T06:00:00.000000Z",
+  "level": "state",
+  "lastUpdated": "2026-11-03T18:19:46.128000Z",
+  "eevp": 0.0,
+  "eevpEdayInPerson": 0.0,
+  "eevpAdvanceTotal": 0.0,
+  "eevpAbsenteeMail": 0.0,
+  "eevpProvisional": 0.0,
+  "eevpAdvanceInPerson": 0.0,
+  "candidates": [
+   {
+    "candidateID": "2",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   },
+   {
+    "candidateID": "3",
+    "voteCount": 0,
+    "absenteeMail": 0,
+    "advanceTotal": 0,
+    "electionDayInPerson": 0,
+    "provisional": 0,
+    "votePct": 0
+   }
+  ],
+  "parameters": {
+   "vote": {
+    "expected": {
+     "actual": 302244,
+     "eevpCap": 99.0,
+     "voteTypes": {
+      "electionDayInPerson": 175519,
+      "absenteeMail": 51444,
+      "provisional": 8951,
+      "advanceInPerson": 66330,
+      "advanceTotal": 117774
+     }
+    },
+    "total": 0,
+    "registered": 605573,
+    "voteTypeTotals": {
+     "absenteeMail": 0,
+     "advanceInPerson": 0,
+     "advanceTotal": 0,
+     "electionDayInPerson": 0,
+     "provisional": 0,
+     "typeTotal": 0
+    },
+    "voteTypeAvailability": {
+     "electionDayInPerson": true,
+     "advanceTotal": true,
+     "provisional": true,
+     "absenteeMail": true,
+     "advanceInPerson": true
+    }
+   },
+   "reportingSources": {
+    "totalBallotsCast": "Stringer",
+    "voteByMode": "StateAutoScrape",
+    "voteTotal": "StateAutoScrape"
+   }
+  },
+  "tabStatusNumber": 0,
+  "raceID": "20261103AK85116",
+  "test": false,
+  "resultsType": "live"
+ }
+}

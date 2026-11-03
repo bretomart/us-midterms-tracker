@@ -5,8 +5,9 @@ name: Deploy dashboard to Pages
 # server runs, writes the payloads next to a copy of the page, and deploys
 # that directory. See export_static.py.
 #
-# A build that cannot reach civicAPI fails on purpose, which leaves the last
-# good deployment in place instead of replacing it with empty data.
+# A build that cannot reach a live results feed (AP, then civicAPI) fails on
+# purpose, leaving the last good deployment in place instead of replacing it
+# with empty data.
 
 on:
   push:
