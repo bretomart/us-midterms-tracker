@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>US Midterm Elections 2026 Tracker</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23141c2e'/%3E%3Cpath d='M8 17l5 5 11-11' fill='none' stroke='%238b93ff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
     <style>
         :root {
             --bg: #0b1120;
@@ -747,6 +748,13 @@
     // whichever source answers once, then keep using it.
     let racesSource = null;
     let newsSource = null;
+    // export_static.py marks the page it publishes, because a static host
+    // answers /api/* with a 404 and probing it on every load only fills the
+    // network panel with noise. Unmarked, the page is a local run: try the
+    // API first, then the files.
+    const STATIC_BUILD = document.documentElement.dataset.mode === 'snapshot';
+    const RACES_CANDIDATES = STATIC_BUILD ? ['data/races.json'] : ['/api/races', 'data/races.json'];
+    const NEWS_CANDIDATES = STATIC_BUILD ? ['data/news.json'] : ['/api/news', 'data/news.json'];
 
     async function loadPayload(candidates) {
         for (const url of candidates) {
@@ -763,7 +771,7 @@
     async function fetchData() {
         let out = null;
         try {
-            const hit = await loadPayload(racesSource ? [racesSource] : ['/api/races', 'data/races.json']);
+            const hit = await loadPayload(racesSource ? [racesSource] : RACES_CANDIDATES);
             if (!hit) throw new Error('no results source');
             racesSource = hit.url;
             const d = hit.body;
@@ -825,7 +833,7 @@
 
     async function fetchNews() {
         try {
-            const hit = await loadPayload(newsSource ? [newsSource] : ['/api/news', 'data/news.json']);
+            const hit = await loadPayload(newsSource ? [newsSource] : NEWS_CANDIDATES);
             if (!hit) throw new Error('no news source');
             newsSource = hit.url;
             const d = hit.body;

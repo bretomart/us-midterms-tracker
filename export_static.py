@@ -17,7 +17,6 @@ Usage:
 import argparse
 import json
 import os
-import shutil
 import sys
 import time
 
@@ -30,6 +29,25 @@ def _write_json(path, obj):
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(obj, fh, separators=(",", ":"))
     return os.path.getsize(path)
+
+
+PAGE_MARKER = '<html lang="en">'
+SNAPSHOT_OPEN = '<html lang="en" data-mode="snapshot">'
+
+
+def _copy_page(src, dest):
+    """Copy the page, marked as a published snapshot.
+
+    The page reads the mark to skip its /api/* probe, which a static host
+    answers with a 404. Without it every load pays two failed requests in the
+    network panel and waits out the miss before reading data/.
+    """
+    with open(src, "r", encoding="utf-8") as fh:
+        page = fh.read()
+    if PAGE_MARKER not in page:
+        raise SystemExit(f"refusing to publish: {src} lost its <html> opener")
+    with open(dest, "w", encoding="utf-8") as fh:
+        fh.write(page.replace(PAGE_MARKER, SNAPSHOT_OPEN, 1))
 
 
 def build(out_dir):
@@ -73,10 +91,8 @@ def build(out_dir):
     out_dir = os.path.abspath(out_dir)
     data_dir = os.path.join(out_dir, "data")
     os.makedirs(data_dir, exist_ok=True)
-    shutil.copyfile(
-        os.path.join(BASE_DIR, "static", "index.html"),
-        os.path.join(out_dir, "index.html"),
-    )
+    _copy_page(os.path.join(BASE_DIR, "static", "index.html"),
+               os.path.join(out_dir, "index.html"))
     # Nothing here needs a site generator, and data/ must ship verbatim.
     with open(os.path.join(out_dir, ".nojekyll"), "w", encoding="utf-8"):
         pass
