@@ -19,6 +19,7 @@ import ap_source
 import baseline
 import call_log
 import exitpoll
+import publish
 import schedule
 
 PORT = int(os.environ.get("PORT", "8080"))
@@ -799,6 +800,15 @@ def _create_server(port):
     return DualStackThreadingHTTPServer(("0.0.0.0", port), ProxyHandler)
 
 
+def _publish_loop(publisher):
+    while True:
+        try:
+            publisher.tick()
+        except Exception as exc:  # noqa: BLE001 - a publisher must not take the server down
+            print(f"[PUBLISH] unexpected error: {exc}", file=sys.stderr, flush=True)
+        time.sleep(15)
+
+
 def run_server():
     load_from_fixtures("FIXTURE-WARMUP")
     load_exit_polls_from_fixture()
@@ -808,6 +818,13 @@ def run_server():
     news_poller.start()
     exit_poller = threading.Thread(target=_exit_poller_loop, daemon=True)
     exit_poller.start()
+    # PUBLISH_INTERVAL turns on a dispatch of the Pages workflow on a timer.
+    # Unset by default: publishing is a deliberate act, not a side effect of
+    # starting the tracker.
+    publisher = publish.from_env(cwd=BASE_DIR)
+    if publisher:
+        threading.Thread(target=_publish_loop, args=(publisher,), daemon=True).start()
+        print(f"[PUBLISH] dispatching {publish.WORKFLOW} every {publisher.interval}s while this server runs")
 
     ports = [8080, 8081]
     servers = []

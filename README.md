@@ -53,12 +53,14 @@ Python 3.10 or newer. Nothing else: the server, the adapter, and the tests use o
 | `call_log.py` | Stamps the first poll that saw each race called, orders those stamps per section, and persists them in `state/call_log.json`. |
 | `static/index.html` | The dashboard: board, wave strip, KPI notes, exit poll panel, wire panel, and provenance panel. |
 | `export_static.py` | Builds the published snapshot: pulls every upstream, then writes the page and its three payloads to `dist/`. |
+| `publish.py` | Dispatches the Pages workflow from the local server on a timer, for when GitHub's cron drops or delays scheduled runs. |
 | `.github/workflows/deploy.yml` | Runs the tests and the exporter, then deploys `dist/` to GitHub Pages. |
 | `fixtures/` | Recorded payloads: civicAPI warm-up copies, trimmed AP metadata and progress samples, and the exit poll document for the adapter tests. |
 | `test_aggregate.py` | Unit tests for normalization, tallies, control projection, conflicts, and RSS parsing. |
 | `test_ap_source.py` | Adapter tests: office mapping, seat naming, party expansion, progress joins, and call detection. |
 | `test_exitpoll.py` | Adapter tests for the exit poll: group order, question numbering, party pairing, missing values, and credit cleanup. |
 | `test_call_log.py` | Tests for call ordering: settling window, unstamped fallback, latest stamp wins, restart persistence, uncalled races. |
+| `test_publish.py` | Tests for the dispatch timer: interval gating, failure backoff, and `PUBLISH_INTERVAL` parsing. |
 
 ## Local usage
 
@@ -76,7 +78,7 @@ The published page also accepts a live source. Once the site is on Pages, `?live
 Run the tests with:
 
 ```bash
-python3 -m unittest test_aggregate test_ap_source test_exitpoll -v
+python3 -m unittest discover -v
 ```
 
 ## Deployment
@@ -84,6 +86,14 @@ python3 -m unittest test_aggregate test_ap_source test_exitpoll -v
 GitHub Pages serves files and runs no Python, so the published site is a build-time snapshot. The workflow in `.github/workflows/deploy.yml` runs on every push to `main`, on manual dispatch, and every 5 minutes on a schedule. Each run tests every module, builds the snapshot, and deploys it.
 
 The schedule is the weak link: GitHub's cron is best-effort and drops or delays scheduled runs under load, so the published age is whatever the last run produced, and the header reports it rather than pretending otherwise. Pages also caches files for ten minutes, so the page fetches its payloads with a buster and `cache: 'no-store'`; a fresh deployment shows on the next 30 second poll, with no hard reload.
+
+When the schedule cannot be trusted, the local server can dispatch the workflow itself:
+
+```bash
+PUBLISH_INTERVAL=300 python3 run.py
+```
+
+With that set, the server asks GitHub for a rebuild every five minutes while it runs, using the authenticated `gh` CLI, and backs off for ten minutes after a failed dispatch instead of retrying on every tick. The workflow still builds and deploys; the server only starts it. Unset, `PUBLISH_INTERVAL` does nothing, so starting the tracker never publishes as a side effect.
 
 The exporter calls the same code the local server uses, so the snapshot is the real payload rather than a canned file:
 
