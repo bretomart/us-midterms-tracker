@@ -720,6 +720,18 @@
 
     const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const nf = (n) => (n || 0).toLocaleString('en-US');
+
+    // Whole percents blur the difference between 0.4% and 1.4%, and on
+    // election night AP calls safe races the moment polls close, so a row can
+    // legitimately read "called" beside a fraction of a percent. Keep one
+    // decimal below 10% so the count never reads as a whole number it is not.
+    function pctText(v) {
+        if (!v) return '--';
+        // A fraction of a percent is real counting, not nothing: say so
+        // instead of printing 0.0%.
+        if (v < 0.1) return '&lt;0.1%';
+        return (v < 10 ? v.toFixed(1) : v.toFixed(0)) + '%';
+    }
     const etParts = () => new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
     const etMinutes = () => {
         const p = etParts();
@@ -1219,17 +1231,23 @@
         return sorted[0].votes - sorted[1].votes;
     }
 
-    // AP's own wording for a race that has votes but no call yet. Races with no
-    // votes stay bare: the "No votes yet" tag already says everything.
+    // The feed's own wording for a race it has not called yet. Names the
+    // publisher so a status never reads as a call this dashboard made. Races
+    // with no votes stay bare: "No votes yet" already says everything.
     function callNote(r) {
         if (r.called || !r.call_status || r.call_status === 'Awaiting Poll Close') return '';
-        return `<span class="who">${esc(r.call_status.toLowerCase())}</span>`;
+        return `<span class="who">AP: ${esc(r.call_status.toLowerCase())}</span>`;
     }
 
     function standingCell(r) {
         if (r.called && r.winner) {
             const m = marginOf(r);
-            return `<span class="tag called">Called</span><span class="who">${m === null ? 'unopposed' : 'margin ' + nf(m)}</span>`;
+            // AP calls safe races at or just after poll close, before any
+            // precinct reports. Say so; "unopposed" is only true when the
+            // ballot carried a single candidate.
+            const note = m !== null ? 'margin ' + nf(m)
+                : (r.candidates || []).length < 2 ? 'unopposed' : 'called before any votes counted';
+            return `<span class="tag called" title="Call published by the AP feed, not by this dashboard">Called</span><span class="who">${note}</span>`;
         }
         if (!r.has_data) return `<span class="tag tie">No votes yet</span>`;
         if (r.tied) return `<span class="tag tie">Tied</span><span class="who">${nf(r.total_votes)} counted</span>${callNote(r)}`;
@@ -1360,7 +1378,7 @@
             <tr class="${r.has_data || r.called ? '' : 'awaiting'}">
                 <td><span class="st">${esc(r.state || '--')}</span>${r.district ? `<span class="dist">${esc(r.district)}</span>` : ''}</td>
                 <td><span class="race">${esc(label)}</span>${kind ? `<span class="kind">${esc(kind)}</span>` : ''}</td>
-                <td><span class="pct">${r.reporting ? r.reporting.toFixed(0) + '%' : '--'}</span><span class="mini"><i style="width:${Math.min(100, r.reporting || 0)}%"></i></span></td>
+                <td><span class="pct">${pctText(r.reporting)}</span><span class="mini"><i style="width:${Math.min(100, r.reporting || 0)}%"></i></span></td>
                 <td>${closeCell(r)}</td>
                 <td>${standingCell(r)}</td>
                 <td>${candCell(r)}</td>
