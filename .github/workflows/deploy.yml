@@ -14,10 +14,10 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    # Refresh the snapshot every 15 minutes. Scheduled runs need the default
-    # branch and GitHub throttles them under load, so the published age can
-    # exceed 15 minutes. The page reports its own age.
-    - cron: "*/15 * * * *"
+    # Refresh the snapshot as often as GitHub allows. The schedule is the only
+    # automatic refresh, and GitHub drops or delays these runs under load, so
+    # the page shows the age of its own data instead of claiming to be fresh.
+    - cron: "*/5 * * * *"
 
 permissions:
   contents: read
@@ -42,8 +42,8 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Run the adapter tests
-        run: python3 -m unittest -v test_aggregate
+      - name: Run the tests
+        run: python3 -m unittest discover -v
 
       - name: Build the static snapshot
         run: python3 export_static.py --out dist

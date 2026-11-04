@@ -132,6 +132,45 @@
             border-radius: 10px;
             padding: 16px 18px;
         }
+        .lc-slot { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+        .lc-slot:empty { display: none; }
+        .lc {
+            min-width: 0;
+            cursor: pointer;
+        }
+        .lc:hover .lcrace { color: var(--accent); }
+        .lcsec {
+            display: block;
+            font-size: 0.64rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--faint);
+        }
+        .lcrace {
+            display: block;
+            font-size: 0.84rem;
+            font-weight: 650;
+            color: var(--text);
+            margin: 3px 0 2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .lcwho {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            color: var(--muted);
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .lcwho span.cname2 { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+        .lcwho span.cparty { flex: 0 0 auto; }
+        .lcwhen { display: block; font-size: 0.72rem; color: var(--faint); margin-top: 2px; }
+        .lc.idle { cursor: default; }
+        .lc.idle .lcrace { color: var(--faint); font-weight: 500; }
         .kpi .eyebrow {
             display: flex;
             justify-content: space-between;
@@ -337,6 +376,9 @@
 
         /* ---------- news ---------- */
         .chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: thin; }
+        /* Thirteen voter-group cuts do not fit one row, and a hidden chip is a
+           cut the reader never learns exists. */
+        #ep-chips { flex-wrap: wrap; overflow-x: visible; }
         .chip {
             flex: 0 0 auto;
             display: inline-flex;
@@ -376,6 +418,60 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+        /* ---------- exit polls ---------- */
+        .ep-note { font-size: 0.81rem; color: var(--muted); line-height: 1.55; margin: 0 0 12px; }
+        .ep-note.warn {
+            color: var(--warn-text);
+            background: var(--warn-bg);
+            border: 1px solid var(--warn-line);
+            border-radius: 8px;
+            padding: 9px 12px;
+        }
+        .ep-tools { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+        .ep-tools input[type="search"] { flex: 1 1 280px; }
+        .ep-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.7rem; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; }
+        .ep-legend span { display: inline-flex; align-items: center; gap: 5px; }
+        .ep-legend i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+        .ep-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 7px 10px; align-items: start; }
+        .ep-list > .empty { grid-column: 1 / -1; }
+        details.ep-q { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; }
+        details.ep-q[open] { border-color: var(--line-strong); }
+        details.ep-q > summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 9px 11px;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--text);
+        }
+        details.ep-q > summary::-webkit-details-marker { display: none; }
+        details.ep-q > summary::before { content: '+'; font-family: var(--mono); font-weight: 400; color: var(--faint); }
+        details.ep-q[open] > summary::before { content: '\2212'; }
+        details.ep-q > summary .qm { margin-left: auto; font-family: var(--mono); font-size: 0.68rem; font-weight: 400; color: var(--faint); white-space: nowrap; }
+        .ep-table { width: 100%; border-collapse: collapse; font-size: 0.79rem; }
+        .ep-table th {
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.64rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--faint);
+            padding: 6px 9px;
+            border-top: 1px solid var(--line);
+            white-space: nowrap;
+        }
+        .ep-table td { padding: 4px 9px; border-top: 1px solid var(--line); color: var(--muted); vertical-align: middle; }
+        .ep-table th.num, .ep-table td.num { text-align: right; font-family: var(--mono); }
+        .ep-cell { display: flex; align-items: center; gap: 6px; min-width: 84px; }
+        .ep-cell b { font-family: var(--mono); font-size: 0.77rem; font-weight: 600; color: var(--text); min-width: 22px; text-align: right; }
+        .epbar { flex: 1 1 40px; height: 5px; border-radius: 3px; background: var(--raised); overflow: hidden; }
+        .epbar i { display: block; height: 100%; border-radius: 3px; }
+        .epbar.d i { background: var(--dem); }
+        .epbar.r i { background: var(--rep); }
         /* ---------- coverage ---------- */
         .coverage { margin-top: 14px; }
         .cov-grid {
@@ -425,7 +521,7 @@
     <header>
         <div>
             <h1>US Midterm Elections 2026</h1>
-            <div class="sub">Vote tallies, race calls, and a live press wire for November 3. Zero-vote races stay uncalled and each figure keeps its source and age. Exit polls have no public machine-readable feed tonight, so crosstabs are not shown; the wire carries exit-poll headlines as outlets publish them.</div>
+            <div class="sub">Vote tallies, race calls, and a live press wire for November 3. Zero-vote races stay uncalled and each figure keeps its source and age. National exit poll crosstabs come from the poll feed NBC publishes; state and district cuts arrive as wire headlines.</div>
             <div class="clock" id="clock">Election clock loading...</div>
         </div>
         <div class="hud">
@@ -455,6 +551,7 @@
                 <span>Leading uncalled D <b id="sen-lead-d">0</b> R <b id="sen-lead-r">0</b></span>
                 <span id="sen-held">--</span>
             </div>
+            <div class="lc-slot" id="lc-senate"></div>
         </div>
 
         <div class="kpi">
@@ -471,6 +568,7 @@
                 <span>Leading uncalled D <b id="house-lead-d">0</b> R <b id="house-lead-r">0</b></span>
                 <span id="house-held">--</span>
             </div>
+            <div class="lc-slot" id="lc-house"></div>
         </div>
 
         <div class="kpi">
@@ -487,6 +585,7 @@
                 <span id="gov-held">--</span>
                 <span>Leading uncalled D <b id="gov-lead-d">0</b> R <b id="gov-lead-r">0</b></span>
             </div>
+            <div class="lc-slot" id="lc-governor"></div>
         </div>
 
         <div class="kpi">
@@ -496,6 +595,7 @@
                 <div class="score o"><span class="n" id="meas-called">0</span><span class="l">Decided</span></div>
             </div>
             <div class="note" id="meas-note">Statewide referenda carried by the feed. Yes/no counts only; measures carry no partisan grouping.</div>
+            <div class="lc-slot" id="lc-measures"></div>
         </div>
     </div>
 
@@ -543,6 +643,22 @@
         </aside>
     </div>
 
+    <section class="panel" id="exit-polls">
+        <h2>National exit polls <span class="meta" id="ep-meta">loading...</span></h2>
+        <div class="ep-note" id="ep-note"></div>
+        <div class="chips" id="ep-chips"></div>
+        <div class="ep-tools">
+            <input type="search" id="ep-search" placeholder="Filter questions: economy, abortion, gender, independents..." oninput="renderExitPolls()">
+            <div class="ep-legend">
+                <span><i style="background:var(--dem)"></i>Democrat</span>
+                <span><i style="background:var(--rep)"></i>Republican</span>
+                <span>Share = that group's share of the selected electorate</span>
+            </div>
+        </div>
+        <div class="ep-list" id="ep-list"><div class="empty">Loading exit poll...</div></div>
+        <div class="prov" id="ep-prov"></div>
+    </section>
+
     <section class="panel coverage">
         <h2>Coverage and provenance <span class="meta" id="coverage-meta">loading...</span></h2>
         <div class="cov-grid">
@@ -551,7 +667,8 @@
                 <ul>
                     <li><b>AP results feed</b> (<a href="https://apnews.com/projects/elections-2026/us-house-results/" target="_blank" rel="noopener">apnews.com</a>): the JSON behind AP's results page, on <code>interactives.apelections.org</code>. Race list, candidate votes, percent of expected vote, the AP's own race calls, and per-race poll closing times. No key; the CDN only checks the referer.</li>
                     <li><b>civicAPI v2</b> (<a href="https://civicapi.org" target="_blank" rel="noopener">civicapi.org</a>): fallback when AP is unreachable. Same fields, no race-call labels.</li>
-                    <li><b>Ten RSS wires</b> (MS NOW, CNN, Fox, NBC, NPR, PBS, CBS, ABC, Politico, The Hill) for headlines, which is where exit-poll coverage appears.</li>
+                    <li><b>Ten RSS wires</b> (MS NOW, CNN, Fox, NBC, NPR, PBS, CBS, ABC, Politico, The Hill) for headlines, and for state and district exit-poll numbers as outlets publish them.</li>
+                    <li><b>NBC national exit poll</b> (<a href="https://www.nbcnews.com/politics/2026-elections/exit-polls" target="_blank" rel="noopener">nbcnews.com</a>): the document behind NBC's exit poll page, SSRS interviews for the National Election Pool. Voter-group splits on the U.S. House vote, refetched every five minutes.</li>
                     <li><b>Closing hours</b> from state election office documents and statutes, cross-checked against the AP state-by-state guide.</li>
                 </ul>
             </div>
@@ -560,7 +677,8 @@
                 <ul>
                     <li><b>AP Elections API</b>: key gated and paid. The public feed behind AP's own results page carries the same numbers, so that is what this reads.</li>
                     <li><b>Decision Desk HQ</b>: returns HTTP 429 to this client, and its API is paid.</li>
-                    <li><b>NEP (Edison) exit poll crosstabs and AP VoteCast</b>: no public machine-readable endpoint, so none is scraped or guessed at.</li>
+                    <li><b>State and district exit poll crosstabs</b>: NBC carries them on individual state pages, with no stable per-race feed, so none is scraped. The wire covers them as outlets publish.</li>
+                    <li><b>AP VoteCast</b>: key gated, and no public machine-readable endpoint.</li>
                 </ul>
             </div>
             <div>
@@ -569,6 +687,7 @@
                     <li>Votes are never averaged across feeds. Where the feed and the published baseline disagree, the banner above names it.</li>
                     <li>A race with no votes shows "no votes yet", never zero.</li>
                     <li>Territories and the synthetic national rollup stay out of the 50-state, 100-seat and 435-seat arithmetic.</li>
+                    <li>Exit poll figures are self-reported voter splits from one pollster. They sit beside the tallies and are never added to them or used to call a race.</li>
                 </ul>
             </div>
         </div>
@@ -714,16 +833,35 @@
         manualRefreshBusy = true;
         if (btn) { btn.disabled = true; btn.textContent = 'Refreshing'; }
         try {
-            const before = (await fetchData())?.refreshed_epoch ?? null;
+            const start = await fetchData();
+            const before = start?.refreshed_epoch ?? null;
+            const beforeSnapshot = start?.snapshot_epoch ?? null;
             await fetchNews();
+            await fetchExitPolls();
             if (!force) return;
 
             let kicked = false;
             try {
-                const res = await fetch('/api/refresh', { cache: 'no-store' });
+                const res = await fetch(`${liveBase}/api/refresh`, { cache: 'no-store' });
                 kicked = res.ok;
             } catch (e) { kicked = false; }
-            if (!kicked) return;
+
+            if (!kicked) {
+                // Published snapshot: there is no server to ask and the page
+                // cannot build one. Watch the deployed files instead, so a
+                // single click keeps trying until the workflow publishes,
+                // rather than leaving the reader to reload until it lands.
+                if (!STATIC_BUILD || beforeSnapshot === null) return;
+                if (btn) btn.textContent = 'Waiting for build';
+                for (let i = 0; i < 24; i++) {
+                    await new Promise(res => setTimeout(res, 5000));
+                    const next = await fetchData();
+                    if (next && Number(next.snapshot_epoch) > Number(beforeSnapshot)) break;
+                }
+                await fetchNews();
+                await fetchExitPolls();
+                return;
+            }
 
             // One civicAPI round trip runs tens of seconds tonight, so poll the
             // payload until it carries a newer refreshed_epoch, then give up.
@@ -753,16 +891,43 @@
     // network panel with noise. Unmarked, the page is a local run: try the
     // API first, then the files.
     const STATIC_BUILD = document.documentElement.dataset.mode === 'snapshot';
-    const RACES_CANDIDATES = STATIC_BUILD ? ['data/races.json'] : ['/api/races', 'data/races.json'];
-    const NEWS_CANDIDATES = STATIC_BUILD ? ['data/news.json'] : ['/api/news', 'data/news.json'];
+    // The published page cannot read the results feed itself, so it is only as
+    // fresh as the last Pages build. Pointing it at a server that is actually
+    // polling (the local run, or a tunnel to it) restores the 30s poll: pass
+    // ?live=http://host:8080 once, the choice sticks in localStorage, and
+    // ?live= with no value clears it. An unreachable server falls back to the
+    // snapshot on the next fetch.
+    const LIVE_STORAGE_KEY = 'tracker.live_base';
+    let liveBase = '';
+    try {
+        const param = new URLSearchParams(location.search).get('live');
+        if (param !== null) {
+            if (param) localStorage.setItem(LIVE_STORAGE_KEY, param);
+            else localStorage.removeItem(LIVE_STORAGE_KEY);
+        }
+        const stored = param || localStorage.getItem(LIVE_STORAGE_KEY) || '';
+        if (/^https?:\/\/[^/]+/i.test(stored)) liveBase = stored.replace(/\/+$/, '');
+    } catch (e) { /* storage blocked: stay on the snapshot */ }
+
+    const candidates = (api, file) => [...new Set([
+        ...(liveBase ? [liveBase + api] : []),
+        ...(STATIC_BUILD ? [] : [api]),
+        file,
+    ])];
+    const RACES_CANDIDATES = candidates('/api/races', 'data/races.json');
+    const NEWS_CANDIDATES = candidates('/api/news', 'data/news.json');
+    const EXIT_CANDIDATES = candidates('/api/exitpolls', 'data/exitpolls.json');
 
     async function loadPayload(candidates) {
-        for (const url of candidates) {
+        for (const base of candidates) {
             try {
-                // The API is live, so a browser cache must never answer it. The
-                // data files are a build output, so let the CDN cache work.
-                const res = await fetch(url, { cache: url.startsWith('/api/') ? 'no-store' : 'default' });
-                if (res.ok) return { url, body: await res.json() };
+                // Nothing here may be answered by a cache. A live poll is newer
+                // than anything cached by definition, and the published files
+                // are replaced in place behind a ten minute CDN TTL, so a cached
+                // copy reads exactly like "the build never landed".
+                const url = base.startsWith('data/') ? `${base}?t=${Date.now()}` : base;
+                const res = await fetch(url, { cache: 'no-store' });
+                if (res.ok) return { url: base, body: await res.json() };
             } catch (e) { /* unreachable, try the next source */ }
         }
         return null;
@@ -797,8 +962,8 @@
             // A snapshot is only as good as the last scheduled build, so it
             // gets its own scale instead of the 90s live-poll one.
             const age = isSnapshot ? Math.max(0, Math.floor(Date.now() / 1000 - Number(d.snapshot_epoch))) : (d.cache_age_seconds ?? 0);
-            const freshOk = isSnapshot ? 1800 : 90;
-            const freshWarn = isSnapshot ? 3600 : 300;
+            const freshOk = isSnapshot ? 900 : 90;
+            const freshWarn = isSnapshot ? 1800 : 300;
             wrap.className = 'stat ' + (age < freshOk ? 'ok' : age < freshWarn ? 'warn' : 'bad');
             document.getElementById('hud-fresh').textContent = isSnapshot
                 ? `snapshot ${age < 60 ? Math.round(age) + 's' : Math.round(age / 60) + 'm'}`
@@ -808,7 +973,9 @@
             const notes = [];
             if (d.conflicts?.length) notes.push('Feed disagreement: ' + d.conflicts.join(' | '));
             if (d.upstream_error) notes.push('Serving the last good tally while the results feed recovers (' + d.upstream_error + ').');
-            if (isSnapshot) notes.push('Static snapshot, rebuilt by the Pages workflow every 15 minutes. Run python3 run.py locally for live polling.');
+            if (isSnapshot) notes.push(liveBase
+                ? `Static snapshot: the live server at ${liveBase} did not answer, so this is the last build.`
+                : 'Static snapshot of the last Pages build. Rebuilds run on a schedule; press Refresh to wait for the next one, or add ?live=http://host:8080 to poll a running server.');
             banner.style.display = notes.length ? 'block' : 'none';
             banner.textContent = notes.join('  ');
 
@@ -819,6 +986,7 @@
             renderWaves();
             renderCoverage(d);
             if (d.summary) renderSummary(d.summary);
+            renderLastCalled();
             renderTable();
         } catch (e) {
             const modeEl = document.getElementById('hud-mode');
@@ -860,13 +1028,17 @@
         document.getElementById('provider-chips').innerHTML = all + provs;
     }
 
+    // Date.now()/1000 - ts is seconds. Formatting it as minutes made every
+    // age 60x too large: a two-minute-old article read "2h 2m ago".
     function relTime(ts) {
         if (!ts) return '';
-        const mins = Math.max(0, Math.round((Date.now() / 1000) - ts));
-        if (mins < 1) return 'now';
-        if (mins < 60) return mins + 'm';
+        const secs = Math.max(0, Date.now() / 1000 - ts);
+        const mins = Math.round(secs / 60);
+        if (mins < 1) return 'just now';
+        if (mins < 60) return `${mins}m ago`;
         const h = Math.floor(mins / 60);
-        return h < 24 ? `${h}h ${mins % 60}m` : `${Math.floor(h / 24)}d`;
+        if (h >= 24) return `${Math.floor(h / 24)}d ago`;
+        return mins % 60 ? `${h}h ${mins % 60}m ago` : `${h}h ago`;
     }
 
     function renderNews() {
@@ -883,11 +1055,99 @@
                 <div class="ihead">
                     <span class="dot" style="background:${esc(i.provider_color)}"></span>
                     <span class="iprov" style="color:${esc(i.provider_color)}">${esc(i.provider_name)}</span>
-                    <span class="itime" title="${esc(i.published_at || '')}">${esc(relTime(i.timestamp))} ago</span>
+                    <span class="itime" title="${esc(i.published_at || '')}">${esc(relTime(i.timestamp))}</span>
                 </div>
                 <h3 class="ititle"><a href="${esc(i.link)}" target="_blank" rel="noopener noreferrer">${esc(i.title)}</a></h3>
                 ${i.summary ? `<p class="isum">${esc(i.summary)}</p>` : ''}
             </article>`).join('');
+    }
+
+    let exitData = null;
+    let exitSource = null;
+    let exitSubset = 0;
+
+    // The feed repeats titles ("Age" twice, "Income" three times), and the
+    // payload numbers those repeats, so the label carries the number.
+    const exitLabel = (q) => q.variant > 1 ? `${q.question} (#${q.variant})` : q.question;
+
+    async function fetchExitPolls() {
+        // Keep the last good payload. The feed republishes on its own hour, so
+        // a failed minute must not blank a panel that already rendered.
+        const hit = await loadPayload(exitSource ? [exitSource] : EXIT_CANDIDATES);
+        if (hit) { exitSource = hit.url; exitData = hit.body; }
+        renderExitPolls();
+    }
+
+    function renderExitPolls() {
+        const meta = document.getElementById('ep-meta');
+        const noteEl = document.getElementById('ep-note');
+        const chipsEl = document.getElementById('ep-chips');
+        const listEl = document.getElementById('ep-list');
+        const provEl = document.getElementById('ep-prov');
+        const d = exitData;
+
+        if (!d) {
+            meta.textContent = 'waiting for feed';
+            noteEl.className = 'ep-note';
+            noteEl.textContent = 'Connecting to the exit poll feed. The tallies, schedule and wire above do not depend on it.';
+            chipsEl.innerHTML = '';
+            listEl.innerHTML = '<div class="empty">No exit poll payload yet.</div>';
+            provEl.textContent = '';
+            return;
+        }
+
+        const subsets = d.subsets || [];
+        if (!subsets.some(sub => sub.code === exitSubset) && subsets.length) exitSubset = subsets[0].code;
+        const subset = subsets.find(sub => sub.code === exitSubset) || subsets[0];
+        const questions = (subset && subset.questions) || [];
+        const stamp = d.poll_last_updated ? `NBC updated ${d.poll_last_updated}` : 'NBC has not stamped an update hour';
+        meta.textContent = `${questions.length} questions · ${stamp}`;
+
+        const warn = !!d.upstream_error;
+        noteEl.className = 'ep-note' + (d.ready && !warn ? '' : ' warn');
+        const bits = [];
+        if (!d.ready) bits.push(d.note || 'The poll is not published yet.');
+        if (warn) bits.push(`Last pull failed: ${d.upstream_error}`);
+        if (d.ready && !warn) {
+            bits.push('Each figure is the share of that voter group backing a party for U.S. House, as reported in exit interviews. Not a vote count, and never folded into the tallies above.');
+        }
+        if (isSnapshotPayload(d)) bits.push('Static snapshot of the feed.');
+        noteEl.textContent = bits.join(' ');
+
+        chipsEl.innerHTML = subsets.map(sub =>
+            `<button class="chip" data-subset="${esc(sub.code)}" aria-pressed="${sub.code === exitSubset}">${esc(sub.title)} <span class="n">${(sub.questions || []).length}</span></button>`).join('');
+
+        const query = (document.getElementById('ep-search').value || '').trim().toLowerCase();
+        const shown = [];
+        for (const question of questions) {
+            const haystack = [exitLabel(question), ...question.answers.map(a => a.label)].join(' ').toLowerCase();
+            if (query && !haystack.includes(query)) continue;
+            shown.push(question);
+        }
+
+        if (!shown.length) {
+            listEl.innerHTML = '<div class="empty">No question matches that filter.</div>';
+        } else {
+            listEl.innerHTML = shown.map(question => {
+                const rows = question.answers.map(a => `
+                    <tr>
+                        <td>${esc(a.label)}</td>
+                        <td class="num">${a.share == null ? '--' : esc(a.share) + '%'}</td>
+                        <td><div class="ep-cell"><span class="epbar d"><i style="width:${a.dem == null ? 0 : Math.max(0, Math.min(100, a.dem))}%"></i></span><b>${a.dem == null ? '--' : esc(a.dem)}</b></div></td>
+                        <td><div class="ep-cell"><span class="epbar r"><i style="width:${a.rep == null ? 0 : Math.max(0, Math.min(100, a.rep))}%"></i></span><b>${a.rep == null ? '--' : esc(a.rep)}</b></div></td>
+                    </tr>`).join('');
+                return `<details class="ep-q"${query ? ' open' : ''}>
+                    <summary>${esc(exitLabel(question))}<span class="qm">${question.answers.length} groups</span></summary>
+                    <table class="ep-table">
+                        <thead><tr><th>Voter group</th><th class="num">Share</th><th>Dem</th><th>Rep</th></tr></thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                </details>`;
+            }).join('');
+        }
+
+        const credit = d.credit ? `${esc(d.credit)}. ` : '';
+        provEl.innerHTML = `<b>${esc(subset ? subset.title : '')}</b> cut of the national exit poll. Source: <a href="${esc(d.page_url || d.source_url || '')}" target="_blank" rel="noopener">${esc(d.source || 'exit poll feed')}</a>. ${credit}${esc(d.methodology || '')}`;
     }
 
     function controlLine(ctrl, label) {
@@ -1021,6 +1281,44 @@
         return bits.join(' ');
     }
 
+    // AP publishes no call timestamp, so the server stamps the first poll that
+    // saw each race called. Races already called when tracking began share one
+    // batch and cannot be ordered among themselves, so they carry the start
+    // time instead of a made-up age.
+    const LAST_CALLED_SECTIONS = [['senate', 'Senate'], ['house', 'House'], ['governor', 'Governors'], ['measures', 'Measures']];
+
+    function hhmmUtc(epoch) {
+        return new Date(epoch * 1000).toISOString().slice(11, 16);
+    }
+
+    // The card is a third of a panel wide, so the full party name would wrap.
+    const PARTY_SHORT = { Democratic: 'Dem', Republican: 'Rep', Independent: 'Ind', Libertarian: 'Lib', Green: 'Grn' };
+    const shortParty = (p) => PARTY_SHORT[p] || p || '';
+
+    function renderLastCalled() {
+        const lc = boardData.last_called;
+        LAST_CALLED_SECTIONS.forEach(([key]) => {
+            const el = document.getElementById(`lc-${key}`);
+            if (!el) return;
+            const e = lc && lc[key];
+            if (!e) {
+                el.innerHTML = `<div class="lc idle"><span class="lcsec">Last called</span><span class="lcrace">no call yet</span><span class="lcwhen">waiting on the feed</span></div>`;
+                return;
+            }
+            const w = e.winner || {};
+            const seat = e.name || [e.state, e.district].filter(Boolean).join(' ') || e.type || 'race';
+            const when = e.known
+                ? `called ${relTime(e.epoch)}`
+                : (lc.started_epoch ? `already called at ${hhmmUtc(lc.started_epoch)} UTC` : 'called before tracking began');
+            el.innerHTML = `<div class="lc" data-chamber="${esc(key)}" title="${esc(seat)} · ${esc(w.name || '')} (${esc(w.party || '')}) · ${esc(when)}">
+                <span class="lcsec">Last called</span>
+                <span class="lcrace">${esc(seat)}</span>
+                <span class="lcwho"><span class="dot ${esc(w.group || 'O')}"></span><span class="cname2">${esc(w.name || '')}</span><span class="cparty" title="${esc(w.party || '')}">${esc(shortParty(w.party))}</span></span>
+                <span class="lcwhen">${esc(when)}</span>
+            </div>`;
+        });
+    }
+
     function renderTable() {
         const ch = pressed('chamber-seg').chamber;
         const st = pressed('status-seg').status;
@@ -1070,6 +1368,14 @@
         }).join('');
     }
 
+    document.getElementById('ep-chips').addEventListener('click', (e) => {
+        const b = e.target.closest('button[data-subset]');
+        if (!b) return;
+        const code = Number(b.dataset.subset);
+        if (Number.isFinite(code)) exitSubset = code;
+        renderExitPolls();
+    });
+
     document.getElementById('provider-chips').addEventListener('click', (e) => {
         const b = e.target.closest('button[data-prov]');
         if (!b) return;
@@ -1078,16 +1384,26 @@
         renderNews();
     });
 
+    document.querySelector('.kpis').addEventListener('click', (e) => {
+        const card = e.target.closest('.lc[data-chamber]');
+        if (!card) return;
+        const seg = document.getElementById('chamber-seg');
+        seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.chamber === card.dataset.chamber)));
+        renderTable();
+    });
+
     pressGroup('chamber-seg', 'chamber');
     pressGroup('status-seg', 'status');
 
     tickClock();
     renderWaves();
+    fetchExitPolls();
     refreshAll();
     setInterval(tickClock, 15000);
     setInterval(renderWaves, 60000);
     setInterval(fetchData, 30000);
     setInterval(fetchNews, 60000);
+    setInterval(fetchExitPolls, 60000);
 </script>
 </body>
 </html>
