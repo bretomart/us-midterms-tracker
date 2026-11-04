@@ -1,0 +1,528 @@
+{
+ "lastModified": "2026-11-04T00:16:54.520Z",
+ "page": {
+  "source": {
+   "sourceText": "**Source**: SSRS",
+   "hidden": false
+  },
+  "description": "NBC News, with a group of other news organizations, conducted exit polling across the country in 45 key states. The poll includes in-person interviews on Election Day, and it combines the in-person poll with other methods\u2013mail, phone and online\u2013to account for in-person early and mail-in voters. The exit polls are not vote results, but instead a look at the thinking and motives of voters across the country. Exit polls help the public better understand the makeup and motivations of the electorate."
+ },
+ "nationalExitPollCMSData": {
+  "enableCMSOverrides": false,
+  "currentPhase": "PRE_RACE_START",
+  "lastModified": "2026-10-30T17:09:32.897Z",
+  "pollsNotClosedText": "Come back after 8:00pm ET for complete national exit poll results.",
+  "cmsPageLastModified": "2026-10-30T17:09:32.897Z",
+  "countdown": {
+   "countdownDatetime": "2026-11-03T20:00:00-05:00",
+   "title": "Exit polls available in:",
+   "countdownEndedText": "Exit polls will be available shortly "
+  }
+ },
+ "nationalExitPollData": [
+  {
+   "title": "All Voters",
+   "code": 0,
+   "polls": {
+    "pollName": "National Presidential",
+    "lastUpdated": "11 PM ET",
+    "polls": [
+     {
+      "question": "Gender",
+      "answers": [
+       {
+        "label": "Male",
+        "percent": "47%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 48
+         },
+         {
+          "color": "#CA262B",
+          "value": 49
+         }
+        ]
+       },
+       {
+        "label": "Female",
+        "percent": "53%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 57
+         },
+         {
+          "color": "#CA262B",
+          "value": 40
+         }
+        ]
+       },
+       {
+        "label": "I identify another way",
+        "percent": "1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 82
+         },
+         {
+          "color": "#CA262B",
+          "value": 11
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "question": "Gender by race",
+      "answers": [
+       {
+        "label": "White men",
+        "percent": "34%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 42
+         },
+         {
+          "color": "#CA262B",
+          "value": 55
+         }
+        ]
+       },
+       {
+        "label": "White women",
+        "percent": "38%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 50
+         },
+         {
+          "color": "#CA262B",
+          "value": 47
+         }
+        ]
+       },
+       {
+        "label": "Black men",
+        "percent": "4%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 83
+         },
+         {
+          "color": "#CA262B",
+          "value": 13
+         }
+        ]
+       },
+       {
+        "label": "Black women",
+        "percent": "5%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 91
+         },
+         {
+          "color": "#CA262B",
+          "value": 7
+         }
+        ]
+       },
+       {
+        "label": "Latino men",
+        "percent": "5%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 55
+         },
+         {
+          "color": "#CA262B",
+          "value": 41
+         }
+        ]
+       },
+       {
+        "label": "Latino women",
+        "percent": "5%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 65
+         },
+         {
+          "color": "#CA262B",
+          "value": 30
+         }
+        ]
+       },
+       {
+        "label": "All others",
+        "percent": "9%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 61
+         },
+         {
+          "color": "#CA262B",
+          "value": 35
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "question": "Are you:",
+      "answers": [
+       {
+        "label": "White",
+        "percent": "72%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 47
+         },
+         {
+          "color": "#CA262B",
+          "value": 51
+         }
+        ]
+       },
+       {
+        "label": "Black",
+        "percent": "9%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 88
+         },
+         {
+          "color": "#CA262B",
+          "value": 9
+         }
+        ]
+       },
+       {
+        "label": "Latino",
+        "percent": "10%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 61
+         },
+         {
+          "color": "#CA262B",
+          "value": 35
+         }
+        ]
+       },
+       {
+        "label": "Asian",
+        "percent": "4%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 69
+         },
+         {
+          "color": "#CA262B",
+          "value": 29
+         }
+        ]
+       },
+       {
+        "label": "Other",
+        "percent": "5%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 52
+         },
+         {
+          "color": "#CA262B",
+          "value": 43
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "candidates": [
+     {
+      "label": "Democrat",
+      "party": "dem",
+      "colorHex": "#0071D0",
+      "color": "0071D0"
+     },
+     {
+      "label": "Republican",
+      "party": "gop",
+      "colorHex": "#CA262B",
+      "color": "CA262B"
+     }
+    ],
+    "maxPollsShown": 9,
+    "resultsNotYetIn": false,
+    "showPollsNotClosedText": false
+   }
+  },
+  {
+   "title": "White Voters",
+   "code": 5,
+   "polls": {
+    "pollName": "National Presidential",
+    "lastUpdated": "11 PM ET",
+    "polls": [
+     {
+      "question": "Gender",
+      "answers": [
+       {
+        "label": "Male",
+        "percent": "48%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 42
+         },
+         {
+          "color": "#CA262B",
+          "value": 55
+         }
+        ]
+       },
+       {
+        "label": "Female",
+        "percent": "52%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 50
+         },
+         {
+          "color": "#CA262B",
+          "value": 47
+         }
+        ]
+       },
+       {
+        "label": "I identify another way",
+        "percent": "1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 89
+         },
+         {
+          "color": "#CA262B",
+          "value": 7
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "question": "Gender by race",
+      "answers": [
+       {
+        "label": "White men",
+        "percent": "48%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 42
+         },
+         {
+          "color": "#CA262B",
+          "value": 55
+         }
+        ]
+       },
+       {
+        "label": "White women",
+        "percent": "52%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 50
+         },
+         {
+          "color": "#CA262B",
+          "value": 47
+         }
+        ]
+       },
+       {
+        "label": "Black men",
+        "percent": "-1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": -1
+         },
+         {
+          "color": "#CA262B",
+          "value": -1
+         }
+        ]
+       },
+       {
+        "label": "Black women",
+        "percent": "-1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": -1
+         },
+         {
+          "color": "#CA262B",
+          "value": -1
+         }
+        ]
+       },
+       {
+        "label": "Latino men",
+        "percent": "-1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": -1
+         },
+         {
+          "color": "#CA262B",
+          "value": -1
+         }
+        ]
+       },
+       {
+        "label": "Latino women",
+        "percent": "-1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": -1
+         },
+         {
+          "color": "#CA262B",
+          "value": -1
+         }
+        ]
+       },
+       {
+        "label": "All others",
+        "percent": "1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 89
+         },
+         {
+          "color": "#CA262B",
+          "value": 7
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "question": "Are you:",
+      "answers": [
+       {
+        "label": "White",
+        "percent": "100%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": 47
+         },
+         {
+          "color": "#CA262B",
+          "value": 51
+         }
+        ]
+       },
+       {
+        "label": "Black",
+        "percent": "-1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": -1
+         },
+         {
+          "color": "#CA262B",
+          "value": -1
+         }
+        ]
+       },
+       {
+        "label": "Latino",
+        "percent": "-1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": -1
+         },
+         {
+          "color": "#CA262B",
+          "value": -1
+         }
+        ]
+       },
+       {
+        "label": "Asian",
+        "percent": "-1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": -1
+         },
+         {
+          "color": "#CA262B",
+          "value": -1
+         }
+        ]
+       },
+       {
+        "label": "Other",
+        "percent": "-1%",
+        "values": [
+         {
+          "color": "#0071D0",
+          "value": -1
+         },
+         {
+          "color": "#CA262B",
+          "value": -1
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "candidates": [
+     {
+      "label": "Democrat",
+      "party": "dem",
+      "colorHex": "#0071D0",
+      "color": "0071D0"
+     },
+     {
+      "label": "Republican",
+      "party": "gop",
+      "colorHex": "#CA262B",
+      "color": "CA262B"
+     }
+    ],
+    "maxPollsShown": 9,
+    "resultsNotYetIn": false,
+    "showPollsNotClosedText": false
+   }
+  }
+ ]
+}

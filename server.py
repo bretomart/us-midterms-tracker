@@ -17,6 +17,8 @@ import xml.etree.ElementTree as ET
 import aggregate
 import ap_source
 import baseline
+import call_log
+import exitpoll
 import schedule
 
 PORT = int(os.environ.get("PORT", "8080"))
@@ -30,6 +32,9 @@ SOURCE_FIXTURES = "Recorded fixtures (fixtures/)"
 
 POLL_INTERVAL = 30
 NEWS_POLL_INTERVAL = 60
+# The exit poll feed republishes on its own schedule, and NBC stamps the poll
+# with its own update hour, so a slower poll loses nothing but stale bytes.
+EXIT_POLL_INTERVAL = 300
 
 RSS_PROVIDERS = [
     {
@@ -116,6 +121,13 @@ _NEWS_STATE = {
     "providers": {},
     "fetched_at": None,
     "last_refresh_epoch": 0.0,
+}
+_EXIT_LOCK = threading.Lock()
+_EXIT_STATE = {
+    "payload": None,
+    "fetched_at": None,
+    "last_refresh_epoch": 0.0,
+    "error": None,
 }
 
 
@@ -308,6 +320,53 @@ def _news_poller_loop():
         time.sleep(NEWS_POLL_INTERVAL)
 
 
+def load_exit_polls_from_fixture():
+    """Warm the exit poll panel from the recorded feed.
+
+    A cold start has nothing to show until the first upstream pull returns,
+    and a transient failure must not blank a panel that already had data.
+    """
+    data = _load_fixture_json("exitpolls_2026-11-03.json")
+    if not data:
+        return None
+    with _EXIT_LOCK:
+        _EXIT_STATE["payload"] = data
+        _EXIT_STATE["fetched_at"] = data.get("fetched_at")
+        if not _EXIT_STATE["last_refresh_epoch"]:
+            _EXIT_STATE["last_refresh_epoch"] = time.time()
+    return data
+
+
+def refresh_exit_polls():
+    """Pull the national exit poll. Returns True when the payload moved."""
+    try:
+        payload = exitpoll.refresh(timeout=15, attempts=2)
+    except Exception as exc:
+        with _EXIT_LOCK:
+            _EXIT_STATE["error"] = f"{type(exc).__name__}: {exc}"
+        return False
+
+    with _EXIT_LOCK:
+        current = _EXIT_STATE["payload"] or {}
+        error = _EXIT_STATE["error"]
+        # An empty document is a failed pull, not a poll with zero questions.
+        # Keep the last good payload rather than trading data for a blank panel.
+        if not payload.get("subsets") and current.get("subsets"):
+            _EXIT_STATE["error"] = error or "feed returned no voter groups"
+            return False
+        _EXIT_STATE["payload"] = payload
+        _EXIT_STATE["fetched_at"] = payload.get("fetched_at")
+        _EXIT_STATE["last_refresh_epoch"] = time.time()
+        _EXIT_STATE["error"] = None
+    return True
+
+
+def _exit_poller_loop():
+    while True:
+        refresh_exit_polls()
+        time.sleep(EXIT_POLL_INTERVAL)
+
+
 def _load_fixture_json(filename):
     path = os.path.join(FIXTURES_DIR, filename)
     if not os.path.exists(path):
@@ -376,6 +435,8 @@ def build_board_payload(raw_races, national_raw, source_status, fetched_at, upst
     senate_feed = aggregate.feed_seats(national_raw.get("senate") or {})
     house_feed = aggregate.feed_seats(national_raw.get("house") or {})
     discrepancies = aggregate.conflicts(board, national_raw)
+    call_times = call_log.observe(
+        [r for name in call_log.SECTIONS for r in board[name]], epoch=epoch)
 
     senate_total = {g: baseline.SENATE["holdover"][g] + senate_tally["called"][g]
                     for g in ("D", "R", "O")}
@@ -436,6 +497,7 @@ def build_board_payload(raw_races, national_raw, source_status, fetched_at, upst
             "house": board["house"],
             "governor": board["governor"],
             "measures": board["measures"],
+            "last_called": call_log.last_by_section(board, call_times),
         },
         "races": deduped,
     }
@@ -629,6 +691,8 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path.startswith("/api/news"):
             self.handle_news_api()
+        elif self.path.startswith("/api/exitpolls"):
+            self.handle_exit_api()
         elif self.path.startswith("/api/refresh"):
             self.handle_refresh()
         elif self.path.startswith("/api/"):
@@ -639,6 +703,8 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
     def do_HEAD(self):
         if self.path.startswith("/api/news"):
             self.handle_news_api()
+        elif self.path.startswith("/api/exitpolls"):
+            self.handle_exit_api()
         elif self.path.startswith("/api/refresh"):
             self.handle_refresh()
         elif self.path.startswith("/api/"):
@@ -672,8 +738,24 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
             }
         self._send_json(out)
 
+    def handle_exit_api(self):
+        with _EXIT_LOCK:
+            payload = _EXIT_STATE["payload"]
+            age = (
+                round(time.time() - _EXIT_STATE["last_refresh_epoch"], 1)
+                if _EXIT_STATE["last_refresh_epoch"] else 0.0
+            )
+            error = _EXIT_STATE["error"]
+        if payload is None:
+            payload = load_exit_polls_from_fixture() or {}
+        out = dict(payload)
+        out["cache_age_seconds"] = age
+        out["upstream_error"] = error
+        self._send_json(out)
+
     def handle_refresh(self):
         started = start_refresh_async()
+        threading.Thread(target=refresh_exit_polls, daemon=True).start()
         with _STATE_LOCK:
             payload = _STATE["payload"]
             age = round(time.time() - _STATE["last_refresh_epoch"], 1) if _STATE["last_refresh_epoch"] else 0.0
@@ -719,10 +801,13 @@ def _create_server(port):
 
 def run_server():
     load_from_fixtures("FIXTURE-WARMUP")
+    load_exit_polls_from_fixture()
     poller = threading.Thread(target=_poller_loop, daemon=True)
     poller.start()
     news_poller = threading.Thread(target=_news_poller_loop, daemon=True)
     news_poller.start()
+    exit_poller = threading.Thread(target=_exit_poller_loop, daemon=True)
+    exit_poller.start()
 
     ports = [8080, 8081]
     servers = []

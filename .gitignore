@@ -5,6 +5,7 @@ __pycache__/
 
 # Runtime artifacts
 server.pid
+state/
 
 # Static site build output (see export_static.py)
 dist/

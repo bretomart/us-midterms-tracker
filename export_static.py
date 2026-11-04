@@ -76,6 +76,18 @@ def build(out_dir):
         print("refusing to publish: every news feed failed", file=sys.stderr)
         return 1
 
+    # The exit poll is a separate upstream and a separate panel, so a failed
+    # pull costs that panel and not the deployment. Never publish the local
+    # warm-up fixture: it is a recording of an earlier moment, not today's poll.
+    server.load_exit_polls_from_fixture()
+    exit_ok = server.refresh_exit_polls()
+    with server._EXIT_LOCK:
+        exit_payload = server._EXIT_STATE["payload"]
+        exit_error = server._EXIT_STATE["error"]
+    if not exit_ok:
+        print(f"warning: exit poll pull failed ({exit_error}); panel will report unavailable",
+              file=sys.stderr)
+
     epoch = int(time.time())
     snapshot = dict(payload)
     snapshot["cache_age_seconds"] = 0.0
@@ -97,6 +109,13 @@ def build(out_dir):
     with open(os.path.join(out_dir, ".nojekyll"), "w", encoding="utf-8"):
         pass
 
+    exitpolls = None
+    if exit_ok and exit_payload:
+        exitpolls = dict(exit_payload)
+        exitpolls["cache_age_seconds"] = 0.0
+        exitpolls["snapshot_epoch"] = epoch
+        exitpolls["upstream_error"] = None
+
     races_size = _write_json(os.path.join(data_dir, "races.json"), snapshot)
     news_size = _write_json(os.path.join(data_dir, "news.json"), news)
 
@@ -108,6 +127,14 @@ def build(out_dir):
     print(f"  data/races.json  {races_size:,} bytes  {rows} board rows  {status}")
     print(f"  data/news.json   {news_size:,} bytes  {len(news_items)} headlines  "
           f"{feeds_ok}/{len(news_providers)} feeds OK")
+    if exitpolls:
+        exit_size = _write_json(os.path.join(data_dir, "exitpolls.json"), exitpolls)
+        groups = len(exitpolls.get("subsets") or [])
+        questions = sum(len(g.get("questions") or []) for g in exitpolls.get("subsets") or [])
+        print(f"  data/exitpolls.json  {exit_size:,} bytes  {groups} voter groups  "
+              f"{questions} questions  {exitpolls.get('poll_last_updated')}")
+    else:
+        print("  data/exitpolls.json  not written (upstream failed)")
     print(f"  snapshot epoch   {epoch}")
     return 0
 
