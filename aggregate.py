@@ -193,3 +193,39 @@ def conflicts(board, national_raw):
         if r["multiple_winners"]:
             found.append(f"{r['name']}: more than one winner flag set")
     return found
+
+def detect_call_conflicts(ap_races, nbc_races):
+    """Compare calls between AP and NBC for identical contests.
+
+    Returns a list of warnings if one source called a candidate that differs
+    from the other source, or if one outlet called a race while the other did not.
+    """
+    nbc_by_key = {}
+    for r in nbc_races:
+        key = (r.get("province"), r.get("type"), r.get("district"))
+        nbc_by_key[key] = r
+
+    conflicts_list = []
+    for ap_r in ap_races:
+        key = (ap_r.get("province"), ap_r.get("type"), ap_r.get("district"))
+        nbc_r = nbc_by_key.get(key)
+        if not nbc_r:
+            continue
+
+        ap_norm = normalise_race(ap_r)
+        nbc_norm = normalise_race(nbc_r)
+
+        if ap_norm["called"] and nbc_norm["called"]:
+            ap_w = ap_norm["winner"]["name"] if ap_norm["winner"] else "unknown"
+            nbc_w = nbc_norm["winner"]["name"] if nbc_norm["winner"] else "unknown"
+            if ap_norm["winner"]["group"] != nbc_norm["winner"]["group"]:
+                conflicts_list.append(
+                    f"CALL CONFLICT {ap_r.get('election_name')}: AP called {ap_w} ({ap_norm['winner']['group']}) vs NBC called {nbc_w} ({nbc_norm['winner']['group']})"
+                )
+        elif ap_norm["called"] != nbc_norm["called"]:
+            called_by = "AP" if ap_norm["called"] else "NBC"
+            winner = (ap_norm["winner"] if ap_norm["called"] else nbc_norm["winner"]) or {}
+            conflicts_list.append(
+                f"SPLIT CALL {ap_r.get('election_name')}: Called only by {called_by} for {winner.get('name', 'candidate')} ({winner.get('group', '?')})"
+            )
+    return conflicts_list
