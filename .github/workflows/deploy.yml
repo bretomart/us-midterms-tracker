@@ -14,9 +14,10 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    # Refresh the snapshot as often as GitHub allows. The schedule is the only
-    # automatic refresh, and GitHub drops or delays these runs under load, so
-    # the page shows the age of its own data instead of claiming to be fresh.
+    # Fallback only. GitHub throttles best-effort scheduled dispatches on
+    # high-frequency crons (observed: 5 landed of ~576 possible in two days,
+    # misaligned to the cron grid), so run_cron.sh drives this workflow via
+    # workflow_dispatch every 5 minutes and schedule only covers its downtime.
     - cron: "*/5 * * * *"
 
 permissions:
