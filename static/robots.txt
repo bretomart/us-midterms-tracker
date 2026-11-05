@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bretomart.github.io/us-midterms-tracker/sitemap.xml

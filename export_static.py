@@ -108,6 +108,11 @@ def build(out_dir):
     # Nothing here needs a site generator, and data/ must ship verbatim.
     with open(os.path.join(out_dir, ".nojekyll"), "w", encoding="utf-8"):
         pass
+    for static_file in ("robots.txt", "sitemap.xml"):
+        src_path = os.path.join(BASE_DIR, "static", static_file)
+        if os.path.exists(src_path):
+            with open(src_path, "r", encoding="utf-8") as rf, open(os.path.join(out_dir, static_file), "w", encoding="utf-8") as wf:
+                wf.write(rf.read())
 
     exitpolls = None
     if exit_ok and exit_payload:
