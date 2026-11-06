@@ -1,24 +1,20 @@
 name: Deploy dashboard to Pages
 
-# GitHub Pages serves files and runs no Python, so the published site is a
-# build-time snapshot: this workflow runs the same upstream pull the local
-# server runs, writes the payloads next to a copy of the page, and deploys
-# that directory. See export_static.py.
+# GitHub Pages serves files and runs no Python, so the published site ships a
+# baseline snapshot for structure, baseline seat counts, and fallback data.
 #
-# A build that cannot reach a live results feed (AP, then civicAPI) fails on
-# purpose, leaving the last good deployment in place instead of replacing it
-# with empty data.
+# The page itself polls civicAPI directly in the visitor's browser for live
+# race tallies, so data freshness no longer depends on continuous rebuilds.
+# This workflow runs on pushes to main and every 6 hours as a fallback refresh.
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
   schedule:
-    # Fallback only. GitHub throttles best-effort scheduled dispatches on
-    # high-frequency crons (observed: 5 landed of ~576 possible in two days,
-    # misaligned to the cron grid), so run_cron.sh drives this workflow via
-    # workflow_dispatch every 5 minutes and schedule only covers its downtime.
-    - cron: "*/5 * * * *"
+    # Fallback refresh. Rebuilding every 5 minutes is unnecessary because the
+    # page reads live results directly from civicAPI in the visitor's browser.
+    - cron: "0 */6 * * *"
 
 permissions:
   contents: read

@@ -27,11 +27,8 @@ python3 -m unittest discover -v
 
 ## Deployment
 
-The GitHub Pages site is a build-time snapshot produced by `.github/workflows/deploy.yml`: it pulls the live feeds, runs the tests, and exports static payloads via `export_static.py`.
+The GitHub Pages site ships a baseline snapshot produced by `.github/workflows/deploy.yml` via `export_static.py`.
 
-GitHub's scheduler throttles best-effort cron triggers on high-frequency public workflows (observed here: 5 landed scheduled runs in two days against a `*/5` cron, none aligned to the grid), so the workflow is driven by `workflow_dispatch` instead:
+The published page polls civicAPI v2 directly in the reader's browser every 60 seconds (free, CORS-open mirror of the AP live results feed). Data freshness no longer depends on continuous GitHub Actions rebuilds. The snapshot provides the closing-hours schedule, the baseline seat counts, and offline fallback data.
 
-- `./run_cron.sh` dispatches a build immediately and waits for it.
-- `./run_cron.sh --once-if-idle` skips when a run is already active; safe to wire into a 5-minute timer such as `systemd-run --user --on-calendar='*:0/5' ./run_cron.sh --once-if-idle`.
-- `./run_cron.sh --watch` loops in the foreground, firing on every 5-minute boundary; after a failed build it retries at most once every 30 minutes (the workflow fails on purpose during upstream feed outages, keeping the last good deployment live).
-- The `schedule:` trigger in the workflow remains as a fallback for when the machine running this script is offline.
+Workflow runs occur on pushes to `main` and on a 6-hour schedule to refresh the fallback snapshot.
