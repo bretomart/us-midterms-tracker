@@ -42,6 +42,17 @@ jobs:
       - name: Run the tests
         run: python3 -m unittest discover -v
 
+      # AP publishes no call time, so the snapshot's last-called card can only
+      # be ordered if the build sees calls more than once. A fresh runner has
+      # no history, and every build would report "called before tracking
+      # began". Keep the log between runs; restore-keys picks the newest entry.
+      - name: Restore the call log
+        uses: actions/cache@v5
+        with:
+          path: state/call_log.json
+          key: call-log-${{ github.run_id }}
+          restore-keys: call-log-
+
       - name: Build the static snapshot
         run: python3 export_static.py --out dist
 
