@@ -1197,8 +1197,9 @@
 
     // Mirrors call_log.last_by_section. Stamped calls order by stamp, then
     // reporting and votes so a batch stamped in one poll stays stable. With no
-    // stamp at all the newest reporting is the only ordering available.
-    function lastCalledBySection(board, ledger) {
+    // stamp at all the newest reporting is the only ordering available, unless
+    // the snapshot already ordered the section itself.
+    function lastCalledBySection(board, ledger, seed) {
         const out = { started_epoch: ledger.started_epoch || null };
         const rank = (r) => [ledger.calls[callRaceId(r)] || 0, Number(r.reporting) || 0,
             Number(r.total_votes) || 0, callRaceId(r)];
@@ -1217,6 +1218,25 @@
             };
             const row = pool.reduce((best, r) => (better(r, best) ? r : best));
             const seen = ledger.calls[callRaceId(row)] || 0;
+            if (seen > 0) {
+                const w = row.winner || {};
+                out[section] = {
+                    id: row.id, name: row.name, state: row.state, district: row.district,
+                    type: row.type, reporting: row.reporting || 0,
+                    known: true, epoch: seen,
+                    winner: { name: w.name, party: w.party, group: w.group },
+                };
+                continue;
+            }
+            // No live row can carry the stamp: the two feeds name ballot
+            // measures differently and one may omit the race entirely. The
+            // snapshot's pick still carries a real server-side call time, and
+            // naming a rank-picked race as "last called" would be a guess.
+            const known = seed && seed[section];
+            if (known && known.known && Number(known.epoch) > 0) {
+                out[section] = known;
+                continue;
+            }
             const w = row.winner || {};
             out[section] = {
                 id: row.id, name: row.name, state: row.state, district: row.district,
@@ -1259,7 +1279,8 @@
                 (a.state || '').localeCompare(b.state || '') ||
                 (a.district || '').localeCompare(b.district || ''));
         }
-        board.last_called = lastCalledBySection(board, observeCalls(board, base && base.last_called));
+        const seed = base && base.last_called;
+        board.last_called = lastCalledBySection(board, observeCalls(board, seed), seed);
         return board;
     }
 
