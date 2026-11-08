@@ -90,10 +90,12 @@ def last_by_section(board, log):
             continue
         stamped = [r for r in rows if calls.get(str(r["id"]), 0) > 0]
         if stamped:
-            row = max(stamped, key=lambda r: calls[str(r["id"])])
+            row = max(stamped, key=lambda r: (calls[str(r["id"])], r.get("reporting") or 0,
+                                              r.get("total_votes") or 0, str(r.get("id") or "")))
             seen = calls[str(row["id"])]
         else:
-            row = max(rows, key=lambda r: (r["reporting"], r["total_votes"]))
+            row = max(rows, key=lambda r: (r.get("reporting") or 0, r.get("total_votes") or 0,
+                                           str(r.get("id") or "")))
             seen = 0.0
         winner = row["winner"]
         out[name] = {

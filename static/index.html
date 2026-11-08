@@ -1116,10 +1116,122 @@
         return { exact, byState };
     }
 
+    // AP publishes no call timestamp; the server stamps the first poll that saw
+    // each race called (call_log.py). The published page has no server, so the
+    // browser keeps the same ledger in localStorage. Without it the live
+    // overlay had nothing to order calls by and kept the snapshot's card.
+    const CALL_LEDGER_KEY = 'tracker.calls.v1';
+    const BOARD_SECTIONS = ['senate', 'house', 'governor', 'measures'];
+    const callRaceId = (r) => (r && r.id != null ? String(r.id) : '');
+    const winnerSignature = (w) => `${(w || {}).name || ''}|${(w || {}).party || ''}`;
+    const callSignature = (r) => winnerSignature(r && r.winner);
+
+    function readCallLedger() {
+        try {
+            const raw = JSON.parse(localStorage.getItem(CALL_LEDGER_KEY) || 'null');
+            if (!raw || typeof raw !== 'object') return null;
+            const started = Number(raw.started_epoch);
+            if (!Number.isFinite(started) || started <= 0) return null;
+            const calls = {}, winners = {};
+            for (const [id, ts] of Object.entries(raw.calls || {})) {
+                const v = Number(ts);
+                if (id && Number.isFinite(v) && v >= 0) calls[id] = v;
+            }
+            for (const [id, sig] of Object.entries(raw.winners || {})) {
+                if (id && typeof sig === 'string') winners[id] = sig;
+            }
+            return { started_epoch: started, calls, winners };
+        } catch (e) { return null; }
+    }
+
+    function writeCallLedger(ledger) {
+        try { localStorage.setItem(CALL_LEDGER_KEY, JSON.stringify(ledger)); } catch (e) { /* storage blocked */ }
+    }
+
+    // Stamp the races the reader sees called. The opening poll has no history,
+    // so every call in it predates the reader and stays unstamped; a race that
+    // flips afterwards is stamped when this browser noticed it. The payload's
+    // own last call carries a server-side stamp, so seed it by race identity
+    // when the ids or keys line up.
+    function observeCalls(board, seed) {
+        const now = Date.now() / 1000;
+        const stored = readCallLedger();
+        const fresh = stored === null;
+        const ledger = stored || { started_epoch: Number(seed && seed.started_epoch) > 0
+            ? Number(seed.started_epoch) : now, calls: {}, winners: {} };
+        const byId = new Map(), byKey = new Map();
+        for (const section of BOARD_SECTIONS) {
+            for (const r of board[section] || []) {
+                if (!r.called) continue;
+                const id = callRaceId(r);
+                if (!byId.has(id)) byId.set(id, r);
+                if (!byKey.has(raceKey(r))) byKey.set(raceKey(r), r);
+            }
+        }
+        for (const section of BOARD_SECTIONS) {
+            const e = seed && seed[section];
+            if (!e) continue;
+            const row = byId.get(String(e.id == null ? '' : e.id)) || byKey.get(raceKey(e));
+            const id = row ? callRaceId(row) : String(e.id == null ? '' : e.id);
+            if (!id || id in ledger.calls) continue;
+            ledger.calls[id] = Number(e.epoch) > 0 ? Number(e.epoch) : 0;
+            const w = (row && row.winner) || e.winner;
+            if (w) ledger.winners[id] = winnerSignature(w);
+        }
+        for (const section of BOARD_SECTIONS) {
+            for (const r of board[section] || []) {
+                if (!r.called || !r.winner) continue;
+                const id = callRaceId(r);
+                if (!id) continue;
+                const sig = callSignature(r);
+                // A race that flips its winner is a new call, not the old one.
+                if (!(id in ledger.calls) || ledger.winners[id] !== sig) {
+                    ledger.calls[id] = fresh ? 0 : now;
+                    ledger.winners[id] = sig;
+                }
+            }
+        }
+        writeCallLedger(ledger);
+        return ledger;
+    }
+
+    // Mirrors call_log.last_by_section. Stamped calls order by stamp, then
+    // reporting and votes so a batch stamped in one poll stays stable. With no
+    // stamp at all the newest reporting is the only ordering available.
+    function lastCalledBySection(board, ledger) {
+        const out = { started_epoch: ledger.started_epoch || null };
+        const rank = (r) => [ledger.calls[callRaceId(r)] || 0, Number(r.reporting) || 0,
+            Number(r.total_votes) || 0, callRaceId(r)];
+        for (const section of BOARD_SECTIONS) {
+            const rows = (board[section] || []).filter(r => r.called && r.winner);
+            if (!rows.length) { out[section] = null; continue; }
+            const stamped = rows.filter(r => (ledger.calls[callRaceId(r)] || 0) > 0);
+            const pool = stamped.length ? stamped : rows;
+            const better = (a, b) => {
+                const ka = rank(a), kb = rank(b);
+                for (let i = 0; i < ka.length; i++) {
+                    if (ka[i] === kb[i]) continue;
+                    return ka[i] > kb[i];
+                }
+                return false;
+            };
+            const row = pool.reduce((best, r) => (better(r, best) ? r : best));
+            const seen = ledger.calls[callRaceId(row)] || 0;
+            const w = row.winner || {};
+            out[section] = {
+                id: row.id, name: row.name, state: row.state, district: row.district,
+                type: row.type, reporting: row.reporting || 0,
+                known: seen > 0, epoch: seen || null,
+                winner: { name: w.name, party: w.party, group: w.group },
+            };
+        }
+        return out;
+    }
+
     function buildLiveBoard(rawRaces, base) {
         const index = buildScheduleIndex(base);
         const board = { senate: [], house: [], governor: [], measures: [],
-            national: {}, last_called: base && base.last_called };
+            national: {}, last_called: null };
         const seen = new Set();
         for (const raw of rawRaces) {
             const id = raw.id == null ? JSON.stringify(raw) : String(raw.id);
@@ -1147,6 +1259,7 @@
                 (a.state || '').localeCompare(b.state || '') ||
                 (a.district || '').localeCompare(b.district || ''));
         }
+        board.last_called = lastCalledBySection(board, observeCalls(board, base && base.last_called));
         return board;
     }
 
@@ -1629,13 +1742,9 @@
 
     // AP publishes no call timestamp, so the server stamps the first poll that
     // saw each race called. Races already called when tracking began share one
-    // batch and cannot be ordered among themselves, so they carry the start
-    // time instead of a made-up age.
+    // batch and cannot be ordered among themselves, so the card names the
+    // newest reporting without claiming a call time for it.
     const LAST_CALLED_SECTIONS = [['senate', 'Senate'], ['house', 'House'], ['governor', 'Governors'], ['measures', 'Measures']];
-
-    function hhmmUtc(epoch) {
-        return new Date(epoch * 1000).toISOString().slice(11, 16);
-    }
 
     // The card is a third of a panel wide, so the full party name would wrap.
     const PARTY_SHORT = { Democratic: 'Dem', Republican: 'Rep', Independent: 'Ind', Libertarian: 'Lib', Green: 'Grn' };
@@ -1653,9 +1762,9 @@
             }
             const w = e.winner || {};
             const seat = e.name || [e.state, e.district].filter(Boolean).join(' ') || e.type || 'race';
-            const when = e.known
-                ? `called ${relTime(e.epoch)}`
-                : (lc.started_epoch ? `already called at ${hhmmUtc(lc.started_epoch)} UTC` : 'called before tracking began');
+            // An unordered call (nothing but the newest reporting to sort by)
+            // must not borrow the tracking start as its call time.
+            const when = e.known ? `called ${relTime(e.epoch)}` : 'called before tracking began';
             el.innerHTML = `<div class="lc" data-chamber="${esc(key)}" title="${esc(seat)} · ${esc(w.name || '')} (${esc(w.party || '')}) · ${esc(when)}">
                 <span class="lcsec">Last called</span>
                 <span class="lcrace">${esc(seat)}</span>
