@@ -810,6 +810,8 @@ def _publish_loop(publisher):
 
 
 def run_server():
+    if call_log.seed_from_fixture():
+        print("[CALL LOG] ledger had no call times; seeded them from fixtures/call_log.json")
     load_from_fixtures("FIXTURE-WARMUP")
     load_exit_polls_from_fixture()
     poller = threading.Thread(target=_poller_loop, daemon=True)

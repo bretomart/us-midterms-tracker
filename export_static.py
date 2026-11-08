@@ -20,6 +20,7 @@ import os
 import sys
 import time
 
+import call_log
 import server
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -51,6 +52,10 @@ def _copy_page(src, dest):
 
 
 def build(out_dir):
+    # A call stamp cannot be re-derived from the feed, so a build whose cache
+    # is cold starts from the committed ledger instead of an empty one.
+    if call_log.seed_from_fixture():
+        print("[CALL LOG] ledger had no call times; seeded them from fixtures/call_log.json")
     # The fixture warm-up only matters for the failure path: it gives the
     # status check something to reject, rather than an empty payload.
     server.load_from_fixtures("FIXTURE-WARMUP")

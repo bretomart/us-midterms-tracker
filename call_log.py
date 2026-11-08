@@ -16,8 +16,13 @@ import os
 import threading
 import time
 
-STATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "state")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATE_DIR = os.path.join(BASE_DIR, "state")
 LOG_PATH = os.path.join(STATE_DIR, "call_log.json")
+# Committed copy of the observed call times. A call stamp cannot be recovered
+# from the feed, so a cold start (new clone, restored or missing cache) begins
+# from this history instead of an empty ledger.
+SEED_PATH = os.path.join(BASE_DIR, "fixtures", "call_log.json")
 
 SECTIONS = ("senate", "house", "governor", "measures")
 
@@ -32,9 +37,9 @@ _LOCK = threading.Lock()
 _CACHE = None
 
 
-def _read():
+def _read_at(path):
     try:
-        with open(LOG_PATH, encoding="utf-8") as fh:
+        with open(path, encoding="utf-8") as fh:
             raw = json.load(fh)
     except (OSError, ValueError):
         return None
@@ -47,12 +52,45 @@ def _read():
     }
 
 
+def _read():
+    return _read_at(LOG_PATH)
+
+
 def _write(state):
     os.makedirs(STATE_DIR, exist_ok=True)
     tmp = LOG_PATH + ".tmp"
     with open(tmp, "w", encoding="utf-8") as fh:
         json.dump(state, fh, indent=1, sort_keys=True)
     os.replace(tmp, LOG_PATH)
+
+
+def seed_from_fixture():
+    """Give the ledger the committed call history when it has none of its own.
+
+    The seed is merged, not copied. A ledger that already orders its calls is
+    left alone; a ledger whose stamps are all zero (a cold start that saw only
+    calls already made) takes the seed's stamps and keeps the ids it saw.
+    Anything missing from the seed was called after the seed was committed, so
+    a cold build stamps it instead of leaving every race unordered.
+    """
+    global _CACHE
+    seed = _read_at(SEED_PATH)
+    if not seed or not any(seed["calls"].values()):
+        return False
+    with _LOCK:
+        current = _CACHE if _CACHE is not None else _read()
+        if current and any(current["calls"].values()):
+            return False
+        calls = dict(seed["calls"])
+        started = seed["started_epoch"]
+        if current:
+            for key, stamp in current["calls"].items():
+                calls[key] = max(calls.get(key, 0.0), stamp)
+            started = min(started, current["started_epoch"])
+        merged = {"started_epoch": started, "calls": calls}
+        _CACHE = merged
+        _write(merged)
+        return True
 
 
 def observe(rows, epoch=None):
