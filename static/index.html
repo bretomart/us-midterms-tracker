@@ -1717,6 +1717,13 @@
         return `<span class="tag lead-${r.leader.group}">Leading</span><span class="who">${m === null ? 'sole reporter' : 'ahead by ' + nf(m)}</span>${callNote(r)}`;
     }
 
+    // A ballot measure's candidate is its side, and AP repeats the side in the
+    // party field, so printing both would read "No No".
+    function partyText(name, party) {
+        const p = party || '';
+        return p.trim().toLowerCase() !== String(name || '').trim().toLowerCase() ? p : '';
+    }
+
     function candCell(r) {
         const all = r.candidates || [];
         if (!all.length) return '<span class="cparty">Uncontested</span>';
@@ -1726,9 +1733,11 @@
             const won = r.called && x.winner;
             const lead = !r.called && r.leader && x.name === r.leader.name && x.votes === r.leader.votes;
             const mark = won ? '<span class="mark won">WIN</span>' : lead ? '<span class="mark lead">LD</span>' : '';
+            const pp = partyText(x.name, x.party || 'Ind');
+            const chip = pp ? `<span class="cparty">${esc(pp)}</span> ` : '';
             return `<li class="${won || lead ? 'hot' : ''}">
                 <span class="dot ${x.group}"></span>
-                <span class="cname">${esc(x.name)} <span class="cparty">${esc(x.party || 'Ind')}</span> ${mark}</span>
+                <span class="cname">${esc(x.name)} ${chip}${mark}</span>
                 <span class="cvotes">${r.has_data ? nf(x.votes) : '--'}</span>
                 <span class="cpct">${r.has_data && r.total_votes > 0 ? (x.votes / r.total_votes * 100).toFixed(1) + '%' : ''}</span>
             </li>`;
@@ -1783,13 +1792,14 @@
             }
             const w = e.winner || {};
             const seat = e.name || [e.state, e.district].filter(Boolean).join(' ') || e.type || 'race';
+            const pp = partyText(w.name, w.party);
             // An unordered call (nothing but the newest reporting to sort by)
             // must not borrow the tracking start as its call time.
             const when = e.known ? `called ${relTime(e.epoch)}` : 'called before tracking began';
-            el.innerHTML = `<div class="lc" data-chamber="${esc(key)}" title="${esc(seat)} · ${esc(w.name || '')} (${esc(w.party || '')}) · ${esc(when)}">
+            el.innerHTML = `<div class="lc" data-chamber="${esc(key)}" title="${esc(seat)} · ${esc(w.name || '')}${pp ? ' (' + esc(pp) + ')' : ''} · ${esc(when)}">
                 <span class="lcsec">Last called</span>
                 <span class="lcrace">${esc(seat)}</span>
-                <span class="lcwho"><span class="dot ${esc(w.group || 'O')}"></span><span class="cname2">${esc(w.name || '')}</span><span class="cparty" title="${esc(w.party || '')}">${esc(shortParty(w.party))}</span></span>
+                <span class="lcwho"><span class="dot ${esc(w.group || 'O')}"></span><span class="cname2">${esc(w.name || '')}</span>${pp ? `<span class="cparty" title="${esc(pp)}">${esc(shortParty(pp))}</span>` : ''}</span>
                 <span class="lcwhen">${esc(when)}</span>
             </div>`;
         });
