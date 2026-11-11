@@ -405,7 +405,9 @@ def _fetch_url_json(url, timeout=8, attempts=3):
 
 def _dedupe_races(raw_races):
     by_id = {}
-    for r in raw_races:
+    for r in raw_races or ():
+        if not isinstance(r, dict):
+            continue
         rid = r.get("id")
         if rid is not None:
             by_id[rid] = r
@@ -811,7 +813,7 @@ def _publish_loop(publisher):
 
 def run_server():
     if call_log.seed_from_fixture():
-        print("[CALL LOG] ledger had no call times; seeded them from fixtures/call_log.json")
+        print("[CALL LOG] merged fixtures/call_log.json into the ledger")
     load_from_fixtures("FIXTURE-WARMUP")
     load_exit_polls_from_fixture()
     poller = threading.Thread(target=_poller_loop, daemon=True)

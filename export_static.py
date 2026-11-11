@@ -52,10 +52,11 @@ def _copy_page(src, dest):
 
 
 def build(out_dir):
-    # A call stamp cannot be re-derived from the feed, so a build whose cache
-    # is cold starts from the committed ledger instead of an empty one.
+    # A call stamp cannot be re-derived from the feed, so a build merges the
+    # committed history into whatever its cache holds: a cold cache gains every
+    # stamp, a warm one gains only the calls newer than the committed copy.
     if call_log.seed_from_fixture():
-        print("[CALL LOG] ledger had no call times; seeded them from fixtures/call_log.json")
+        print("[CALL LOG] merged fixtures/call_log.json into the ledger")
     # The fixture warm-up only matters for the failure path: it gives the
     # status check something to reject, rather than an empty payload.
     server.load_from_fixtures("FIXTURE-WARMUP")

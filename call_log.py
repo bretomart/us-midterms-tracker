@@ -16,6 +16,8 @@ import os
 import threading
 import time
 
+import aggregate
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATE_DIR = os.path.join(BASE_DIR, "state")
 LOG_PATH = os.path.join(STATE_DIR, "call_log.json")
@@ -35,6 +37,48 @@ SETTLE_SECONDS = 180
 
 _LOCK = threading.Lock()
 _CACHE = None
+
+
+def race_identity(row):
+    """Stable identity for one board row across the two feeds, or None.
+
+    AP and civicAPI give the same race different ids (20261103MS26692 vs
+    81004), so a call stamp keyed by feed id cannot survive a source switch
+    or be compared across feeds. The identity is the contest itself:
+
+    - Senate and governor: the state. Each has one contest per state, and the
+      feeds label the district differently (AP "Class II", civicAPI nothing;
+      AP nothing, civicAPI "AZ"), so the district is not usable.
+    - House: state plus district, with a single-seat state's at-large district
+      folded onto district 01 (AP "DE-01", civicAPI "DE-AL"; those states have
+      no separate district 1).
+    - Ballot measures: None. The feeds name them differently ("Alabama 4:
+      Require citizenship to vote" vs "Alabama Amendment 4") and the numbers
+      collide, so no label joins; measures stay keyed by feed id.
+
+    ``static/index.html`` mirrors this rule in JavaScript; keep them equal.
+    """
+    race_type = row.get("type")
+    state = (row.get("state") or "").upper()
+    if race_type == aggregate.SENATE_TYPE:
+        return f"senate|{state}"
+    if race_type == aggregate.GOVERNOR_TYPE:
+        return f"governor|{state}"
+    if race_type == aggregate.HOUSE_TYPE:
+        district = (row.get("district") or "").upper()
+        if district.endswith("-AL"):
+            district = district[:-3] + "-01"
+        return f"house|{state}|{district}"
+    return None
+
+
+def _key(row):
+    """Ledger key for one row: its identity, or its feed id when unordered."""
+    identity = race_identity(row)
+    if identity is not None:
+        return identity
+    race_id = row.get("id")
+    return str(race_id) if race_id is not None else None
 
 
 def _read_at(path):
@@ -65,13 +109,17 @@ def _write(state):
 
 
 def seed_from_fixture():
-    """Give the ledger the committed call history when it has none of its own.
+    """Merge the committed call history into the ledger.
 
-    The seed is merged, not copied. A ledger that already orders its calls is
-    left alone; a ledger whose stamps are all zero (a cold start that saw only
-    calls already made) takes the seed's stamps and keeps the ids it saw.
+    The seed is merged, never copied over: max() keeps an existing stamp, so a
+    ledger that already orders its calls keeps its own times and only gains the
+    history it is missing. That also covers a ledger written under an older
+    keying rule, whose stamps no live row can reach; without the merge such a
+    build would report every ordered call as made before tracking began.
     Anything missing from the seed was called after the seed was committed, so
-    a cold build stamps it instead of leaving every race unordered.
+    a build stamps it instead of leaving every race unordered.
+
+    Returns True only when the merge changed the ledger.
     """
     global _CACHE
     seed = _read_at(SEED_PATH)
@@ -79,14 +127,15 @@ def seed_from_fixture():
         return False
     with _LOCK:
         current = _CACHE if _CACHE is not None else _read()
-        if current and any(current["calls"].values()):
-            return False
         calls = dict(seed["calls"])
         started = seed["started_epoch"]
         if current:
             for key, stamp in current["calls"].items():
                 calls[key] = max(calls.get(key, 0.0), stamp)
             started = min(started, current["started_epoch"])
+        if current and calls == current["calls"] and started == current["started_epoch"]:
+            _CACHE = current
+            return False
         merged = {"started_epoch": started, "calls": calls}
         _CACHE = merged
         _write(merged)
@@ -104,10 +153,20 @@ def observe(rows, epoch=None):
             state = {"started_epoch": now, "calls": {}}
         learned = False
         for row in rows:
-            race_id = row.get("id")
-            if race_id is None or not row.get("called"):
+            if not row.get("called"):
                 continue
-            key = str(race_id)
+            key = _key(row)
+            if key is None:
+                continue
+            # A ledger written before calls were keyed by identity holds this
+            # race's stamp under its feed id. Carry it forward instead of
+            # losing a real observed time; the seed only reaches back to the
+            # moment it was committed.
+            legacy = str(row.get("id") or "")
+            if key != legacy and legacy in state["calls"]:
+                state["calls"][key] = max(state["calls"].get(key, 0.0),
+                                          state["calls"].pop(legacy))
+                learned = True
             if key not in state["calls"]:
                 state["calls"][key] = 0.0 if now <= state["started_epoch"] + SETTLE_SECONDS else now
                 learned = True
@@ -126,11 +185,11 @@ def last_by_section(board, log):
         if not rows:
             out[name] = None
             continue
-        stamped = [r for r in rows if calls.get(str(r["id"]), 0) > 0]
+        stamped = [r for r in rows if calls.get(_key(r), 0) > 0]
         if stamped:
-            row = max(stamped, key=lambda r: (calls[str(r["id"])], r.get("reporting") or 0,
+            row = max(stamped, key=lambda r: (calls[_key(r)], r.get("reporting") or 0,
                                               r.get("total_votes") or 0, str(r.get("id") or "")))
-            seen = calls[str(row["id"])]
+            seen = calls[_key(row)]
         else:
             row = max(rows, key=lambda r: (r.get("reporting") or 0, r.get("total_votes") or 0,
                                            str(r.get("id") or "")))

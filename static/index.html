@@ -1130,11 +1130,16 @@
         return { exact, byState };
     }
 
-    // AP publishes no call timestamp; the server stamps the first poll that saw
+    // AP publishes no call time; the server stamps the first poll that saw
     // each race called (call_log.py). The published page has no server, so the
     // browser keeps the same ledger in localStorage. Without it the live
     // overlay had nothing to order calls by and kept the snapshot's card.
-    const CALL_LEDGER_KEY = 'tracker.calls.v1';
+    // v2: entries are keyed by race identity (callIdent below) instead of feed
+    // id, so one race cannot hold an AP-era stamp and a civic-era stamp at the
+    // same time. A v1 ledger cannot be re-keyed (the ids are gone), so readers
+    // start cold and the snapshot's own ordering plus after-detection carry the
+    // card until this browser sees a call flip.
+    const CALL_LEDGER_KEY = 'tracker.calls.v2';
     const BOARD_SECTIONS = ['senate', 'house', 'governor', 'measures'];
     const callRaceId = (r) => (r && r.id != null ? String(r.id) : '');
     const winnerSignature = (w) => `${(w || {}).name || ''}|${(w || {}).party || ''}`;
@@ -1146,7 +1151,7 @@
             if (!raw || typeof raw !== 'object') return null;
             const started = Number(raw.started_epoch);
             if (!Number.isFinite(started) || started <= 0) return null;
-            const calls = {}, winners = {};
+            const calls = {}, winners = {}, after = {};
             for (const [id, ts] of Object.entries(raw.calls || {})) {
                 const v = Number(ts);
                 if (id && Number.isFinite(v) && v >= 0) calls[id] = v;
@@ -1154,7 +1159,10 @@
             for (const [id, sig] of Object.entries(raw.winners || {})) {
                 if (id && typeof sig === 'string') winners[id] = sig;
             }
-            return { started_epoch: started, calls, winners };
+            for (const [id, a] of Object.entries(raw.after || {})) {
+                if (id && a) after[id] = true;
+            }
+            return { started_epoch: started, calls, winners, after };
         } catch (e) { return null; }
     }
 
@@ -1162,46 +1170,114 @@
         try { localStorage.setItem(CALL_LEDGER_KEY, JSON.stringify(ledger)); } catch (e) { /* storage blocked */ }
     }
 
+    // A call's identity across feeds. AP and civicAPI give the same race
+    // different ids (20261103MS26692 vs 81004), so a live row cannot be matched
+    // to its snapshot row by id. Senate and governor have one contest per state
+    // and label it differently (AP puts "Class II" in district, civicAPI leaves
+    // it empty), so those sections key on state alone. House keys on the
+    // district, but the two feeds name a single-seat state's at-large district
+    // differently (AP DE-01, civicAPI DE-AL); those states have no separate
+    // district 1, so folding -AL onto -01 makes the key agree. Ballot measures
+    // are excluded: the feeds name them differently (AP "Alabama 4: ...",
+    // civicAPI "Alabama Amendment 4") and the numbers collide, so no key joins.
+    const ORDERED_SECTIONS = ['senate', 'house', 'governor'];
+    const callIdent = (section, r) => {
+        if (!ORDERED_SECTIONS.includes(section)) return null;
+        const state = (r.state || '').toUpperCase();
+        if (section !== 'house') return `${section}|${state}`;
+        return `${section}|${state}|${(r.district || '').toUpperCase().replace(/-AL$/, '-01')}`;
+    };
+    // One ledger key: the cross-feed identity where the section has one, the
+    // feed id where it does not. Mirrors call_log._key.
+    const callKey = (section, r) => callIdent(section, r) || callRaceId(r);
+
     // Stamp the races the reader sees called. The opening poll has no history,
     // so every call in it predates the reader and stays unstamped; a race that
     // flips afterwards is stamped when this browser noticed it. The payload's
-    // own last call carries a server-side stamp, so seed it by race identity
-    // when the ids or keys line up.
-    function observeCalls(board, seed) {
+    // own last call carries a server-side stamp, so seed it under the same
+    // identity key, which survives the snapshot and the live feed disagreeing
+    // about a race's id.
+    function observeCalls(board, seed, base) {
         const now = Date.now() / 1000;
         const stored = readCallLedger();
         const fresh = stored === null;
         const ledger = stored || { started_epoch: Number(seed && seed.started_epoch) > 0
             ? Number(seed.started_epoch) : now, calls: {}, winners: {} };
-        const byId = new Map(), byKey = new Map();
+        if (!ledger.after) ledger.after = {};
+        // A call the base board (the snapshot on page load) does not carry was
+        // called after that snapshot was built, so it is newer than every
+        // snapshot call and must outrank the snapshot's pick even when this
+        // browser has no history to stamp it with. Floor it one second past the
+        // latest snapshot stamp: a real time is unknowable, but the ordering is
+        // not, and the card reports "since the last snapshot" rather than an age.
+        const baseCalled = new Set();
+        for (const section of ORDERED_SECTIONS) {
+            for (const r of (base && base[section]) || []) {
+                if (r.called && r.winner) baseCalled.add(callIdent(section, r));
+            }
+        }
+        let floor = 0;
+        for (const section of BOARD_SECTIONS) {
+            const e = seed && seed[section];
+            if (e && Number(e.epoch) > floor) floor = Number(e.epoch);
+        }
+        const canOrder = baseCalled.size > 0 && floor > 0;
+        if (canOrder) floor += 1;
+        // Live rows indexed by ledger key, so the snapshot's own last call can
+        // be stamped under the same key the reader looks up.
+        const byKey = new Map();
         for (const section of BOARD_SECTIONS) {
             for (const r of board[section] || []) {
                 if (!r.called) continue;
-                const id = callRaceId(r);
-                if (!byId.has(id)) byId.set(id, r);
-                if (!byKey.has(raceKey(r))) byKey.set(raceKey(r), r);
+                const k = callKey(section, r);
+                if (k && !byKey.has(k)) byKey.set(k, r);
             }
         }
         for (const section of BOARD_SECTIONS) {
             const e = seed && seed[section];
             if (!e) continue;
-            const row = byId.get(String(e.id == null ? '' : e.id)) || byKey.get(raceKey(e));
-            const id = row ? callRaceId(row) : String(e.id == null ? '' : e.id);
-            if (!id || id in ledger.calls) continue;
-            ledger.calls[id] = Number(e.epoch) > 0 ? Number(e.epoch) : 0;
+            const k = callKey(section, e);
+            if (!k || k in ledger.calls) continue;
+            ledger.calls[k] = Number(e.epoch) > 0 ? Number(e.epoch) : 0;
+            const row = byKey.get(k);
             const w = (row && row.winner) || e.winner;
-            if (w) ledger.winners[id] = winnerSignature(w);
+            if (w) ledger.winners[k] = winnerSignature(w);
+        }
+        // A section is only trusted for after-detection while the count of
+        // live calls missing from the snapshot cannot exceed the gap between
+        // the two called tallies. If a feed ever relabels districts so the
+        // identity join breaks, nearly every race looks new at once; flagging
+        // them would name a stale race as new, so that section keeps the
+        // snapshot's ordering instead.
+        const joinHolds = {};
+        if (canOrder) {
+            for (const section of ORDERED_SECTIONS) {
+                const live = (board[section] || []).filter(r => r.called && r.winner);
+                const snap = ((base && base[section]) || [])
+                    .filter(r => r.called && r.winner);
+                const unseen = live.filter(r => !baseCalled.has(callIdent(section, r))).length;
+                joinHolds[section] = live.length >= snap.length
+                    && unseen <= live.length - snap.length;
+            }
         }
         for (const section of BOARD_SECTIONS) {
             for (const r of board[section] || []) {
                 if (!r.called || !r.winner) continue;
-                const id = callRaceId(r);
-                if (!id) continue;
+                const k = callKey(section, r);
+                if (!k) continue;
                 const sig = callSignature(r);
                 // A race that flips its winner is a new call, not the old one.
-                if (!(id in ledger.calls) || ledger.winners[id] !== sig) {
-                    ledger.calls[id] = fresh ? 0 : now;
-                    ledger.winners[id] = sig;
+                if (!(k in ledger.calls) || ledger.winners[k] !== sig) {
+                    ledger.calls[k] = fresh ? 0 : now;
+                    ledger.winners[k] = sig;
+                    delete ledger.after[k];
+                }
+                // Still unstamped (seen called on a cold ledger, or left at 0 by
+                // an earlier build) and absent from the snapshot: called after it.
+                if (canOrder && joinHolds[section] && !ledger.calls[k]
+                        && !baseCalled.has(callIdent(section, r))) {
+                    ledger.calls[k] = floor;
+                    ledger.after[k] = true;
                 }
             }
         }
@@ -1215,15 +1291,15 @@
     // the snapshot already ordered the section itself.
     function lastCalledBySection(board, ledger, seed) {
         const out = { started_epoch: ledger.started_epoch || null };
-        const rank = (r) => [ledger.calls[callRaceId(r)] || 0, Number(r.reporting) || 0,
-            Number(r.total_votes) || 0, callRaceId(r)];
+        const rank = (section, r) => [ledger.calls[callKey(section, r)] || 0,
+            Number(r.reporting) || 0, Number(r.total_votes) || 0, callRaceId(r)];
         for (const section of BOARD_SECTIONS) {
             const rows = (board[section] || []).filter(r => r.called && r.winner);
             if (!rows.length) { out[section] = null; continue; }
-            const stamped = rows.filter(r => (ledger.calls[callRaceId(r)] || 0) > 0);
+            const stamped = rows.filter(r => (ledger.calls[callKey(section, r)] || 0) > 0);
             const pool = stamped.length ? stamped : rows;
             const better = (a, b) => {
-                const ka = rank(a), kb = rank(b);
+                const ka = rank(section, a), kb = rank(section, b);
                 for (let i = 0; i < ka.length; i++) {
                     if (ka[i] === kb[i]) continue;
                     return ka[i] > kb[i];
@@ -1231,13 +1307,13 @@
                 return false;
             };
             const row = pool.reduce((best, r) => (better(r, best) ? r : best));
-            const seen = ledger.calls[callRaceId(row)] || 0;
+            const seen = ledger.calls[callKey(section, row)] || 0;
             if (seen > 0) {
                 const w = row.winner || {};
                 out[section] = {
                     id: row.id, name: row.name, state: row.state, district: row.district,
                     type: row.type, reporting: row.reporting || 0,
-                    known: true, epoch: seen,
+                    known: true, epoch: seen, after: !!ledger.after[callKey(section, row)],
                     winner: { name: w.name, party: w.party, group: w.group },
                 };
                 continue;
@@ -1294,7 +1370,7 @@
                 (a.district || '').localeCompare(b.district || ''));
         }
         const seed = base && base.last_called;
-        board.last_called = lastCalledBySection(board, observeCalls(board, seed), seed);
+        board.last_called = lastCalledBySection(board, observeCalls(board, seed, base), seed);
         return board;
     }
 
@@ -1809,7 +1885,8 @@
             const pp = partyText(w.name, w.party);
             // An unordered call (nothing but the newest reporting to sort by)
             // must not borrow the tracking start as its call time.
-            const when = e.known ? `called ${relTime(e.epoch)}` : 'called before tracking began';
+            const when = e.after ? 'called since the last snapshot'
+                : e.known ? `called ${relTime(e.epoch)}` : 'called before tracking began';
             el.innerHTML = `<div class="lc" data-chamber="${esc(key)}" title="${esc(seat)} · ${esc(w.name || '')}${pp ? ' (' + esc(pp) + ')' : ''} · ${esc(when)}">
                 <span class="lcsec">Last called</span>
                 <span class="lcrace">${esc(seat)}</span>
