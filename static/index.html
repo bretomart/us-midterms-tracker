@@ -902,7 +902,7 @@
                 kicked = res.ok;
             } catch (e) { kicked = false; }
 
-            if (!kicked && LIVE_OVERLAY) {
+            if (!kicked && liveOverlay()) {
                 await liveRefresh(true);
                 await fetchNews();
                 await fetchExitPolls();
@@ -945,7 +945,7 @@
 
     // The local server answers /api/races and /api/news. The static GitHub
     // Pages build ships the same payloads as files under data/. Resolve
-    // whichever source answers once, then keep using it.
+    // whichever source answers once, then keep using it while it answers.
     let racesSource = null;
     let newsSource = null;
     // export_static.py marks the page it publishes, because a static host
@@ -953,12 +953,13 @@
     // network panel with noise. Unmarked, the page is a local run: try the
     // API first, then the files.
     const STATIC_BUILD = document.documentElement.dataset.mode === 'snapshot';
-    // The published page cannot read the results feed itself, so it is only as
-    // fresh as the last Pages build. Pointing it at a server that is actually
-    // polling (the local run, or a tunnel to it) restores the 30s poll: pass
-    // ?live=http://host:8080 once, the choice sticks in localStorage, and
-    // ?live= with no value clears it. An unreachable server falls back to the
-    // snapshot on the next fetch.
+    // The published page reads the results feed itself (see liveOverlay
+    // below). Pointing it at a server that is actually polling (the local
+    // run, or a tunnel to it) swaps that for the server's 30s poll and its AP
+    // data: pass ?live=http://host:8080 once, the choice sticks in
+    // localStorage, and ?live= with no value clears it. A server that does
+    // not answer, at load or later, leaves the page on the published files,
+    // and the civicAPI overlay takes over.
     const LIVE_STORAGE_KEY = 'tracker.live_base';
     let liveBase = '';
     try {
@@ -995,6 +996,13 @@
         return null;
     }
 
+    // A pinned source can stop answering mid-session (a ?live= server going
+    // down), so a miss falls through to the remaining candidates.
+    async function loadPinned(pinned, candidates) {
+        return (pinned && await loadPayload([pinned]))
+            || loadPayload(candidates.filter(c => c !== pinned));
+    }
+
     // Live results, read by the browser itself.
     //
     // Pages cannot run the Python server, so the published page used to be
@@ -1008,7 +1016,13 @@
     const CIVIC = 'https://civicapi.org/api/v2';
     const CIVIC_SEARCHES = ['General', 'Statewide'].map(t =>
         `${CIVIC}/race/search?startDate=2026-11-03&endDate=2026-11-03&country=US&election_type=${t}&limit=1000`);
-    const LIVE_OVERLAY = STATIC_BUILD && !liveBase;
+    // A stored ?live= choice outlives the server it names. The overlay stands
+    // down only while that server is the source actually answering; otherwise
+    // the page would sit on the last Pages build with a live feed in reach.
+    const liveOverlay = () => STATIC_BUILD && !(liveBase && racesSource === liveBase + '/api/races');
+    // Above the slowest round trip seen on election night (tens of seconds),
+    // below the 55s poll guard, so a hung request ends before the next poll.
+    const CIVIC_TIMEOUT_MS = 45000;
     const MEASURE_TYPES = new Set(['Referendum', 'Proposition', 'Ballot Measure']);
     const SCHEDULE_FIELDS = ['close_first', 'close_last', 'close_label', 'close_epoch',
         'close_note', 'close_src', 'close_disputed', 'close_verified', 'polls_closed',
@@ -1343,7 +1357,7 @@
             document.getElementById('hud-fresh').textContent =
                 secs < 60 ? `live ${secs}s` : `live ${Math.round(secs / 60)}m`;
             banner.style.display = 'none';
-        } else if (LIVE_OVERLAY && liveState.checkedAt) {
+        } else if (liveOverlay() && liveState.checkedAt) {
             wrap.className = 'stat warn';
             document.getElementById('hud-fresh').textContent = 'snapshot';
             banner.style.display = 'block';
@@ -1353,13 +1367,13 @@
     }
 
     async function liveFetch(force = false) {
-        if (!LIVE_OVERLAY) return null;
+        if (!liveOverlay()) return null;
         if (!force && Date.now() - liveState.checkedAt < 55000) return null;
         if (document.visibilityState === 'hidden') return null;
         liveState.checkedAt = Date.now();
         try {
             const results = await Promise.allSettled(CIVIC_SEARCHES.map(url =>
-                fetch(`${url}&_=${Date.now()}`, { cache: 'no-store' }).then(res => {
+                fetch(`${url}&_=${Date.now()}`, { cache: 'no-store', signal: AbortSignal.timeout(CIVIC_TIMEOUT_MS) }).then(res => {
                     if (!res.ok) throw new Error(`HTTP ${res.status}`);
                     return res.json();
                 })));
@@ -1399,7 +1413,7 @@
     async function fetchData() {
         let out = null;
         try {
-            const hit = await loadPayload(racesSource ? [racesSource] : RACES_CANDIDATES);
+            const hit = await loadPinned(racesSource, RACES_CANDIDATES);
             if (!hit) throw new Error('no results source');
             racesSource = hit.url;
             const d = hit.body;
@@ -1448,7 +1462,7 @@
             if (d.baseline) baselineData = d.baseline;
             lastPayload = d;
             let liveSummary = null;
-            if (LIVE_OVERLAY) {
+            if (liveOverlay()) {
                 const live = await liveFetch();
                 if (live) {
                     boardData = live.board;
@@ -1475,7 +1489,7 @@
 
     async function fetchNews() {
         try {
-            const hit = await loadPayload(newsSource ? [newsSource] : NEWS_CANDIDATES);
+            const hit = await loadPinned(newsSource, NEWS_CANDIDATES);
             if (!hit) throw new Error('no news source');
             newsSource = hit.url;
             const d = hit.body;
@@ -1547,7 +1561,7 @@
     async function fetchExitPolls() {
         // Keep the last good payload. The feed republishes on its own hour, so
         // a failed minute must not blank a panel that already rendered.
-        const hit = await loadPayload(exitSource ? [exitSource] : EXIT_CANDIDATES);
+        const hit = await loadPinned(exitSource, EXIT_CANDIDATES);
         if (hit) { exitSource = hit.url; exitData = hit.body; }
         renderExitPolls();
     }
@@ -1888,7 +1902,7 @@
     setInterval(tickClock, 15000);
     setInterval(renderWaves, 60000);
     setInterval(fetchData, STATIC_BUILD ? 300000 : 30000);
-    if (LIVE_OVERLAY) {
+    if (STATIC_BUILD) {
         setInterval(liveRefresh, 60000);
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible' && Date.now() - liveState.checkedAt > 55000) {
